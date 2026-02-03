@@ -40,13 +40,13 @@ const LoginPage = () => {
             <span className="pl-1">사용자 아이디</span>
             <input
               className={`h-12 rounded-lg px-4 border ${
-                idError ? "border-red-500" : "border-transparent"
+                idError ? "border-[#FF6738]" : "border-transparent"
               }`}
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
             />
             {idError && (
-              <span className="text-sm text-red-500 pl-1">{idError}</span>
+              <span className="text-sm text-[#FF6738] pl-1">{idError}</span>
             )}
           </div>
           <div className="flex flex-col gap-2">
@@ -54,13 +54,13 @@ const LoginPage = () => {
             <input
               type="password"
               className={`h-12 rounded-lg px-4 border ${
-                passwordError ? "border-red-500" : "border-transparent"
+                passwordError ? "border-[#FF6738]" : "border-transparent"
               }`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             {passwordError && (
-              <span className="text-sm text-red-500 pl-1">{passwordError}</span>
+              <span className="text-sm text-[#FF6738] pl-1">{passwordError}</span>
             )}
           </div>
           <button
