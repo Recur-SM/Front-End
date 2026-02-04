@@ -1,4 +1,7 @@
 import React from 'react';
+// 아이콘 파일 import
+import profileIcon from '../assets/profileIcon.svg';
+import logoutIcon from '../assets/logoutIcon.svg';
 
 interface SidebarProps {
   role: 'mentor' | 'mentee';
@@ -21,8 +24,8 @@ const Sidebar: React.FC<SidebarProps> = ({
       <div className="mb-[3.7vh]">
         <div className="text-[0.78vw] text-[#FF6738] font-bold mb-[1.48vh]">설 스터디</div>
         <div className="flex items-center gap-[0.625vw] mb-[0.09vh]">
-          <div className="w-[1.45vw] h-[2.59vh] bg-gray-50 border border-gray-100 rounded-full flex items-center justify-center text-gray-400 text-[0.62vw]">
-            👤
+          <div className="w-[1.45vw] h-[2.59vh] flex items-center justify-center overflow-hidden">
+            <img src={profileIcon} alt="프로필" className="w-full h-full object-contain" />
           </div>
           <span className="text-[1.25vw] font-bold text-[#111111] tracking-tight">{userName}</span>
         </div>
@@ -78,7 +81,8 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* 로그아웃 */}
       <div className="mt-auto">
         <button className="flex items-center gap-[0.41vw] text-[0.78vw] text-[#111111]">
-          <span className="text-[0.93vw]">↪</span> 로그아웃
+          <img src={logoutIcon} alt="로그아웃" className="w-[0.93vw] h-[0.93vw]" />
+          로그아웃
         </button>
       </div>
     </aside>
