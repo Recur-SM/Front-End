@@ -19,7 +19,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   onStudentSelect,
 }) => {
   return (
-    <aside className="w-[12.5vw] h-screen bg-white border-r border-gray-200 flex flex-col p-[2.22vh_1.25vw] sticky top-0 shadow-sm overflow-x-hidden">
+    <aside className="w-[11vw] h-screen bg-white border-r border-gray-200 flex flex-col p-[2.22vh_1.25vw] sticky top-0 shadow-sm overflow-x-hidden">
       {/* 상단 프로필 영역 */}
       <div className="mb-[3.7vh]">
         <div className="text-[0.78vw] text-[#FF6738] font-bold mb-[1.48vh]">설 스터디</div>
@@ -44,7 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         {role === 'mentor' && (
           <div className="mb-[4.44vh]">
             <div className="text-[0.67vw] text-[#111111] font-extrabold mb-[1.85vh] uppercase tracking-wider">학생 목록</div>
-            <ul className="space-y-[1.85vh] pl-[0.41vw]"> 
+            <ul className="space-y-[1.4vh] pl-[0.41vw]"> 
               {students.map((student) => (
                 <li
                   key={student}
@@ -65,7 +65,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         {/* 메뉴 영역 */}
         <nav>
           <div className="text-[0.67vw] text-[#111111] font-extrabold mb-[1.85vh] uppercase tracking-wider">메뉴</div>
-          <ul className="space-y-[2.59vh] pl-[0.41vw]"> 
+          <ul className="space-y-[1.4vh] pl-[0.41vw]"> 
             {['질의응답', '서울대생칼럼', '줌미팅 피드백', '약점 맞춤 솔루션'].map((menu) => (
               <li 
                 key={menu}
