@@ -6,7 +6,7 @@ interface FilterBarProps {
 
 const FilterBar: React.FC<FilterBarProps> = ({ filters, selectedFilter, onFilterChange }) => {
   return (
-    <div className="flex space-x-[10px] my-[2px]">
+    <div className="flex space-x-[0.52vw] my-[0.19vh]">
       {filters.map((filter) => {
         const isActive = selectedFilter === filter;
         
@@ -15,7 +15,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ filters, selectedFilter, onFilter
             key={filter}
             onClick={() => onFilterChange(filter)}
             className={`
-              px-[16px] py-[6px] rounded-[12px] border text-[13px] font-medium transition-all
+              px-[0.83vw] py-[0.56vh] rounded-[1.11vh] border text-[0.68vw] font-medium transition-all
               ${isActive 
                 ? 'border-[#FF6738] text-[#FF6738] bg-white'
                 : 'border-[#F7F7F7] text-[#111111] bg-white'
