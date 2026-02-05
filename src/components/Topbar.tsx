@@ -7,7 +7,7 @@ const Topbar: React.FC = () => {
     <header className="h-[7.04vh] w-full bg-white border-b border-gray-200 relative flex items-end justify-center">
       {/* 탭 메뉴 */}
       <nav className="flex gap-[3.33vw] h-full items-end">
-        {['학습 관리', '플래너'].map((tab) => {
+        {['학습 관리', '과제 관리'].map((tab) => {
           const isSelected = activeTab === tab;
           
           return (
