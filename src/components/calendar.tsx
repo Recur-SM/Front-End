@@ -9,9 +9,11 @@ const CalendarWidget: React.FC = () => {
   const [title, setTitle] = useState('');
 
   const [events] = useState([
-    { title: '영어 과제', date: '2026-02-05' },
-    { title: '문법 강의', date: '2026-02-05' },
-    { title: '독서 2지문', date: '2026-02-05' },
+    { title: '영어 과제', date: '2025-12-31' },
+    { title: '단어 시험', date: '2026-01-31' },
+    { title: '수학 오답노트', date: '2026-01-30' },
+    { title: '문법 강의', date: '2026-01-30' },
+    { title: '독서 2지문', date: '2026-01-01' },
     { title: '수학 오답노트', date: '2026-02-06' },
     { title: '단어 시험', date: '2026-02-06' },
     { title: '시대 국어 복습', date: '2026-02-04' },
@@ -29,11 +31,11 @@ const CalendarWidget: React.FC = () => {
   return (
     <div className="w-full flex flex-col items-center py-6">
       
-      {/* 1. 헤더: 양끝 정렬 레이아웃 */}
+      {/* 헤더 */}
       <div className="w-full max-w-[852px] flex items-center justify-between mb-[12px] px-6">
         <h2 className="text-[18px] font-bold text-gray-900 tracking-tight">{title}</h2>
         
-        {/* 버튼 컨테이너: 67x34px 고정 */}
+        {/* 버튼 컨테이너 */}
         <div className="flex items-center w-[67px] h-[34px] bg-white/50 backdrop-blur-sm rounded-full border border-gray-200 shadow-sm overflow-hidden">
           <button 
             onClick={() => { calendarRef.current?.getApi().prev(); updateTitle(); }} 
@@ -50,7 +52,7 @@ const CalendarWidget: React.FC = () => {
         </div>
       </div>
       
-      {/* 2. 캘린더 본체 */}
+      {/* 캘린더 본체 */}
       <div className="w-full max-w-[852px] bg-white rounded-[40px] px-[6px] py-[16px] shadow-[0_10px_40px_rgba(0,0,0,0.04)]">
         <div className="planner-calendar">
           <FullCalendar 
@@ -70,8 +72,8 @@ const CalendarWidget: React.FC = () => {
       </div>
 
       <style>{`
-        /* 테두리 및 기본 배경 제거 */
         .planner-calendar .fc { --fc-border-color: transparent !important; }
+
         .planner-calendar .fc-scrollgrid, 
         .planner-calendar .fc-scrollgrid table, 
         .planner-calendar .fc-daygrid-day, 
@@ -79,7 +81,6 @@ const CalendarWidget: React.FC = () => {
           border: none !important; 
         }
 
-        /* 셀 크기 및 호버 효과 */
         .planner-calendar .fc-daygrid-day-frame {
           min-height: 220px !important; 
           width: 120px !important;
@@ -91,13 +92,11 @@ const CalendarWidget: React.FC = () => {
           background-color: #FF673826 !important;
         }
 
-        /* 오늘 날짜 강조 완전 제거 */
         .planner-calendar .fc-day-today, 
         .planner-calendar .fc-day-today .fc-daygrid-day-number {
           background-color: transparent !important;
         }
 
-        /* 날짜 숫자 및 일정 텍스트 스타일 */
         .planner-calendar .fc-daygrid-day-top {
           flex-direction: row !important;
           justify-content: flex-start !important;
@@ -120,7 +119,16 @@ const CalendarWidget: React.FC = () => {
           font-weight: 500;
         }
 
-        /* 요일 헤더 */
+        /* 이전/다음 달 날짜 색상 고정 & 투명도 제거 */
+        .planner-calendar .fc-day-other .fc-daygrid-day-number {
+          color: #111111 !important;
+          opacity: 1 !important;
+        }
+        
+        .planner-calendar .fc-day-other .fc-event-title {
+          color: #999999 !important;
+        }
+
         .planner-calendar .fc-col-header-cell { 
           width: 120px !important;
           height: 120px !important;
