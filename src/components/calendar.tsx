@@ -39,13 +39,13 @@ const CalendarWidget: React.FC = () => {
         <div className="flex items-center w-[67px] h-[34px] bg-white/50 backdrop-blur-sm rounded-full border border-gray-200 shadow-sm overflow-hidden">
           <button 
             onClick={() => { calendarRef.current?.getApi().prev(); updateTitle(); }} 
-            className="w-[33.5px] h-full flex items-center justify-center text-[#FF6738] hover:bg-[#FF6738]/10 transition-colors"
+            className="w-[33.5px] h-full flex items-center justify-center text-[#FF6738]"
           >
             <ChevronLeft size={16} />
           </button>
           <button 
             onClick={() => { calendarRef.current?.getApi().next(); updateTitle(); }} 
-            className="w-[33.5px] h-full flex items-center justify-center text-[#FF6738] hover:bg-[#FF6738]/10 transition-colors"
+            className="w-[33.5px] h-full flex items-center justify-center text-[#FF6738]"
           >
             <ChevronRight size={16} />
           </button>
@@ -85,7 +85,6 @@ const CalendarWidget: React.FC = () => {
           min-height: 220px !important; 
           width: 120px !important;
           padding: 24px 4px !important;
-          cursor: pointer;
           transition: background-color 0.15s ease;
         }
         .planner-calendar .fc-daygrid-day-frame:hover {
@@ -117,6 +116,10 @@ const CalendarWidget: React.FC = () => {
           font-size: 13px;
           color: #505050;
           font-weight: 500;
+          cursor: pointer;
+        }
+        .planner-calendar .fc-event-title:hover {
+          color: #FF6738;
         }
 
         /* 이전/다음 달 날짜 색상 고정 & 투명도 제거 */
