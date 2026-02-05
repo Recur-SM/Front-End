@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Sidebar from './components/sidebar';
+import Sidebar from './components/Sidebar';
 
 function App() {
   const dummyStudents = ["김제현", "이슬아", "박지민", "최유진"];
