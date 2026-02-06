@@ -5,7 +5,7 @@ const HomePage = () => {
     
   return (
     <div>
-        <List title="오늘의 할일" />
+        <List title="오늘 할 일" />
     </div>
   )
 }
