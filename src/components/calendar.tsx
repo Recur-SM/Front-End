@@ -9,14 +9,7 @@ const CalendarWidget: React.FC = () => {
   const [title, setTitle] = useState('');
 
   const [events] = useState([
-    { title: '영어 과제', date: '2025-12-31' },
-    { title: '단어 시험', date: '2026-01-31' },
-    { title: '수학 오답노트', date: '2026-01-30' },
-    { title: '문법 강의', date: '2026-01-30' },
-    { title: '독서 2지문', date: '2026-01-01' },
-    { title: '수학 오답노트', date: '2026-02-06' },
-    { title: '단어 시험', date: '2026-02-06' },
-    { title: '시대 국어 복습', date: '2026-02-04' },
+    {/* 목데이터 자리(지우셔도 됩니다) */}
   ]);
 
   const updateTitle = () => {
