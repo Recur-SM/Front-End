@@ -24,9 +24,9 @@ const HomePage = () => {
 
         <div className="flex flex-col px-10 py-6 gap-4">
 
-        <div className="flex gap-1 px-3">
-          <div className="flex font-medium text-2xl">{selectedStudent}</div>
-          <div className="flex items-end text-sm ">학생</div>
+        <div className="flex gap-1.5 px-3">
+          <div className="flex font-bold text-2xl">{selectedStudent}</div>
+          <div className="flex items-end text-md ">학생</div>
         </div>
 
         <List title="오늘 할 일" type="할일" />
@@ -36,7 +36,7 @@ const HomePage = () => {
         <List title="주간 학습 리포트" type="주간"/>
 
         <div className="flex-col px-3 py-3">
-          <div className="flex font-medium text-lg">월간 계획표</div>
+          <div className="flex font-semibold text-lg">월간 계획표</div>
           <div className="flex font-normal text-xs">스케줄을 한 눈에 확인해보세요</div>
           <CalendarWidget />
         </div>

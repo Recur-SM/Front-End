@@ -49,9 +49,9 @@ const List: React.FC<ListProps> = ({ title, type }) => {
 
   return (
     <div className="bg-white rounded-md px-8 py-5">
-      <span className="flex text-xl font-medium pb-3 px-1">{title}</span>
+      <span className="flex text-lg font-semibold pb-3 px-1">{title}</span>
 
-      <div className="space-y-5">
+      <div className="space-y-3">
         {isFilterableType(type) && (
           <div className="flex gap-1">
             {TABS.map((tab) => (
@@ -65,7 +65,7 @@ const List: React.FC<ListProps> = ({ title, type }) => {
           </div>
         )}
 
-        <div className="grid grid-cols-5 gap-4 mb-2 px-1">
+        <div className="grid grid-cols-5 gap-4 px-1 pt-5">
           {LIST_TITLES[type].map((title) => (
             <div key={title} className="font-semibold text-sm text-gray-600">
               {title}
