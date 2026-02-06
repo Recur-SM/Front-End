@@ -15,7 +15,7 @@ const Topbar: React.FC = () => {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`
-                cursor-pointer text-[1.39vh] font-bold relative transition-all
+                cursor-pointer text-base relative transition-all
                 pb-[1.67vh] px-[0.21vw]
                 ${isSelected 
                   ? 'text-gray-900 border-b-[0.28vh] border-gray-800'
