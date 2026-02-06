@@ -5,7 +5,7 @@ import Topbar from "../components/Topbar";
 import CalendarWidget from "../components/calendar";
 
 const HomePage = () => {
-  const [selectedStudent, setSelectedStudent] = useState<string | null>("민수");
+  const [selectedStudent, setSelectedStudent] = useState<string | null>("김민수");
 
   return (
     <div className="flex">
@@ -29,11 +29,11 @@ const HomePage = () => {
           <div className="flex items-end text-sm">학생</div>
         </div>
 
-        <List title="오늘 할 일" />
+        <List title="오늘 할 일" type="할일" />
 
-        <List title="어제자 피드백" />
+        <List title="어제자 피드백" type="피드백" />
 
-        <List title="주간 학습 리포트" />
+        <List title="주간 학습 리포트" type="주간"/>
 
         <div className="flex-col px-3 py-3">
           <div className="flex font-medium text-lg">월간 계획표</div>
