@@ -1,12 +1,11 @@
+import Header from "../components/header";
 import Tabbar from "../components/tabbar";
 
 const HomePage = () => {
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-between bg-[#F7F7F7]">
-      {/* 중앙 테스트 문구 */}
-      <div className="text-xl font-bold text-gray-800">
-        test
-      </div>
+    <div className="relative flex flex-col items-center justify-between bg-[#F7F7F7]">
+      {/* 상단 헤더 컴포넌트 */}
+      <Header />
 
       {/* 하단 탭바 컴포넌트 */}
       <Tabbar />
