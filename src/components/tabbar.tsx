@@ -2,7 +2,7 @@ import BookIcon from "../assets/bookIcon.svg";
 import PencilIcon from "../assets/pencilIcon.svg";
 import ProfileIcon from "../assets/profileIcon.svg";
 
-const Tapbar: React.FC = () => {
+const Tabbar: React.FC = () => {
   return (
     <div className="w-[334px] h-[64px] px-[48px] flex justify-between items-end rounded-t-[32px] bg-white">
         <div className="mw-[51px] flex flex-col items-center">
@@ -21,4 +21,4 @@ const Tapbar: React.FC = () => {
   );
 };
 
-export default Tapbar;
+export default Tabbar;

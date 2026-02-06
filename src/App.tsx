@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
-import Tapbar from './components/tapbar';
+import Tabbar from './components/tabbar';
 
 function App() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/" element={<Tapbar />} />
+      <Route path="/" element={<Tabbar />} />
     </Routes>
   );
 }
