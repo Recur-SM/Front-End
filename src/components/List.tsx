@@ -18,7 +18,7 @@ const List: React.FC<ListProps> = ({ title }) => {
 
   return (
     <div className="bg-white rounded-md px-8 py-5">
-      <span className="flex text-2xl font-semibold pb-3 px-1">{title}</span>
+      <span className="flex text-xl font-semibold pb-3 px-1">{title}</span>
       <div className="space-y-5">
         <div className="flex gap-1">
           {TABS.map((tab) => (
