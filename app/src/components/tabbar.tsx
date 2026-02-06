@@ -6,7 +6,7 @@ import ProfileIcon from "../assets/profileIcon.svg";
 const Tabbar: React.FC = () => {
   return (
     /* 전체 바 */
-    <div className="w-[77.67vw] h-[6.87vh] px-[11.16vw] flex justify-between items-center rounded-t-[7.44vw] bg-white shadow-[0_-0.43vh_1.16vw_rgba(0,0,0,0.05)]">
+    <div className="w-[100vw] h-[6.87vh] px-[11.16vw] flex justify-between items-center rounded-t-[7.44vw] bg-white shadow-[0_-0.43vh_1.16vw_rgba(0,0,0,0.05)]">
         
         {/* 학습 관리 */}
         <div className="w-[11.86vw] flex flex-col items-center">
