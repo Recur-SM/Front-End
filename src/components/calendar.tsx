@@ -3,6 +3,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import koLocale from '@fullcalendar/core/locales/ko';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import './CalendarWidget.css';
 
 const CalendarWidget: React.FC = () => {
   const calendarRef = useRef<FullCalendar>(null);
@@ -63,105 +64,6 @@ const CalendarWidget: React.FC = () => {
           />
         </div>
       </div>
-
-      <style>{`
-        /* 전역 변수 설정 */
-        :root {
-          --fc-small-font-size: 0.68vw !important;
-          --fc-page-bg-color: transparent !important;
-        }
-
-        .planner-calendar .fc { 
-          --fc-border-color: transparent !important; 
-          font-size: 0.73vw;
-        }
-
-        .planner-calendar .fc-scrollgrid, 
-        .planner-calendar .fc-scrollgrid table, 
-        .planner-calendar .fc-daygrid-day, 
-        .planner-calendar .fc-col-header-cell { 
-          border: none !important; 
-        }
-
-        .planner-calendar .fc-daygrid-day-frame {
-          min-height: 20.37vh !important; 
-          width: 6.25vw !important;
-          padding: 2.22vh 0.21vw !important;
-          transition: background-color 0.15s ease;
-        }
-
-        .planner-calendar .fc-daygrid-day-frame:hover {
-          background-color: #FF673826 !important;
-        }
-
-        .planner-calendar .fc-day-today, 
-        .planner-calendar .fc-day-today .fc-daygrid-day-number {
-          background-color: transparent !important;
-        }
-
-        .planner-calendar .fc-daygrid-day-top {
-          flex-direction: row !important;
-          justify-content: flex-start !important;
-          margin-bottom: 0.74vh;
-        }
-
-        .planner-calendar .fc-daygrid-day-number {
-          font-size: 1.04vw;
-          font-weight: 600;
-          color: #111111;
-          padding: 0 0.42vw;
-        }
-
-        .planner-calendar .fc-daygrid-event {
-          background: transparent !important;
-          border: none !important;
-          padding: 0.19vh 0.42vw !important;
-          margin-top: 0.19vh !important;
-        }
-
-        .planner-calendar .fc-event-title {
-          font-size: 0.68vw;
-          color: #505050;
-          font-weight: 500;
-          cursor: pointer;
-        }
-
-        .planner-calendar .fc-event-title:hover {
-          color: #FF6738;
-        }
-
-        .planner-calendar .fc-day-other .fc-daygrid-day-number {
-          color: #111111 !important;
-          opacity: 1 !important;
-        }
-        
-        .planner-calendar .fc-day-other .fc-event-title {
-          color: #999999 !important;
-        }
-
-        .planner-calendar .fc-col-header-cell { 
-          width: 6.25vw !important;
-          height: 11.11vh !important;
-          vertical-align: middle !important;
-          font-size: 0.94vw; 
-          color: #505050; 
-          font-weight: 500;
-        }
-
-        .planner-calendar .fc-col-header-cell-cushion {
-          line-height: 11.11vh;
-        }
-
-        /* 캘린더 내부 숨겨진 px 요소들 대응 */
-        .planner-calendar .fc-daygrid-event-harness {
-          margin: 0.09vh 0 !important;
-        }
-        
-        .planner-calendar .fc-daygrid-more-link {
-          font-size: 0.63vw !important;
-          padding: 0.19vh 0.21vw !important;
-        }
-      `}</style>
     </div>
   );
 };
