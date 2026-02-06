@@ -27,7 +27,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           <div className="w-[1.45vw] h-[2.59vh] flex items-center justify-center overflow-hidden">
             <img src={profileIcon} alt="프로필" className="w-full h-full object-contain" />
           </div>
-          <span className="text-[1.25vw] font-bold text-[#111111] tracking-tight">{userName}</span>
+          <span className="text-[1.25vw] font-medium text-[#111111] tracking-tight">{userName}</span>
         </div>
         
         {role !== 'mentor' && (

@@ -24,9 +24,9 @@ const HomePage = () => {
 
         <div className="flex flex-col px-10 py-6 gap-4">
 
-        <div className="flex gap-1">
+        <div className="flex gap-1 px-3">
           <div className="flex font-medium text-2xl">{selectedStudent}</div>
-          <div className="flex items-end text-sm">학생</div>
+          <div className="flex items-end text-sm ">학생</div>
         </div>
 
         <List title="오늘 할 일" type="할일" />

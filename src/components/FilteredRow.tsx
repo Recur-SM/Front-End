@@ -27,7 +27,7 @@ const FilteredRow = ({ item }: { item: FilterableItem }) => {
             readOnly
             className="sr-only peer"
           />
-          <div className="w-4 h-4 rounded border border-[#505050] flex items-center justify-center peer-checked:bg-[#FF6738]">
+          <div className="w-4 h-4 rounded border border-[#505050] flex items-center justify-center peer-checked:bg-[#FF6738] peer-checked:border-none">
             {item.isFeedback && (
               <svg
                 className="w-3 h-3 text-white"

@@ -49,7 +49,7 @@ const List: React.FC<ListProps> = ({ title, type }) => {
 
   return (
     <div className="bg-white rounded-md px-8 py-5">
-      <span className="flex text-xl font-semibold pb-3 px-1">{title}</span>
+      <span className="flex text-xl font-medium pb-3 px-1">{title}</span>
 
       <div className="space-y-5">
         {isFilterableType(type) && (
