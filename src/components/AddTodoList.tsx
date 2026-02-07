@@ -8,6 +8,7 @@ const AddTodoList: React.FC = () => {
     type: "할일",
     isFeedback: false,
   });
+  const [todos, setTodos] = useState<TodoItem[]>([]);
   const [fileName, setFileName] = useState<string | null>(null);
 
   const handleAddTodo = () => {
@@ -38,7 +39,20 @@ const AddTodoList: React.FC = () => {
   const handleSubmit = () => {
     if (!newTodo.title || !newTodo.category) return;
 
+    const todo: TodoItem = {
+      id: Date.now(), // 임시 id
+      title: newTodo.title,
+      date: `${new Date().getMonth() + 1}월 ${new Date().getDate()}일`,
+      category: newTodo.category,
+      goal: newTodo.goal,
+      file: newTodo.file,
+      isFeedback: false,
+      type: "할일",
+    };
+
+    setTodos((prev) => [...prev, todo]);
     setNewTodo({ type: "할일", isFeedback: false });
+    setFileName(null);
     setIsAdding(false);
   };
 
@@ -54,11 +68,28 @@ const AddTodoList: React.FC = () => {
 
       <div className="border-t my-4" />
 
+      {todos.map((todo) => (
+        <div
+          key={todo.id}
+          className="grid grid-cols-7 gap-4 items-center py-1 pl-1 text-sm text-[#505050]"
+        >
+          <div>{todo.title}</div>
+          <div>{todo.date}</div>
+          <div>{todo.file ?? "-"}</div>
+          <div>{todo.goal ?? "-"}</div>
+          <div className="pl-6">
+            <input type="checkbox" checked={todo.isFeedback} disabled />
+          </div>
+          <div>{todo.category}</div>
+          <div />
+        </div>
+      ))}
+
       {isAdding && (
-        <div className="grid grid-cols-7 gap-4 items-center py-0.5 text-sm">
+        <div className="grid grid-cols-7 gap-4 items-center py-1 pl-1 text-sm">
           {/* 제목 */}
           <input
-            className="pl-1 bg-transparent outline-none"
+            className="bg-transparent outline-none"
             placeholder="제목"
             value={newTodo.title ?? ""}
             onChange={handleChange("title")}
