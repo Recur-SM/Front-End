@@ -78,10 +78,22 @@ const AddTodoList: React.FC = () => {
           <div>{todo.file ?? "-"}</div>
           <div>{todo.goal ?? "-"}</div>
           <div className="pl-6">
-            <input type="checkbox" checked={todo.isFeedback} disabled />
+            <input
+              type="checkbox"
+              className="w-4 h-4"
+              checked={todo.isFeedback}
+              disabled
+            />
           </div>
-          <div>{todo.category}</div>
-          <div />
+          <div className="flex">
+            <div
+              className={`px-3 py-2 rounded-full border border-[#FF6738]
+                text-xs text-[#FF6738]`}
+            >
+              {todo.category}
+            </div>
+            <div />
+          </div>
         </div>
       ))}
 
