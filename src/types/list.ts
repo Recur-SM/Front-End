@@ -3,6 +3,7 @@ import type { TabType } from "./filter";
 export const TODAYTASKTITLE = ["제목", "날짜", "학습지", "목표", "피드백 작성"];
 export const FEEDBACKTITLE = ["제목", "날짜", "학습지", "목표", "피드백"];
 export const WEEKLYTITLE = ["제목", "날짜", "멘토 총평", "이번주 잘한 점", "다음주 보완할 점"];
+export const ADDTODOTITLE = ["제목", "날짜", "학습지", "목표", "피드백 작성", "과목"];
 
 export type ListType = "할일" | "피드백" | "주간";
 
