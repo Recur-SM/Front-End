@@ -4,11 +4,11 @@ import type { TabType } from "../types/filter";
 
 const AddTodoList: React.FC = () => {
   const [isAdding, setIsAdding] = useState(false);
-
   const [newTodo, setNewTodo] = useState<Partial<TodoItem>>({
     type: "할일",
     isFeedback: false,
   });
+  const [fileName, setFileName] = useState<string | null>(null);
 
   const handleAddTodo = () => {
     setIsAdding(true);
@@ -22,6 +22,18 @@ const AddTodoList: React.FC = () => {
         [key]: e.target.value,
       }));
     };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setFileName(file.name);
+
+    setNewTodo((prev) => ({
+      ...prev,
+      file: file.name,
+    }));
+  };
 
   const handleSubmit = () => {
     if (!newTodo.title || !newTodo.category) return;
@@ -46,7 +58,7 @@ const AddTodoList: React.FC = () => {
         <div className="grid grid-cols-7 gap-4 items-center py-0.5 text-sm">
           {/* 제목 */}
           <input
-            className="bg-transparent outline-none"
+            className="pl-1 bg-transparent outline-none"
             placeholder="제목"
             value={newTodo.title ?? ""}
             onChange={handleChange("title")}
@@ -58,11 +70,20 @@ const AddTodoList: React.FC = () => {
           </span>
 
           {/* 파일 */}
-          <label className="flex items-center gap-1 text-sm cursor-pointer text-gray-500">
-            파일 첨부
-            <span>↗</span>
-            <input type="file" hidden />
-          </label>
+          <div className="flex flex-col">
+            <label className="flex items-center gap-1 text-sm cursor-pointer text-gray-500">
+              파일 첨부
+              <img src="/src/assets/arrow.svg" alt="arrow" />
+              <input type="file" hidden onChange={handleFileChange} />
+            </label>
+            <div>
+              {fileName && (
+                <div className="col-span-7 mt-2 text-sm text-gray-600">
+                  {fileName}
+                </div>
+              )}
+            </div>
+          </div>
 
           {/* 목표 */}
           <input
@@ -76,6 +97,7 @@ const AddTodoList: React.FC = () => {
           <div className="flex pl-6">
             <input
               type="checkbox"
+              disabled
               className="w-4 h-4"
               checked={newTodo.isFeedback}
               onChange={(e) =>
@@ -100,12 +122,12 @@ const AddTodoList: React.FC = () => {
                   }))
                 }
                 className={`px-3 py-2 rounded-full border border-[#505050]
-    text-xs text-[#505050]
-    whitespace-nowrap
-    flex items-center justify-center
+                text-xs text-[#505050]
+                whitespace-nowrap
+                flex items-center justify-center
             ${
               newTodo.category === subj
-                ? "bg-black text-white"
+                ? "border-[#FF6738] text-[#FF6738]"
                 : "text-gray-500"
             }`}
               >
@@ -115,16 +137,16 @@ const AddTodoList: React.FC = () => {
           </div>
 
           {/* 액션 */}
-          <div className="flex gap-1 pl-6">
+          <div className="flex gap-0.5 pl-7">
             <button
               onClick={() => setIsAdding(false)}
-              className="px-3 py-1 rounded-full border bg-[#E5E5EC]"
+              className="px-3 py-1 rounded-full border bg-[#F6F6F6] active:bg-[#FF67381A] active:text-[#FF6738]"
             >
               취소
             </button>
             <button
               onClick={handleSubmit}
-              className="px-3 py-1 rounded-full bg-[#E5E5EC]"
+              className="px-3 py-1 rounded-full border bg-[#F6F6F6] active:bg-[#FF67381A] active:text-[#FF6738]"
             >
               추가
             </button>
@@ -132,14 +154,12 @@ const AddTodoList: React.FC = () => {
         </div>
       )}
 
-      {!isAdding && (
-        <button
-          className="flex gap-2 items-center mt-2 text-[#505050]"
-          onClick={handleAddTodo}
-        >
-          <img src="/src/assets/plus.svg" alt="plus" width={10} />할 일
-        </button>
-      )}
+      <button
+        className="flex gap-2 py-3 items-center mt-2 text-[#505050]"
+        onClick={handleAddTodo}
+      >
+        <img src="/src/assets/plus.svg" alt="plus" width={10} />할 일
+      </button>
     </div>
   );
 };
