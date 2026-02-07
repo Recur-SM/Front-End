@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   LIST_TITLES,
   type FeedbackItem,
-  type ListProps,
   type TodoItem,
   type WeeklyReportItem,
 } from "../types/list";
@@ -30,7 +29,13 @@ const SOURCE_MAP: SourceMap = {
   주간: mockWeeklyReports,
 };
 
-const List: React.FC<ListProps> = ({ title, type }) => {
+interface ListProps {
+  title: string;
+  type: "할일" | "피드백" | "주간";
+  selectedDate?: string;
+}
+
+const List: React.FC<ListProps> = ({ title, type, selectedDate }) => {
   const [selectedTab, setSelectedTab] = useState<TabType>("전체");
 
   const isFilterableType = (
@@ -40,12 +45,14 @@ const List: React.FC<ListProps> = ({ title, type }) => {
   const sourceItems = SOURCE_MAP[type];
 
   const filteredItems = isFilterableType(type)
-    ? selectedTab === "전체"
-      ? sourceItems
-      : (sourceItems as FilterableItem[]).filter(
-          (item) => item.category === selectedTab,
-        )
-    : sourceItems;
+  ? (sourceItems as FilterableItem[])
+      .filter((item) =>
+        selectedDate ? item.date === selectedDate : true,
+      )
+      .filter((item) =>
+        selectedTab === "전체" ? true : item.category === selectedTab,
+      )
+  : sourceItems;
 
   return (
     <div className="bg-white rounded-md px-8 py-5">
