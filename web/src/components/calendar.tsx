@@ -3,7 +3,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import koLocale from '@fullcalendar/core/locales/ko';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import './CalendarWidget.css';
+import './calendar.css';
 
 const CalendarWidget: React.FC = () => {
   const calendarRef = useRef<FullCalendar>(null);
