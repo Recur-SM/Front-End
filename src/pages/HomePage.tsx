@@ -1,11 +1,14 @@
 import Sidebar from "../components/Sidebar";
-import List from "../components/List";
 import { useState } from "react";
 import Topbar from "../components/Topbar";
-import CalendarWidget from "../components/calendar";
+import StudyManagement from "../components/StudyManagement";
+import AssignmentManagement from "../components/AssignmentManagement";
 
 const HomePage = () => {
-  const [selectedStudent, setSelectedStudent] = useState<string | null>("김민수");
+  const [selectedStudent, setSelectedStudent] = useState<string | null>(
+    "김민수",
+  );
+  const [activeTab, setActiveTab] = useState("학습 관리");
 
   return (
     <div className="flex">
@@ -20,29 +23,20 @@ const HomePage = () => {
       />
 
       <div className="flex flex-col w-full">
-        <Topbar />
+        <Topbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
         <div className="flex flex-col px-10 py-6 gap-4">
+          <div className="flex gap-1.5 px-3">
+            <div className="flex font-bold text-2xl">{selectedStudent}</div>
+            <div className="flex items-end text-md ">학생</div>
+          </div>
 
-        <div className="flex gap-1.5 px-3">
-          <div className="flex font-bold text-2xl">{selectedStudent}</div>
-          <div className="flex items-end text-md ">학생</div>
-        </div>
-
-        <List title="오늘 할 일" type="할일" />
-
-        <List title="어제자 피드백" type="피드백" />
-
-        <List title="주간 학습 리포트" type="주간"/>
-
-        <div className="flex-col px-3 py-3">
-          <div className="flex font-semibold text-lg">월간 계획표</div>
-          <div className="flex font-normal text-xs">스케줄을 한 눈에 확인해보세요</div>
-          <CalendarWidget />
+          <main className="p-4">
+            {activeTab === "학습 관리" && <StudyManagement />}
+            {activeTab === "과제 관리" && <AssignmentManagement />}
+          </main>
         </div>
       </div>
-      </div>
-
     </div>
   );
 };

@@ -4,7 +4,7 @@ export const mockTodos: TodoItem[] = [
   {
     id: 1,
     title: "수학 오답 노트",
-    date: "1월 18일",
+    date: "2026-02-07",
     file: "수학_오답노트_양식_설스터디.pdf",
     goal: "오답노트 정리",
     isFeedback: true,
@@ -14,7 +14,7 @@ export const mockTodos: TodoItem[] = [
   {
     id: 2,
     title: "단어 읽기",
-    date: "1월 18일",
+    date: "2026-02-07",
     goal: "3개 이상 틀리지 않기",
     isFeedback: false,
     category: "영어",
@@ -23,7 +23,7 @@ export const mockTodos: TodoItem[] = [
   {
     id: 3,
     title: "강지연 국어",
-    date: "1월 18일",
+    date: "2026-02-07",
     goal: "",
     isFeedback: false,
     category: "국어",
@@ -32,7 +32,7 @@ export const mockTodos: TodoItem[] = [
   {
     id: 4,
     title: "문법 강의",
-    date: "1월 18일",
+    date: "2026-02-08",
     file: "언어(문법)_오답노트_설스터디.pdf",
     goal: "오답노트 정리",
     isFeedback: false,
@@ -42,7 +42,7 @@ export const mockTodos: TodoItem[] = [
   {
     id: 5,
     title: "문학인강",
-    date: "1월 18일",
+    date: "2026-02-08",
     file: "언어(문법)_오답노트_설스터디.pdf",
     goal: "오답노트 정리",
     isFeedback: false,
