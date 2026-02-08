@@ -15,6 +15,9 @@ interface ListProps {
 
 const List = ({ title, type, items = [] }: ListProps) => {
   const [isAdding, setIsAdding] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("전체");
+
+  const filters = ["전체", "국어", "영어", "수학"];
 
   return (
     <div className="w-full max-w-[430px] rounded-[24px]">
@@ -22,11 +25,18 @@ const List = ({ title, type, items = [] }: ListProps) => {
       {/* 헤더 */}
       <div className="flex justify-between items-center mb-[20px]">
         <h3 className="text-[20px] font-semibold text-[#111111]">{title}</h3>
-        {(type === 1 || type === 2) && (
+        {items.length > 0 && (type === 1 || type === 2) && (
           <div className="flex gap-[8px]">
-            {["전체", "국어", "영어", "수학"].map((f, i) => (
-              <span key={i} className={`px-[16px] py-[4px] rounded-full text-[13px] transition-all 
-                ${i === 0 ? 'border border-[#FF6738] text-[#FF6738]' : 'border border-[#F7F7F7] text-[#111111]'}`}>
+            {filters.map((f) => (
+              <span 
+                key={f} 
+                onClick={() => setActiveFilter(f)}
+                className={`px-[16px] py-[4px] rounded-full text-[13px] transition-all cursor-pointer
+                ${activeFilter === f 
+                  ? 'border border-[#FF6738] text-[#FF6738]'
+                  : 'border border-[#EEEEEE] text-[#111111]'
+                }`}
+              >
                 {f}
               </span>
             ))}
