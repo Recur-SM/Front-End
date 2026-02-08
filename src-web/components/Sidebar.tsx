@@ -22,6 +22,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     <aside className="w-[11vw] h-screen bg-white border-r border-gray-200 flex flex-col p-[2.22vh_1.25vw] sticky top-0 shadow-sm overflow-x-hidden">
       {/* 상단 프로필 영역 */}
       <div className="mb-[3.7vh]">
+
         <div className="text-xs text-[#FF6738] font-medium mb-[1.48vh]">설 스터디</div>
         <div className="flex items-center gap-[0.625vw] mb-[0.09vh]">
           <div className="w-[1.45vw] h-[2.59vh] flex items-center justify-center overflow-hidden">
@@ -43,12 +44,14 @@ const Sidebar: React.FC<SidebarProps> = ({
         {/* 학생 목록 영역 (멘토 전용) */}
         {role === 'mentor' && (
           <div className="mb-[4.44vh]">
+
             <div className="text-xs text-[#111111] font-semibold mb-[1.85vh] uppercase tracking-wider">학생 목록</div>
             <ul className="space-y-[1.4vh] pl-[0.41vw]"> 
               {students.map((student) => (
                 <li
                   key={student}
                   onClick={() => onStudentSelect?.(student)}
+
                   className={`cursor-pointer text-xs ${
                     student === selectedStudent
                       ? 'text-[#FF6738] font-bold'
@@ -64,6 +67,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
         {/* 메뉴 영역 */}
         <nav>
+
           <div className="text-xs text-[#111111] font-semibold mb-[1.85vh] uppercase tracking-wider">메뉴</div>
           <ul className="space-y-[1.4vh] pl-[0.41vw]"> 
             {['질의응답', '서울대생칼럼', '줌미팅 피드백', '약점 맞춤 솔루션'].map((menu) => (
