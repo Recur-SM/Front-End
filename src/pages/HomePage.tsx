@@ -25,7 +25,7 @@ const HomePage = () => {
       <div className="flex flex-col w-full">
         <Topbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        <div className="flex flex-col px-10 py-6 gap-4">
+        <div className="flex flex-col px-10 py-5 gap-1">
           <div className="flex gap-1.5 px-3">
             <div className="flex font-bold text-2xl">{selectedStudent}</div>
             <div className="flex items-end text-md ">학생</div>
