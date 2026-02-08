@@ -2,13 +2,20 @@ import { useState } from "react";
 import { ADDTODOTITLE, type TodoItem } from "../types/list";
 import type { TabType } from "../types/filter";
 
-const AddTodoList: React.FC = () => {
+interface AddTodoListProps {
+  selectedDate: string;
+  onAddTodo: (todo: TodoItem) => void;
+}
+
+const AddTodoList: React.FC<AddTodoListProps> = ({
+  selectedDate,
+  onAddTodo,
+}) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTodo, setNewTodo] = useState<Partial<TodoItem>>({
     type: "할일",
     isFeedback: false,
   });
-  const [todos, setTodos] = useState<TodoItem[]>([]);
   const [fileName, setFileName] = useState<string | null>(null);
 
   const handleAddTodo = () => {
@@ -42,7 +49,7 @@ const AddTodoList: React.FC = () => {
     const todo: TodoItem = {
       id: Date.now(), // 임시 id
       title: newTodo.title,
-      date: `${new Date().getMonth() + 1}월 ${new Date().getDate()}일`,
+      date: selectedDate,
       category: newTodo.category,
       goal: newTodo.goal,
       file: newTodo.file,
@@ -50,7 +57,7 @@ const AddTodoList: React.FC = () => {
       type: "할일",
     };
 
-    setTodos((prev) => [...prev, todo]);
+    onAddTodo(todo);
     setNewTodo({ type: "할일", isFeedback: false });
     setFileName(null);
     setIsAdding(false);
@@ -68,7 +75,7 @@ const AddTodoList: React.FC = () => {
 
       <div className="border-t my-4" />
 
-      {todos.map((todo) => (
+      {/* {todos.map((todo) => (
         <div
           key={todo.id}
           className="grid grid-cols-7 gap-4 items-center py-1 pl-1 text-sm text-[#505050]"
@@ -95,7 +102,7 @@ const AddTodoList: React.FC = () => {
             <div />
           </div>
         </div>
-      ))}
+      ))} */}
 
       {isAdding && (
         <div className="grid grid-cols-7 gap-4 items-center py-1 pl-1 text-sm">
