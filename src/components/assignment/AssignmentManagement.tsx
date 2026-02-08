@@ -6,7 +6,7 @@ import AddTodoList from "./AddTodoList";
 import type { TodoItem } from "../types/list";
 import PlannerBoard from "./PlannerBoard";
 import FeedbackBoard from "./FeedbackBoard";
-import AssignmentBoard from "./AssignmentBoard";
+import AssignmentBoard from "./assignment/AssignmentBoard";
 
 const AssignmentManagement = () => {
   const [selectedDay, setSelectedDay] = useState(new Date());

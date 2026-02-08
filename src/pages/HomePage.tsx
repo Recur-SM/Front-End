@@ -1,8 +1,8 @@
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/menu/Sidebar";
 import { useState } from "react";
-import Topbar from "../components/Topbar";
-import StudyManagement from "../components/StudyManagement";
-import AssignmentManagement from "../components/AssignmentManagement";
+import Topbar from "../components/menu/Topbar";
+import StudyManagement from "../components/learning/StudyManagement";
+import AssignmentManagement from "../components/assignment/AssignmentManagement";
 
 const HomePage = () => {
   const [selectedStudent, setSelectedStudent] = useState<string | null>(

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { ADDTODOTITLE, type TodoItem } from "../types/list";
-import type { TabType } from "../types/filter";
+import { ADDTODOTITLE, type TodoItem } from "../../types/list";
+import type { TabType } from "../../types/filter";
 
 const AddTodoList: React.FC = () => {
   const [isAdding, setIsAdding] = useState(false);

@@ -1,4 +1,4 @@
-import type { FilterableItem } from "../types/list";
+import type { FilterableItem } from "../../types/list";
 
 const FilteredRow = ({ item }: { item: FilterableItem }) => {
   return (
