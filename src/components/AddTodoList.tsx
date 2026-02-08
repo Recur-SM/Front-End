@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { ADDTODOTITLE, type TodoItem } from "../types/list";
 import type { TabType } from "../types/filter";
+import Arrow from "../assets/arrow.svg";
+import Plus from "../assets/plus.svg";
 
 interface AddTodoListProps {
   selectedDate: string;
@@ -123,7 +125,7 @@ const AddTodoList: React.FC<AddTodoListProps> = ({
           <div className="flex flex-col">
             <label className="flex items-center gap-1 text-sm cursor-pointer text-gray-500">
               파일 첨부
-              <img src="/src/assets/arrow.svg" alt="arrow" />
+              <img src={Arrow} alt="arrow" />
               <input type="file" hidden onChange={handleFileChange} />
             </label>
             <div>
@@ -208,7 +210,7 @@ const AddTodoList: React.FC<AddTodoListProps> = ({
         className="flex gap-2 py-3 items-center mt-2 text-[#505050]"
         onClick={handleAddTodo}
       >
-        <img src="/src/assets/plus.svg" alt="plus" width={10} />할 일
+        <img src={Plus} alt="plus" width={10} />할 일
       </button>
     </div>
   );
