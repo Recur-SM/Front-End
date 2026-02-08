@@ -9,7 +9,7 @@ export interface LoginResult {
   tokenType: string;
   userId: number;
   username: string;
-  role: string;
+  role: "MENTOR" | "MENTEE" | null;
 }
 
 export interface LoginResponse {
