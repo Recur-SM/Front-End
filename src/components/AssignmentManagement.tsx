@@ -24,7 +24,7 @@ const AssignmentManagement = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-center py-5">
+      <div className="flex justify-center py-3">
         <WeekCalendar today={selectedDay} onClickDay={handleClickDay} />
       </div>
 
@@ -39,13 +39,17 @@ const AssignmentManagement = () => {
         )}
       </div>
 
-      <div className="flex w-full gap-1">
-        <div className="w-1/3">
-          <PlannerBoard />
-        </div>
+      <div className="flex flex-col">
+        <span className="font-semibold text-lg py-3">플래너</span>
 
-        <div className="w-2/3">
-          <FeedbackBoard />
+        <div className="flex w-full gap-1">
+          <div className="w-1/3">
+            <PlannerBoard />
+          </div>
+
+          <div className="w-2/3">
+            <FeedbackBoard />
+          </div>
         </div>
       </div>
     </div>
