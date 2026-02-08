@@ -73,22 +73,33 @@ const List = ({ title, type, items = [] }: ListProps) => {
               <div className="grid grid-cols-[1.5fr_0.8fr_2.2fr] items-center py-1">
                 <input 
                   autoFocus
-                  className="w-[66px] h-[28px] bg-transparent border border-transparent rounded-[4px] px-2 text-[14px] text-[#111111] outline-none transition-all placeholder:text-[#999999] focus:border-[#D1D1D1]" 
+                  className="w-[66px] h-[28px] bg-transparent border border-transparent rounded-[4px] px-2 text-[14px] text-[#111111] outline-none transition-all placeholder:text-[#999999]" 
                   placeholder="제목" 
                 />
                 <span className="text-[14px] text-[#999999]">1월 8일</span>
                 <div className="flex justify-between items-center">
                   <div className="flex gap-1">
                     {["국", "영", "수"].map((sub) => (
-                      <button key={sub} className="w-[33px] h-[26px] rounded-full border border-[#D1D1D1] text-[12px] text-[#999999] flex items-center justify-center hover:border-[#FF6738] hover:text-[#FF6738]">
+                      <button key={sub} className="w-[33px] h-[26px] rounded-full border border-[#999999] text-[12px] text-[#999999] flex items-center justify-center hover:border-[#FF6738] hover:text-[#FF6738]">
                         {sub}
                       </button>
                     ))}
                   </div>
-                  <div className="flex items-center gap-2 text-gray-300 font-light text-[18px] mr-1">
-                    <span onClick={() => setIsAdding(false)} className="cursor-pointer hover:text-red-400 text-[14px]">✕</span>
-                    <span className="text-[#EEEEEE] text-[12px]">|</span>
-                    <span onClick={() => setIsAdding(false)} className="cursor-pointer hover:text-green-500">✓</span>
+                  {/* 컨트롤 버튼 영역 수정 */}
+                  <div className="flex items-center gap-2 font-light text-[18px] mr-1">
+                    <span 
+                        onClick={() => setIsAdding(false)} 
+                        className="cursor-pointer transition-colors text-[#999999] hover:text-[#FF6738] text-[14px]"
+                    >
+                        ✕
+                    </span>
+                    <span className="text-[#E5E5EC] text-[14px]">|</span>
+                    <span 
+                        onClick={() => setIsAdding(false)} 
+                        className="cursor-pointer transition-colors text-[#999999] hover:text-[#FF6738]"
+                    >
+                        ✓
+                    </span>
                   </div>
                 </div>
               </div>
@@ -99,7 +110,7 @@ const List = ({ title, type, items = [] }: ListProps) => {
                 onClick={() => setIsAdding(true)}
                 className="text-[#999999] text-[14px] mt-2 cursor-pointer hover:text-[#767676] flex items-center gap-1 w-fit"
               >
-                <span className="text-[18px]">+</span> 할일
+                <span className="text-[18px]">+</span> 할 일
               </div>
             )}
           </>
