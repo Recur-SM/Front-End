@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { TodoItem } from "../types/list";
+import type { TodoItem } from "../../types/list";
 
 interface AssignmentBoardProps {
   todos: TodoItem[];

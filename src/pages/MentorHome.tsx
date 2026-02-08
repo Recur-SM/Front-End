@@ -4,7 +4,7 @@ import Topbar from "../components/menu/Topbar";
 import StudyManagement from "../components/learning/StudyManagement";
 import AssignmentManagement from "../components/assignment/AssignmentManagement";
 
-const HomePage = () => {
+const MentorHome = () => {
   const [selectedStudent, setSelectedStudent] = useState<string | null>(
     "김민수",
   );
@@ -41,4 +41,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default MentorHome;

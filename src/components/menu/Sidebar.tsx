@@ -1,7 +1,7 @@
 import React from 'react';
 // 아이콘 파일 import
-import profileIcon from '../assets/profileIcon.svg';
-import logoutIcon from '../assets/logoutIcon.svg';
+import profileIcon from '../../assets/profileIcon.svg';
+import logoutIcon from '../../assets/logoutIcon.svg';
 
 interface SidebarProps {
   role: 'mentor' | 'mentee';

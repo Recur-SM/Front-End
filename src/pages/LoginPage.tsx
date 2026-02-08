@@ -1,35 +1,37 @@
 import { useState } from "react";
-import type { LoginRequest } from "../types/auth";
-import { mockLogin } from "../mocks/login.mock";
+import { login } from "../api/auth";
+import { useAuthStore } from "../stores/authStore";
 
 const LoginPage = () => {
-  const [userId, setUserId] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [idError, setIdError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const isActive = userId && password;
+  const isActive = username && password;
 
   const handleLogin = async () => {
-    const payload: LoginRequest = { userId, password };
-    setIdError("");
-    setPasswordError("");
+  try {
+    const res = await login({
+      username,
+      password,
+    });
 
-    try {
-      const res = await mockLogin(payload);
-      console.log("로그인 성공", res);
-    } catch (e) {
-      const message = (e as Error).message;
-
-      if (message === "USER_NOT_FOUND") {
+    if (res.isSuccess) {
+      useAuthStore.getState().setAccessToken(res.result.accessToken);
+      useAuthStore.getState().setRole(res.result.role);
+    }
+  } catch (e) {
+    if (e instanceof Error) {
+      if (e.message === "USER_NOT_FOUND") {
         setIdError("존재하지 않는 계정입니다.");
       }
-
-      if (message === "INVALID_PASSWORD") {
+      if (e.message === "INVALID_PASSWORD") {
         setPasswordError("올바른 비밀번호를 입력해주세요.");
       }
     }
-  };
+  }
+};
 
   return (
     <div className="flex flex-col h-screen justify-center items-center gap-12">
@@ -42,8 +44,8 @@ const LoginPage = () => {
               className={`h-12 rounded-lg px-4 border ${
                 idError ? "border-[#FF6738]" : "border-transparent"
               }`}
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             {idError && (
               <span className="text-sm text-[#FF6738] pl-1">{idError}</span>

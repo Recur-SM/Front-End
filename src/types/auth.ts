@@ -1,11 +1,20 @@
 export interface LoginRequest {
-  userId: string;
+  username: string;
   password: string;
 }
 
+export interface LoginResult {
+  accessToken: string;
+  refreshToken: string;
+  tokenType: string;
+  userId: number;
+  username: string;
+  role: "MENTOR" | "MENTEE" | null;
+}
+
 export interface LoginResponse {
-  id: number;
-  userId: string;
-  name: string;
-  token: string;
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: LoginResult;
 }

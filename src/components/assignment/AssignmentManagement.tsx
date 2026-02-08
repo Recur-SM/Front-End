@@ -1,9 +1,9 @@
 import { useState } from "react";
-import List from "./List";
+import List from "../List";
 import WeekCalendar from "./WeekCalendar";
-import { mockTodos } from "../mocks/list.mock";
 import AddTodoList from "./AddTodoList";
-import type { TodoItem } from "../types/list";
+import { mockTodos } from "../../mocks/list.mock";
+import type { TodoItem } from "../../types/list";
 import PlannerBoard from "./PlannerBoard";
 import FeedbackBoard from "./FeedbackBoard";
 import AssignmentBoard from "./AssignmentBoard";
