@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { ADDTODOTITLE, type TodoItem } from "../../types/list";
 import type { TabType } from "../../types/filter";
+import Arrow from "../../assets/arrow.svg";
+import Plus from "../../assets/plus.svg";
 
-const AddTodoList: React.FC = () => {
+interface AddTodoListProps {
+  selectedDate: string;
+  onAddTodo: (todo: TodoItem) => void;
+}
+
+const AddTodoList: React.FC<AddTodoListProps> = ({
+  selectedDate,
+  onAddTodo,
+}) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTodo, setNewTodo] = useState<Partial<TodoItem>>({
     type: "할일",
     isFeedback: false,
   });
-  const [todos, setTodos] = useState<TodoItem[]>([]);
   const [fileName, setFileName] = useState<string | null>(null);
 
   const handleAddTodo = () => {
@@ -42,7 +51,7 @@ const AddTodoList: React.FC = () => {
     const todo: TodoItem = {
       id: Date.now(), // 임시 id
       title: newTodo.title,
-      date: `${new Date().getMonth() + 1}월 ${new Date().getDate()}일`,
+      date: selectedDate,
       category: newTodo.category,
       goal: newTodo.goal,
       file: newTodo.file,
@@ -50,7 +59,7 @@ const AddTodoList: React.FC = () => {
       type: "할일",
     };
 
-    setTodos((prev) => [...prev, todo]);
+    onAddTodo(todo);
     setNewTodo({ type: "할일", isFeedback: false });
     setFileName(null);
     setIsAdding(false);
@@ -68,7 +77,7 @@ const AddTodoList: React.FC = () => {
 
       <div className="border-t my-4" />
 
-      {todos.map((todo) => (
+      {/* {todos.map((todo) => (
         <div
           key={todo.id}
           className="grid grid-cols-7 gap-4 items-center py-1 pl-1 text-sm text-[#505050]"
@@ -95,7 +104,7 @@ const AddTodoList: React.FC = () => {
             <div />
           </div>
         </div>
-      ))}
+      ))} */}
 
       {isAdding && (
         <div className="grid grid-cols-7 gap-4 items-center py-1 pl-1 text-sm">
@@ -116,7 +125,7 @@ const AddTodoList: React.FC = () => {
           <div className="flex flex-col">
             <label className="flex items-center gap-1 text-sm cursor-pointer text-gray-500">
               파일 첨부
-              <img src="/src/assets/arrow.svg" alt="arrow" />
+              <img src={Arrow} alt="arrow" />
               <input type="file" hidden onChange={handleFileChange} />
             </label>
             <div>
@@ -201,7 +210,7 @@ const AddTodoList: React.FC = () => {
         className="flex gap-2 py-3 items-center mt-2 text-[#505050]"
         onClick={handleAddTodo}
       >
-        <img src="/src/assets/plus.svg" alt="plus" width={10} />할 일
+        <img src={Plus} alt="plus" width={10} />할 일
       </button>
     </div>
   );
