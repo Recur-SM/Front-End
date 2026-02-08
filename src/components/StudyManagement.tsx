@@ -3,7 +3,7 @@ import CalendarWidget from "./calendar";
 
 const StudyManagement = () => {
   return (
-    <div>
+    <div className="flex flex-col space-y-3">
       <List title="오늘 할 일" type="할일" />
 
       <List title="어제자 피드백" type="피드백" />
