@@ -1,18 +1,4 @@
-<<<<<<< HEAD
-import React from 'react'
-import List from '../components/List'
 
-const HomePage = () => {
-    
-  return (
-    <div>
-        <List title="오늘 할 일" />
-    </div>
-  )
-}
-
-export default HomePage
-=======
 import Sidebar from "../components/Sidebar";
 import { useState } from "react";
 import Topbar from "../components/Topbar";
@@ -57,4 +43,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
->>>>>>> e4845d1d2761bc22bf059e99466ab1dd388d374f
