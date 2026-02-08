@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ArrowIcon from "../assets/arrow.svg";
+import DownloadIcon from "../assets/download.svg"; // 다운로드 아이콘 추가
 
 interface ListItem {
   title: string;
@@ -16,8 +18,29 @@ interface ListProps {
 const List = ({ title, type, items = [] }: ListProps) => {
   const [isAdding, setIsAdding] = useState(false);
   const [activeFilter, setActiveFilter] = useState("전체");
+  const navigate = useNavigate();
 
   const filters = ["전체", "국어", "영어", "수학"];
+
+  const handleTitleClick = (item: ListItem) => {
+    navigate('/assignment-detail', { state: { assignment: item } });
+  };
+
+  const handleDownload = (fileName: string) => {
+    const link = document.createElement('a');
+    link.href = `/files/${fileName}`;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const truncateFileName = (name: string) => {
+    if (name.length > 15) {
+      return name.substring(0, 13) + "...";
+    }
+    return name;
+  };  
 
   return (
     <div className="w-full max-w-[430px] rounded-[24px]">
@@ -47,7 +70,7 @@ const List = ({ title, type, items = [] }: ListProps) => {
       {/* 본문 영역 */}
       <div className="min-h-[100px] flex flex-col gap-1">
         
-        {/* 타입 1: 할 일 목록 및 추가*/}
+        {/* 타입 1: 할 일 목록 */}
         {type === 1 && (
           <>
             {items.length > 0 && (
@@ -58,14 +81,33 @@ const List = ({ title, type, items = [] }: ListProps) => {
 
             {items.map((item, idx) => (
               <div key={idx} className="grid grid-cols-[1.5fr_0.8fr_2.2fr] items-center text-[14px] py-[1px]">
-                <div className="flex items-center text-[#111111]">
-                    {item.title}
+                <div 
+                  onClick={() => handleTitleClick(item)}
+                  className="flex items-center text-[#111111] cursor-pointer hover:text-[#FF6738] transition-colors group"
+                >
+                    <span className="group-hover:underline">{item.title}</span>
                     <img src={ArrowIcon} className="w-[17px] h-[17px] mt-[2px]" alt="arrow" />
                 </div>
                 <span className="text-[#111111]">{item.date}</span>
-                <span className={item.file ? "text-[#FF6738] underline" : "text-[#999999]"}>
-                  {item.file ? `${item.file}` : "-"}
-                </span>
+                
+                {/* 학습지 영역 */}
+                <div className="flex items-center justify-between gap-2">
+                  <span className={item.file ? "text-[#FF6738] underline" : "text-[#999999]"}>
+                    {item.file ? truncateFileName(item.file) : "-"}
+                  </span>
+                  {item.file && (
+                    <img 
+                      src={DownloadIcon} 
+                      className="w-[18px] h-[18px] cursor-pointer hover:opacity-70 transition-opacity" 
+                      alt="download"
+                      style={{ filter: "invert(54%) sepia(87%) saturate(2321%) hue-rotate(336deg) brightness(101%) contrast(101%)" }} // 주황색(#FF6738) 강제 적용
+                      onClick={(e) => {
+                        e.stopPropagation(); 
+                        handleDownload(item.file!);
+                      }}
+                    />
+                  )}
+                </div>
               </div>
             ))}
 
@@ -85,21 +127,10 @@ const List = ({ title, type, items = [] }: ListProps) => {
                       </button>
                     ))}
                   </div>
-                  {/* 컨트롤 버튼 영역 수정 */}
                   <div className="flex items-center gap-2 font-light text-[18px] mr-1">
-                    <span 
-                        onClick={() => setIsAdding(false)} 
-                        className="cursor-pointer transition-colors text-[#999999] hover:text-[#FF6738] text-[14px]"
-                    >
-                        ✕
-                    </span>
+                    <span onClick={() => setIsAdding(false)} className="cursor-pointer transition-colors text-[#999999] hover:text-[#FF6738] text-[14px]">✕</span>
                     <span className="text-[#E5E5EC] text-[14px]">|</span>
-                    <span 
-                        onClick={() => setIsAdding(false)} 
-                        className="cursor-pointer transition-colors text-[#999999] hover:text-[#FF6738]"
-                    >
-                        ✓
-                    </span>
+                    <span onClick={() => setIsAdding(false)} className="cursor-pointer transition-colors text-[#999999] hover:text-[#FF6738]">✓</span>
                   </div>
                 </div>
               </div>
@@ -131,9 +162,20 @@ const List = ({ title, type, items = [] }: ListProps) => {
                         <img src={ArrowIcon} className="w-[17px] h-[17px] mt-[2px]" alt="arrow" />
                     </div>
                     <span className="text-[#111111]">{item.date}</span>
-                    <span className={item.file ? "text-[#FF6738] underline" : "text-[#999999]"}>
-                      {item.file ? `${item.file}` : "-"}
-                    </span>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className={item.file ? "text-[#FF6738] underline" : "text-[#999999]"}>
+                        {item.file ? truncateFileName(item.file) : "-"}
+                      </span>
+                      {item.file && (
+                        <img 
+                          src={DownloadIcon} 
+                          className="w-[18px] h-[18px] cursor-pointer hover:opacity-70 transition-opacity" 
+                          alt="download"
+                          style={{ filter: "invert(54%) sepia(87%) saturate(2321%) hue-rotate(336deg) brightness(101%) contrast(101%)" }} // 주황색(#FF6738) 강제 적용
+                          onClick={() => handleDownload(item.file!)}
+                        />
+                      )}
+                    </div>
                   </div>
                 ))}
               </>

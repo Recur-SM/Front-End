@@ -20,7 +20,7 @@ const HomePage = () => {
           type={2} 
           items={[
             { title: "수학 오답 노트", date: "2월 7일" },
-            { title: "단어 암기", date: "2월 7일", file: "단어_암기_노트.pdf" }
+            { title: "단어 암기", date: "2월 7일", file: "영어_단어_암기_노트_해설.pdf" }
           ]} 
         />
       </div>
