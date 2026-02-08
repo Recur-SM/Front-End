@@ -6,6 +6,7 @@ import AddTodoList from "./AddTodoList";
 import type { TodoItem } from "../types/list";
 import PlannerBoard from "./PlannerBoard";
 import FeedbackBoard from "./FeedbackBoard";
+import AssignmentBoard from "./AssignmentBoard";
 
 const AssignmentManagement = () => {
   const [selectedDay, setSelectedDay] = useState(new Date());
@@ -39,10 +40,10 @@ const AssignmentManagement = () => {
         )}
       </div>
 
-      <div className="flex flex-col">
-        <span className="font-semibold text-lg py-3">플래너</span>
+      <div className="flex flex-col py-2">
+        <span className="font-semibold text-lg">플래너</span>
 
-        <div className="flex w-full gap-1">
+        <div className="flex w-full gap-1 py-2">
           <div className="w-1/3">
             <PlannerBoard />
           </div>
@@ -50,6 +51,13 @@ const AssignmentManagement = () => {
           <div className="w-2/3">
             <FeedbackBoard />
           </div>
+        </div>
+
+        <div className="flex flex-col py-2">
+          {todosForDay.length === 0 && (
+            <span className="font-semibold text-lg">과제</span>
+          )}
+          <AssignmentBoard todos={todosForDay} />
         </div>
       </div>
     </div>
