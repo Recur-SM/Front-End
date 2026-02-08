@@ -9,6 +9,7 @@ export interface LoginResult {
   tokenType: string;
   userId: number;
   username: string;
+  role: string;
 }
 
 export interface LoginResponse {
