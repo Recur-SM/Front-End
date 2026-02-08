@@ -3,9 +3,9 @@ import ProfileIcon from "../assets/profileIcon.svg";
 
 const Header = () => {
   return (
-    <header className="fixed top-0 left-0 w-full h-[172px] pt-[54px] flex justify-center bg-white rounded-b-[32px] shadow-[0px_4px_6px_0px_rgba(0,0,0,0.03)] z-50">
+    <header className="fixed top-0 left-0 w-full h-[172px] pt-[54px] flex flex-col justify-center bg-white rounded-b-[32px] shadow-[0px_4px_6px_0px_rgba(0,0,0,0.03)] z-50">
+      
       <div className="w-full max-w-[430px] h-[56px] px-[24px] flex items-center justify-between">
-        
         <div className="flex-1 flex justify-start items-center">
           <div className="w-[40px] h-[40px] flex items-center justify-start">
             <img src={MenuIcon} alt="메뉴" className="w-[20px] h-[20px] object-contain cursor-pointer" />
@@ -26,7 +26,6 @@ const Header = () => {
             </div>
           </div>
         </div>
-
       </div>
     </header>
   );
