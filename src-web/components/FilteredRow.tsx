@@ -1,11 +1,13 @@
 import type { FilterableItem } from "../types/list";
+import Arrow from "../assets/arrow.svg";
+import Download from "../assets/download.svg";
 
 const FilteredRow = ({ item }: { item: FilterableItem }) => {
   return (
     <div className="grid grid-cols-5 gap-4 items-center text-xs">
       <div className="flex gap-3 cursor-pointer">
         <div>{item.title}</div>
-        <img src="/src/assets/arrow.svg" alt="arrow" />
+        <img src={Arrow} alt="arrow" />
       </div>
 
       <div>{item.date}</div>
@@ -13,7 +15,7 @@ const FilteredRow = ({ item }: { item: FilterableItem }) => {
       <div className="flex gap-3 cursor-pointer">
         <div>{item.file || "-"}</div>
         {item.file && (
-          <img src="/src/assets/download.svg" alt="download" />
+          <img src={Download} alt="download" />
         )}
       </div>
 
