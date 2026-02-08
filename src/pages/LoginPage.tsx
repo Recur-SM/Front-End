@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { login } from "../api/auth";
+import { useAuthStore } from "../stores/authStore";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -10,7 +11,6 @@ const LoginPage = () => {
   const isActive = username && password;
 
   const handleLogin = async () => {
-    console.log(import.meta.env.VITE_API_BASE_URL);
   try {
     const res = await login({
       username,
@@ -18,8 +18,8 @@ const LoginPage = () => {
     });
 
     if (res.isSuccess) {
-      localStorage.setItem("accessToken", res.result.accessToken);
-      localStorage.setItem("refreshToken", res.result.refreshToken);
+      useAuthStore.getState().setAccessToken(res.result.accessToken);
+      useAuthStore.getState().setRole(res.result.role);
     }
   } catch (e) {
     if (e instanceof Error) {
