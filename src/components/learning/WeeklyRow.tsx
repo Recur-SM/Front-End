@@ -1,4 +1,4 @@
-import type { WeeklyReportItem } from "../types/list";
+import type { WeeklyReportItem } from "../../types/list";
 
 const WeeklyRow = ({ item }: { item: WeeklyReportItem }) => {
   return (

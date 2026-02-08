@@ -1,6 +1,6 @@
-import type { FilterableItem } from "../types/list";
-import Arrow from "../assets/arrow.svg";
-import Download from "../assets/download.svg";
+import type { FilterableItem } from "../../types/list";
+import Arrow from "../../assets/arrow.svg";
+import Download from "../../assets/download.svg";
 
 const FilteredRow = ({ item }: { item: FilterableItem }) => {
   return (

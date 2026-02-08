@@ -12,8 +12,8 @@ import {
   mockFeedbacks,
   mockWeeklyReports,
 } from "../mocks/list.mock";
-import FilteredRow from "./FilteredRow";
-import WeeklyRow from "./WeeklyRow";
+import FilteredRow from "./learning/FilteredRow";
+import WeeklyRow from "./learning/WeeklyRow";
 
 type FilterableItem = TodoItem | FeedbackItem;
 
