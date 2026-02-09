@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import BackIcon from "../assets/backIcon.svg";
+import TimerItem from "../components/timer";
 
 const Record = () => {
     const navigate = useNavigate();
@@ -17,7 +18,11 @@ const Record = () => {
 
             {/* 오늘 할 일 리스트 */}
             <div className="w-[384px] min-h-[122px] p-[12px] rounded-[8px] bg-white shadow-[0px_4px_6px_0px_rgba(0,0,0,0.03)]">
-                <h3 className="text-[20px] font-semibold text-[#111111]">1월 8일 할 일</h3>
+                <h3 className="text-[20px] font-semibold text-[#111111] mb-[24px]">1월 8일 할 일</h3>
+                    <div className="flex flex-col">
+                        <TimerItem title="수학 오답 노트" />
+                        <TimerItem title="영어 단어 암기" />
+                    </div>
             </div>
         </div>
     );
