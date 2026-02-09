@@ -4,6 +4,7 @@ import type { AddFeedbackRequest } from "../../types/feedback";
 import { useMenteeStore } from "../../stores/menteeStroe";
 import { useAuthStore } from "../../stores/authStore";
 import { addFeedback, getFeedbackList } from "../../api/feedback";
+import { useScrollStore } from "../../stores/scrollStore";
 
 interface AssignmentBoardProps {
   todos: TodoItem[];
@@ -16,6 +17,65 @@ const AssignmentBoard = ({ todos }: AssignmentBoardProps) => {
   const [feedbackIds, setFeedbackIds] = useState<Record<number, number>>({});
   const { id } = useAuthStore();
   const textareaRefs = useRef<Record<number, HTMLTextAreaElement | null>>({});
+  const todoRefs = useRef<Record<number, HTMLDivElement | null>>({});
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { targetTaskId, clearTarget } = useScrollStore();
+
+  useEffect(() => {
+    // todos가 로드되고 targetTaskId가 있을 때만 스크롤
+    if (!targetTaskId && containerRef.current) {
+      containerRef.current.scrollIntoView({
+        behavior: "instant",
+        block: "start",
+      });
+    }
+
+    if (targetTaskId && todos.length > 0 && !isLoading) {
+      // 약간의 delay로 ref 연결 대기
+      const timeoutId = setTimeout(() => {
+        requestAnimationFrame(() => {
+          const element = todoRefs.current[targetTaskId];
+
+          if (element) {
+            element.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+
+            element.classList.add("highlight-task");
+            setTimeout(() => {
+              element.classList.remove("highlight-task");
+              clearTarget();
+            }, 2000);
+          } else {
+            // 한 번 더 재시도
+            setTimeout(() => {
+              const retryEl = todoRefs.current[targetTaskId];
+              if (retryEl) {
+                retryEl.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
+                retryEl.classList.add("highlight-task");
+                setTimeout(() => {
+                  retryEl.classList.remove("highlight-task");
+                  clearTarget();
+                }, 2000);
+              } else {
+                clearTarget();
+              }
+            }, 200);
+          }
+        });
+      }, 100);
+
+      return () => {
+        clearTimeout(timeoutId);
+        clearTarget();
+      };
+    }
+  }, [targetTaskId, todos, isLoading, clearTarget]);
 
   useEffect(() => {
     let isMounted = true;
@@ -29,14 +89,16 @@ const AssignmentBoard = ({ todos }: AssignmentBoardProps) => {
       try {
         // 멘티의 모든 피드백 목록 조회
         const feedbackList = await getFeedbackList(selectedMentee.menteeId);
-        
+
         const newValues: Record<number, string> = {};
         const newFeedbackIds: Record<number, number> = {};
 
         if (feedbackList?.result?.feedbacks) {
           feedbackList.result.feedbacks.forEach((feedback) => {
-            const matchedTodo = todos.find(todo => todo.id === feedback.taskId);
-            
+            const matchedTodo = todos.find(
+              (todo) => todo.id === feedback.taskId,
+            );
+
             if (matchedTodo && feedback.detailContent) {
               newValues[matchedTodo.id] = feedback.detailContent;
               newFeedbackIds[matchedTodo.id] = feedback.feedbackId;
@@ -138,7 +200,13 @@ const AssignmentBoard = ({ todos }: AssignmentBoardProps) => {
         const value = values[todo.id] ?? "";
 
         return (
-          <div key={todo.id}>
+          <div
+            key={todo.id}
+            ref={(el) => {
+              todoRefs.current[todo.id] = el;
+            }}
+            className="transition-all duration-300"
+          >
             <span className="font-semibold text-lg">{todo.title}</span>
 
             <div className="flex w-full gap-1 py-2">
