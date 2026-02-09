@@ -20,7 +20,7 @@ const AssignmentManagementPage = () => {
                 />
             </div>
 
-            <div className="w-[382px] h-[291px] flex justify-between items-center"
+            <div className="w-[382px] h-[291px] flex justify-between items-center"></div>
         </div>
     );
 };
