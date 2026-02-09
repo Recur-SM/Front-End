@@ -1,10 +1,9 @@
 import React from "react";
-// 아이콘 파일 import
 import profileIcon from "../../assets/profileIcon.svg";
 import logoutIcon from "../../assets/logoutIcon.svg";
-import { logout } from "../../api/logout";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../stores/authStore";
+import { logout } from "../../api/auth";
 
 interface SidebarProps {
   role: "mentor" | "mentee";
