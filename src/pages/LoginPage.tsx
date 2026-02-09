@@ -18,6 +18,7 @@ const LoginPage = () => {
       if (res.isSuccess) {
         useAuthStore.getState().setAccessToken(res.result.accessToken);
         useAuthStore.getState().setRole(res.result.role);
+        useAuthStore.getState().setId(res.result.userId);
       }
     } catch (e) {
       if (e instanceof Error) {
