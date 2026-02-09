@@ -5,11 +5,16 @@ import StudyManagement from "../components/learning/StudyManagement";
 import AssignmentManagement from "../components/assignment/AssignmentManagement";
 import { getMentees } from "../api/mentee";
 import { useMenteeStore } from "../stores/menteeStroe";
+import type { TodoItem } from "../types/list";
+import { getTasks } from "../api/task";
+import type { TabType } from "../types/filter";
 
 const MentorHome = () => {
   const [activeTab, setActiveTab] = useState("학습 관리");
   const { mentees, selectedMentee, setMentees, setSelectedMentee } =
     useMenteeStore();
+      const [tasks, setTasks] = useState<TodoItem[]>([]);
+
 
   useEffect(() => {
     const fetchMentorData = async () => {
@@ -21,6 +26,32 @@ const MentorHome = () => {
     };
     fetchMentorData();
   }, []);
+
+  useEffect(() => {
+    if (!selectedMentee) return;
+    const fetchTasks = async () => {
+      const today = new Date().toISOString().split("T")[0];
+      try {
+        const res = await getTasks(selectedMentee.menteeId, today);
+        const fetchedTodos: TodoItem[] = res.result.tasks
+          .filter((t) => t.taskType === "ADDITIONAL")
+          .map((t) => ({
+            id: t.taskId,
+            title: t.taskName,
+            date: t.taskDate,
+            goal: t.taskGoal,
+            file: t.pdfFileUrl,
+             category: t.subjectName as TabType,
+            type: "할일",
+            isFeedback: t.hasFeedback,
+          }));
+        setTasks(fetchedTodos);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchTasks();
+  }, [selectedMentee]);
 
   return (
     <div className="flex">
@@ -47,8 +78,12 @@ const MentorHome = () => {
           </div>
 
           <main className="p-4">
-            {activeTab === "학습 관리" && <StudyManagement />}
-            {activeTab === "과제 관리" && <AssignmentManagement />}
+            {activeTab === "학습 관리" && (
+              <StudyManagement tasks={tasks} />
+            )}
+            {activeTab === "과제 관리" && (
+              <AssignmentManagement tasks={tasks} />
+            )}
           </main>
         </div>
       </div>
@@ -57,4 +92,3 @@ const MentorHome = () => {
 };
 
 export default MentorHome;
-
