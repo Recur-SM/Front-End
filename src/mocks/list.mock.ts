@@ -107,13 +107,11 @@ export const updateMockFeedback = async ({
   id,
   value,
 }: {
-
   id: number;
   value: boolean;
 }): Promise<TodoItem> => {
   await new Promise((resolve) => setTimeout(resolve, 300));
   const todo = mockTodos.find((t) => t.id === id);
-
   if (!todo) throw new Error("Todo not found");
 
   return { ...todo, isFeedback: value };

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { ADDTODOTITLE, type TodoItem } from "../types/list";
-import type { TabType } from "../types/filter";
-import Arrow from "../assets/arrow.svg";
-import Plus from "../assets/plus.svg";
+import { ADDTODOTITLE, type TodoItem } from "../../types/list";
+import type { TabType } from "../../types/filter";
+import Arrow from "../../assets/arrow.svg";
+import Plus from "../../assets/plus.svg";
 
 interface AddTodoListProps {
   selectedDate: string;
