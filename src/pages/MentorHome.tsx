@@ -1,21 +1,37 @@
 import Sidebar from "../components/menu/Sidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Topbar from "../components/menu/Topbar";
 import StudyManagement from "../components/learning/StudyManagement";
 import AssignmentManagement from "../components/assignment/AssignmentManagement";
+import type { MenteeResponse } from "../types/mentee";
+import { getMentees } from "../api/mentee";
 
 const MentorHome = () => {
-  const [selectedStudent, setSelectedStudent] = useState<string | null>(
-    "김민수",
-  );
+  const [selectedStudent, setSelectedStudent] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("학습 관리");
+  const [students, setStudents] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchMenteeData = async () => {
+      try {
+        const res: MenteeResponse = await getMentees();
+        const menteeNames = res.result.mentees.map((m) => m.menteeName);
+        setStudents(menteeNames);
+        if (menteeNames.length > 0) setSelectedStudent(menteeNames[0]); // 초기 선택
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchMenteeData();
+  }, []);
 
   return (
     <div className="flex">
       <Sidebar
         role="mentor"
         userName="현지현"
-        students={["김민수", "이지은", "장서연"]}
+        students={students}
         selectedStudent={selectedStudent}
         onStudentSelect={(name) => {
           setSelectedStudent(name);
