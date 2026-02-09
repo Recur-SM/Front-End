@@ -1,17 +1,17 @@
-
 interface TopbarProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  activeTab: "학습 관리" | "과제 관리";
+  setActiveTab: (tab: "학습 관리" | "과제 관리") => void;
 }
 
 const Topbar: React.FC<TopbarProps> = ({ activeTab, setActiveTab }) => {
+  const tabs = ["학습 관리", "과제 관리"] as const;
 
   return (
     <>
       <header className="h-[7.04vh] w-full relative flex items-end justify-center">
         {/* 탭 메뉴 */}
         <nav className="flex gap-[3.33vw] h-full items-end">
-          {["학습 관리", "과제 관리"].map((tab) => {
+          {tabs.map((tab) => {
             const isSelected = activeTab === tab;
 
             return (
