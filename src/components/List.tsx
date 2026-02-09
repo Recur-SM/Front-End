@@ -1,13 +1,13 @@
 import FilterButton from "./FilterButton";
 import { TABS, type TabType } from "../types/filter";
 import { useState } from "react";
-import { LIST_TITLES, type TodoItem } from "../types/list";
+import { LIST_TITLES, type ListItem } from "../types/list";
 import FilteredRow from "./learning/FilteredRow";
 
 interface ListProps {
   title: string;
   type: "할일" | "피드백";
-  tasks: TodoItem[];
+  tasks: ListItem[];
 }
 
 const List: React.FC<ListProps> = ({ title, type, tasks }) => {
