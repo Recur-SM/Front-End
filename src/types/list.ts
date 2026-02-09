@@ -4,6 +4,18 @@ export const TODAYTASKTITLE = ["제목", "날짜", "학습지", "목표", "피�
 export const FEEDBACKTITLE = ["제목", "날짜", "학습지", "목표", "피드백"];
 export const ADDTODOTITLE = ["제목", "날짜", "학습지", "목표", "피드백 작성", "과목"];
 
+export const SubjectMap: Record<string, string> = {
+    국어: "KOR",
+    영어: "ENG",
+    수학: "MATH",
+};
+
+export const SubjectIdMap: Record<string, number> = {
+    국어: 1,
+    영어: 2,
+    수학: 3,
+};
+
 export type ListType = "할일" | "피드백";
 
 export type FilterableItem = TodoItem | FeedbackItem;
