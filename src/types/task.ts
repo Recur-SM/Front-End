@@ -47,3 +47,32 @@ export interface FileUploadResponse {
   message: string;
   result: FileUploadResult;
 }
+
+export interface Task {
+  taskId: number;
+  subjectName: string;
+  subjectCode: string;
+  taskName: string;
+  taskDate: string;
+  taskGoal: string;
+  taskType: "FIXED" | "ADDITIONAL";
+  learningMaterialType: "COLUMN" | "PDF";
+  pdfFileUrl: string;
+  columnContent: string;
+  comment: string;
+  isCompleted: boolean;
+  studyTime: number;
+  completionPhotoUrl: string;
+  completedAt: string;
+  hasFeedback: boolean;
+}
+
+export interface TaskResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
+    plannerDate: string;
+    tasks: Task[];
+  };
+}
