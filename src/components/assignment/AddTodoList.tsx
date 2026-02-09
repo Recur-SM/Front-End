@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type TodoItem } from "../../types/list";
+import { SubjectMap, type TodoItem } from "../../types/list";
 import type { TabType } from "../../types/filter";
 import Arrow from "../../assets/arrow.svg";
 import Plus from "../../assets/plus.svg";
@@ -25,12 +25,6 @@ const AddTodoList: React.FC<AddTodoListProps> = ({
   const [fileName, setFileName] = useState<string | null>(null);
   const { selectedMentee } = useMenteeStore();
   const { id } = useAuthStore();
-
-  const subjectMap: Record<string, string> = {
-    국어: "KOR",
-    영어: "ENG",
-    수학: "MATH",
-  };
 
   const handleAddTodo = () => {
     setIsAdding(true);
@@ -61,7 +55,7 @@ const AddTodoList: React.FC<AddTodoListProps> = ({
     try {
       if (!newTodo.title || !newTodo.category) return;
 
-      const taskCode = subjectMap[newTodo.category];
+      const taskCode = SubjectMap[newTodo.category];
 
       const todo: AddTaskRequest = {
         menteeId: selectedMentee!.menteeId,
