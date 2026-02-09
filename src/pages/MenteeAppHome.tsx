@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom'; // Outlet 추가
 import { useState } from 'react';
 
 import Header from "../../src-app/components/header";
@@ -13,37 +13,52 @@ import AssignmentDetail from '../../src-app/pages/AssignmentDetail';
 
 function MenteeHome() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  
-  // 과제 세부 페이지 -> 헤더 변경
-  const isDetailPage = location.pathname === '/mentee-a/assignment-detail';
 
-  return (
-    <div className="relative min-h-screen bg-[#F7F7F7] w-full">
-
-      {/* 상단 헤더 */}
+  // 헤더 + 탭바 포함
+  const MainLayout = () => (
+    <>
       <div className="fixed top-0 z-50 w-full max-w-[430px]">
-        {isDetailPage ? (
-          <DetailHeader />
-        ) : (
-          <Header onMenuClick={() => setIsSidebarOpen(true)} /> // 기본 페이지일 때
-        )}
+        <Header onMenuClick={() => setIsSidebarOpen(true)} />
       </div>
-
-      {/* 메인 콘텐츠 */}
       <main className="w-full max-w-[430px] pt-[105px] pb-[100px] px-[24px] flex-1 overflow-y-auto">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/assignment-management" element={<AssignmentManagement />} />
-          <Route path="/record" element={<Record />} />
-          <Route path="/assignment-detail" element={<AssignmentDetail />} />
-        </Routes>
+        <Outlet />
       </main>
-
-      {/* 하단 탭바 */}
       <div className="fixed bottom-0 z-50 w-full max-w-[430px]">
         <Tabbar />
       </div>
+    </>
+  );
+
+  // 상세 헤더만, 탭바 없음
+  const DetailLayout = () => (
+    <>
+      <div className="fixed top-0 z-50 w-full max-w-[430px]">
+        <DetailHeader />
+      </div>
+      <main className="w-full max-w-[430px] pt-[105px] pb-0 px-[24px] flex-1 overflow-y-auto">
+        <Outlet />
+      </main>
+    </>
+  );
+
+  return (
+    <div className="relative min-h-screen bg-[#F7F7F7] w-full flex flex-col items-center">
+      <Routes>
+        {/* 헤더/탭바 제외 */}
+        <Route path="/login" element={<LoginPage />} />
+
+        {/* 헤더 + 탭바 있음 */}
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/assignment-management" element={<AssignmentManagement />} />
+          <Route path="/record" element={<Record />} />
+        </Route>
+
+        {/* 상세 헤더만 있음 */}
+        <Route element={<DetailLayout />}>
+          <Route path="/assignment-detail" element={<AssignmentDetail />} />
+        </Route>
+      </Routes>
 
       {/* 사이드바 */}
       <Sidebar 
