@@ -2,10 +2,22 @@ import type { ListItem } from "../../types/list";
 import Arrow from "../../assets/arrow.svg";
 import Download from "../../assets/download.svg";
 
-const FilteredRow = ({ item }: { item: ListItem }) => {
+interface FilteredRowProps {
+  item: ListItem;
+  onClick?: () => void;
+}
+
+const FilteredRow = ({ item, onClick }: FilteredRowProps) => {
+  const handleTaskClick = () => {
+    onClick?.();
+  };
+
   return (
     <div className="grid grid-cols-5 gap-4 items-center text-xs">
-      <div className="flex gap-3 cursor-pointer">
+      <div
+        className="flex gap-3 cursor-pointer"
+        onClick={() => handleTaskClick()}
+      >
         <div>{item.title}</div>
         <img src={Arrow} alt="arrow" />
       </div>

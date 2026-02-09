@@ -8,9 +8,10 @@ interface ListProps {
   title: string;
   type: "할일" | "피드백";
   tasks: ListItem[];
+  onTaskClick?: (taskId: number) => void;
 }
 
-const List: React.FC<ListProps> = ({ title, type, tasks }) => {
+const List: React.FC<ListProps> = ({ title, type, tasks, onTaskClick }) => {
   const [selectedTab, setSelectedTab] = useState<TabType>("전체");
   const filteredTasks = tasks.filter((t) =>
     selectedTab === "전체" ? true : t.category === selectedTab,
@@ -44,7 +45,11 @@ const List: React.FC<ListProps> = ({ title, type, tasks }) => {
 
       <div className="space-y-4 px-1">
         {filteredTasks.map((item) => (
-          <FilteredRow key={item.id} item={item} />
+          <FilteredRow
+            key={item.id}
+            item={item}
+            onClick={() => onTaskClick?.(item.id)}
+          />
         ))}
       </div>
     </div>
