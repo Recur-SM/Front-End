@@ -1,9 +1,18 @@
 import { api } from "./axios";
-import type { AddTaskRequest, AddTaskResponse, FileUploadResponse, TaskDetailResponse, TaskResponse } from "../types/task";
+import type {
+  AddTaskRequest,
+  AddTaskResponse,
+  FileUploadResponse,
+  MonthlyTaskResponse,
+  TaskDetailResponse,
+  TaskResponse,
+} from "../types/task";
 
-export async function addTask(payload: AddTaskRequest): Promise<AddTaskResponse> {
-    const res = await api.post<AddTaskResponse>("/tasks", payload);
-    return res.data;
+export async function addTask(
+  payload: AddTaskRequest,
+): Promise<AddTaskResponse> {
+  const res = await api.post<AddTaskResponse>("/tasks", payload);
+  return res.data;
 }
 
 export async function fileUpload(
@@ -21,20 +30,31 @@ export async function fileUpload(
 
 export async function getTasks(
   mentee_id: number,
-  date: string
+  date: string,
 ): Promise<TaskResponse> {
-  const res = await api.get('/tasks', {
+  const res = await api.get("/tasks", {
     params: { mentee_id, date },
   });
   return res.data;
 }
 
 export async function getTaskDetail(
-    task_id: number,
-    mentee_id: number,
+  task_id: number,
+  mentee_id: number,
 ): Promise<TaskDetailResponse> {
-    const res = await api.get(`/tasks/${task_id}`, {
-        params: { mentee_id: mentee_id }
-    });
-    return res.data;
+  const res = await api.get(`/tasks/${task_id}`, {
+    params: { mentee_id: mentee_id },
+  });
+  return res.data;
+}
+
+export async function getMonthlyTask(
+  mentee_id: number,
+  year: number,
+  month: number,
+): Promise<MonthlyTaskResponse> {
+  const res = await api.get("/tasks/monthly", {
+    params: { mentee_id: mentee_id, year: year, month: month },
+  });
+  return res.data;
 }
