@@ -33,7 +33,7 @@ const Record = () => {
         <div className="webapp-root w-full min-h-screen py-[32px] flex flex-col items-center gap-[8px]">
             <div className="w-[384px] flex justify-end px-[4px]">
                 <div 
-                    onClick={() => navigate("/mentee-a/assignment-management")}
+                    onClick={() => navigate("/mentee/assignment-management")}
                     className="w-[89px] h-[30px] rounded-[12px] flex justify-center items-center gap-[4px] border border-[#E5E5EC] text-[12px] text-[#767676] bg-white cursor-pointer active:bg-gray-50"
                 >
                     <img src={BackIcon} alt="돌아가기" className="w-[20px] h-[20px]" />

@@ -12,12 +12,13 @@ const AppLayout = () => {
   const isLoginPage = location.pathname === "/login";
 
   const { accessToken } = useAuthStore();
+  const handleMenuClick = () => {};
 
   return (
     <div className="relative min-h-screen bg-[#F7F7F7] flex flex-col items-center">
       {!isLoginPage && (
         <div className="fixed top-0 z-50 w-full max-w-[430px]">
-          <Header />
+          <Header onMenuClick={handleMenuClick} />
         </div>
       )}
 
