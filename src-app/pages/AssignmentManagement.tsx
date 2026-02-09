@@ -27,7 +27,7 @@ const AssignmentManagementPage = () => {
     };
 
     return (
-        <div className="w-full min-h-auto overflow-x-hidden py-[32px] flex flex-col gap-[8px]">
+        <div className="w-full min-h-auto overflow-x-hidden pt-[99px] pb-[32px] flex flex-col gap-[8px]">
             {/* 공부 시간 기록 버튼 */}
             <div 
                 onClick={() => navigate("/mentee-a/record")}

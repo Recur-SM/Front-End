@@ -30,7 +30,7 @@ const Record = () => {
     const completedTasks = tasks.filter(t => t.isCompleted);
 
     return (
-        <div className="webapp-root w-full min-h-screen py-[32px] flex flex-col items-center gap-[8px]">
+        <div className="webapp-root w-full min-h-screen pt-[99px] pb-[32px] flex flex-col items-center gap-[8px]">
             <div className="w-[384px] flex justify-end px-[4px]">
                 <div 
                     onClick={() => navigate("/mentee-a/assignment-management")}
