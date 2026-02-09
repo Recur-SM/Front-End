@@ -42,7 +42,7 @@ function MenteeHome() {
   );
 
   return (
-    <div className="relative min-h-screen bg-[#F7F7F7] w-full flex flex-col items-center">
+    <div className="relative min-h-screen w-full flex flex-col items-center">
       <Routes>
         {/* 헤더/탭바 제외 */}
         <Route path="/login" element={<LoginPage />} />
