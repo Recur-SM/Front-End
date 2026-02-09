@@ -35,12 +35,8 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
 
       <div className="py-1">
         <List title="오늘 할 일" type="할일" tasks={todosForDay} />
-      
-          <AddTodoList
-            selectedDate={selectedDateStr}
-            onAddTodo={handleAddTodo}
-          />
-       
+
+        <AddTodoList selectedDate={selectedDateStr} onAddTodo={handleAddTodo} />
       </div>
 
       <div className="flex flex-col py-2">

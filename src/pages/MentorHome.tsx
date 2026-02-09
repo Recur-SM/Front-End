@@ -12,7 +12,9 @@ import { getFeedbackList } from "../api/feedback";
 import { useAuthStore } from "../stores/authStore";
 
 const MentorHome = () => {
-  const [activeTab, setActiveTab] = useState("학습 관리");
+  const [activeTab, setActiveTab] = useState<"학습 관리" | "과제 관리">(
+    "학습 관리",
+  );
   const { mentees, selectedMentee, setMentees, setSelectedMentee } =
     useMenteeStore();
   const { username } = useAuthStore();
@@ -77,6 +79,10 @@ const MentorHome = () => {
     fetchFeedbacks();
   }, [selectedMentee]);
 
+  const switchToAssignment = () => {
+    setActiveTab("과제 관리");
+  };
+
   return (
     <div className="flex">
       <Sidebar
@@ -103,7 +109,11 @@ const MentorHome = () => {
 
           <main className="p-4">
             {activeTab === "학습 관리" && (
-              <StudyManagement tasks={tasks} feebacks={feebacks} />
+              <StudyManagement
+                tasks={tasks}
+                feebacks={feebacks}
+                onSwitchToAssignment={switchToAssignment}
+              />
             )}
             {activeTab === "과제 관리" && (
               <AssignmentManagement tasks={tasks} />

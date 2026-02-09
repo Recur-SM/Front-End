@@ -1,3 +1,27 @@
+type TaskType = "FIXED" | "ADDITIONAL";
+type MaterialType = "COLUMN" | "PDF";
+
+export interface TaskDetailResult {
+  task_id: number;
+  task_date: string; 
+  task_name: string;
+  task_goal: string;
+  task_type: TaskType;
+  learning_material_type: MaterialType;
+  pdf_file_url: string;
+  column_content: string;
+  is_fixed: boolean;
+  created_at: string;  
+  updated_at: string; 
+}
+
+export interface TaskDetailResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: TaskDetailResult;
+}
+
 export interface AddTaskRequest {
   menteeId: number;
   mentorId: number;
@@ -5,8 +29,8 @@ export interface AddTaskRequest {
   taskName: string;
   taskDate: string;
   taskGoal?: string;
-  taskType: "FIXED" | "ADDITIONAL"; 
-  learningMaterialType?: "COLUMN" | "PDF";
+  taskType: TaskType; 
+  learningMaterialType?: MaterialType;
   columnContent?: string;
   comment?: string;
 }
@@ -20,8 +44,8 @@ export interface AddTaskResult {
   taskName: string;
   taskDate: string;
   taskGoal: string;
-  taskType: "FIXED" | "ADDITIONAL";
-  learningMaterialType: "COLUMN" | "PDF";
+  taskType: TaskType;
+  learningMaterialType: MaterialType;
   pdfFileUrl: string;
   columnContent: string;
   comment: string;
@@ -55,8 +79,8 @@ export interface Task {
   taskName: string;
   taskDate: string;
   taskGoal: string;
-  taskType: "FIXED" | "ADDITIONAL";
-  learningMaterialType: "COLUMN" | "PDF";
+  taskType: TaskType;
+  learningMaterialType: MaterialType;
   pdfFileUrl: string;
   columnContent: string;
   comment: string;
