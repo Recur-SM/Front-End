@@ -6,6 +6,7 @@ import DetailHeader from "../../src-app/components/detailHeader";
 import Tabbar from "../../src-app/components/tabbar";
 import Sidebar from "../../src-app/components/sidebar";
 import HomePage from '../../src-app/pages/HomePage';
+import LoginPage from '../../src-app/pages/LoginPage';
 import AssignmentManagement from '../../src-app/pages/AssignmentManagement';
 import Record from '../../src-app/pages/Record';
 import AssignmentDetail from '../../src-app/pages/AssignmentDetail';
@@ -32,6 +33,7 @@ function MenteeHome() {
       <main className="w-full max-w-[430px] pt-[105px] pb-[100px] px-[24px] flex-1 overflow-y-auto">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/assignment-management" element={<AssignmentManagement />} />
           <Route path="/record" element={<Record />} />
           <Route path="/assignment-detail" element={<AssignmentDetail />} />
