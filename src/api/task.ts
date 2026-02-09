@@ -1,5 +1,5 @@
 import { api } from "./axios";
-import type { AddTaskRequest, AddTaskResponse, FileUploadResponse } from "../types/task";
+import type { AddTaskRequest, AddTaskResponse, FileUploadResponse, TaskResponse } from "../types/task";
 
 export async function addTask(payload: AddTaskRequest): Promise<AddTaskResponse> {
     const res = await api.post<AddTaskResponse>("/tasks", payload);
@@ -15,6 +15,16 @@ export async function fileUpload(
 
   const res = await api.post(`/tasks/${task_id}/attachment`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
+}
+
+export async function getTasks(
+  mentee_id: number,
+  date: string
+): Promise<TaskResponse> {
+  const res = await api.get('/tasks', {
+    params: { mentee_id, date },
   });
   return res.data;
 }
