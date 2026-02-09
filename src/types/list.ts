@@ -18,8 +18,6 @@ export const SubjectIdMap: Record<string, number> = {
 
 export type ListType = "할일" | "피드백";
 
-export type FilterableItem = TodoItem | FeedbackItem;
-
 export interface BaseItem {
   id: number;
   title: string;

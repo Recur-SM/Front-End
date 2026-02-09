@@ -1,8 +1,8 @@
-import type { FilterableItem } from "../../types/list";
+import type { ListItem } from "../../types/list";
 import Arrow from "../../assets/arrow.svg";
 import Download from "../../assets/download.svg";
 
-const FilteredRow = ({ item }: { item: FilterableItem }) => {
+const FilteredRow = ({ item }: { item: ListItem }) => {
   return (
     <div className="grid grid-cols-5 gap-4 items-center text-xs">
       <div className="flex gap-3 cursor-pointer">
