@@ -1,22 +1,22 @@
 import { Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
+
 import Header from "../../src-app/components/header";
 import Tabbar from "../../src-app/components/tabbar";
+import Sidebar from "../../src-app/components/sidebar";
 import HomePage from '../../src-app/pages/HomePage';
 import AssignmentManagement from '../../src-app/pages/AssignmentManagement';
 import Record from '../../src-app/pages/Record';
-import Sidebar from '../../src-app/components/sidebar';
 
 function MenteeHome() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <div className="relative min-h-screen bg-[#F7F7F7] w-full">
-      
-      <div className="fixed top-0 z-100">
-        <Sidebar />
-      </div>
 
       {/* 상단 헤더 */}
       <div className="fixed top-0 z-50 w-full max-w-[430px]">
-        <Header />
+        <Header onMenuClick={() => setIsSidebarOpen(true)} />
       </div>
 
       {/* 메인 콘텐츠 */}
@@ -33,6 +33,12 @@ function MenteeHome() {
         <Tabbar />
       </div>
 
+      {/* 사이드바 */}
+      <Sidebar 
+        isOpen={isSidebarOpen} 
+        onClose={() => setIsSidebarOpen(false)} 
+        userName="김제현"
+      />
     </div>
   );
 }
