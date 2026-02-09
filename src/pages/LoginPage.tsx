@@ -19,6 +19,7 @@ const LoginPage = () => {
         useAuthStore.getState().setAccessToken(res.result.accessToken);
         useAuthStore.getState().setRole(res.result.role);
         useAuthStore.getState().setId(res.result.userId);
+        useAuthStore.getState().setUsername(res.result.username);
       }
     } catch (e) {
       if (e instanceof Error) {
