@@ -22,6 +22,7 @@ const FeedbackBoard = () => {
             outline-none
             bg-transparent
             text-[#767676]
+            px-10
           "
       />
     </div>
