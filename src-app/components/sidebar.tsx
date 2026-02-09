@@ -30,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, userName }) => {
 
             <div className="flex items-center gap-[8px] mx-[8px] mb-[2px]">
                 <img src={ProfileIcon} alt="프로필" className="w-[17.33px] h-[17.33px] m-[4.33px] object-contain" />
-                <span className="text-[20px] font-medium text-[#111111]">이하은</span>
+                <span className="text-[20px] font-medium text-[#111111]">{userName}</span>
             </div>
           
             <button 
