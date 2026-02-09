@@ -45,7 +45,7 @@ const Tabbar: React.FC = () => {
               className={`w-[5.7vw] h-[2.25vh] object-contain transition-all`} 
             />
             <div className={`text-[2.79vw] mt-[0.43vh] font-medium transition-colors ${
-              active ? "text-[#FF8A00]" : "text-[#999999]"
+              active ? "text-[#FF6738]" : "text-[#999999]"
             }`}>
               {tab.name}
             </div>
