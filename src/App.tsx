@@ -31,13 +31,12 @@ function App() {
       {/* 멘토 전용 라우트 구역 */}
       <Route element={<ProtectedRoute allowedRoles={["MENTOR"]} />}>
         <Route path="/mentor/dashboard" element={<MentorHome />} />
-        {/* 추가적인 멘토 전용 페이지들을 여기에 작성 */}
       </Route>
 
-      <Route path="/mentee/my-page" element={<MenteeHome />} />
       {/* 멘티 전용 라우트 구역 */}
+      <Route path="/mentee/*" element={<MenteeHome />} />
       <Route element={<ProtectedRoute allowedRoles={["MENTEE"]} />}>
-        {/* <Route path="/mentee/my-page" element={<MenteeHome />} /> */}
+        {/* <Route path="/mentee/*" element={<MenteeHome />} /> */}
       </Route>
     </Routes>
   );

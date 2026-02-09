@@ -37,7 +37,7 @@ const List = ({ title, type, items = [] }: ListProps) => {
 
   const truncateFileName = (name: string) => {
     if (name.length > 15) {
-      return name.substring(0, 13) + "...";
+      return name.substring(0, 12) + "...";
     }
     return name;
   };  
@@ -49,12 +49,12 @@ const List = ({ title, type, items = [] }: ListProps) => {
       <div className="flex justify-between items-center mb-[20px]">
         <h3 className="text-[20px] font-semibold text-[#111111]">{title}</h3>
         {items.length > 0 && (type === 1 || type === 2) && (
-          <div className="flex gap-[8px]">
+          <div className="flex gap-[4px]">
             {filters.map((f) => (
               <span 
                 key={f} 
                 onClick={() => setActiveFilter(f)}
-                className={`px-[16px] py-[4px] rounded-full text-[13px] transition-all cursor-pointer
+                className={`px-[14px] py-[2px] rounded-full text-[13px] transition-all cursor-pointer
                 ${activeFilter === f 
                   ? 'border border-[#FF6738] text-[#FF6738]'
                   : 'border border-[#EEEEEE] text-[#111111]'
