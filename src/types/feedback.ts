@@ -68,3 +68,27 @@ export interface FeedbackItem {
   date: string;
   content: string;
 }
+
+export interface FeedbackResult {
+  feedbackId: number;
+  taskId: number;
+  taskName: string;
+  menteeId: number;
+  menteeName: string;
+  mentorId: number;
+  mentorName: string;
+  subjectId: number;
+  subjectName: string;
+  subjectCode: string;
+  feedbackDate: string;
+  detailContent: string;
+  createdAt: string;  
+  updatedAt: string; 
+}
+
+export interface FeedbackResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: FeedbackResult;
+}
