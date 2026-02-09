@@ -7,12 +7,19 @@ interface TimerProps {
   title: string;
   initialSeconds: number;
   isCompleted: boolean;
+  autoStart?: boolean; // 자동 시작 여부 추가
   onStatusChange: (time: number) => void;
 }
 
-const TimerItem = ({ title, initialSeconds, isCompleted, onStatusChange }: TimerProps) => {
+const TimerItem = ({ title, initialSeconds, isCompleted, autoStart, onStatusChange }: TimerProps) => {
   const [seconds, setSeconds] = useState(initialSeconds);
   const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    if (autoStart) {
+      setIsActive(true);
+    }
+  }, [autoStart]);
 
   useEffect(() => {
     setSeconds(initialSeconds);
@@ -62,7 +69,7 @@ const TimerItem = ({ title, initialSeconds, isCompleted, onStatusChange }: Timer
         )}
         
         <span className={`text-[12px] font-medium w-[60px] text-right ${
-          isActive || isCompleted ? 'text-[#FF8A00]' : 'text-[#A1A1A1]'
+          isActive || isCompleted ? 'text-[#FF6738]' : 'text-[#999999]'
         }`}>
           {formatTime(seconds)}
         </span>

@@ -12,10 +12,18 @@ const Record = () => {
         { id: 3, title: "수학 오답 노트", time: 5554, isCompleted: true },
     ]);
 
+    const [activeTaskId, setActiveTaskId] = useState<number | null>(null);
+
     const handleStatusChange = (id: number, currentTime: number, nextStatus: boolean) => {
         setTasks(prev => prev.map(task => 
             task.id === id ? { ...task, isCompleted: nextStatus, time: currentTime } : task
         ));
+
+        if (nextStatus === false) {
+            setActiveTaskId(id);
+        } else {
+            if (activeTaskId === id) setActiveTaskId(null);
+        }
     };
 
     const todoTasks = tasks.filter(t => !t.isCompleted);
@@ -23,7 +31,6 @@ const Record = () => {
 
     return (
         <div className="webapp-root w-full min-h-screen py-[32px] flex flex-col items-center gap-[8px]">
-            {/* 돌아가기 버튼 */}
             <div className="w-[384px] flex justify-end px-[4px]">
                 <div 
                     onClick={() => navigate("/mentee/assignment-management")}
@@ -34,9 +41,7 @@ const Record = () => {
                 </div>
             </div>
 
-            {/* 메인 카드 컨테이너 */}
             <div className="w-[384px] p-[12px] rounded-[8px] bg-white shadow-[0px_4px_6px_0px_rgba(0,0,0,0.03)] flex flex-col gap-[20px]">
-                {/* 할 일 섹션 */}
                 <div>
                     <h3 className="text-[20px] font-semibold text-[#111111] mb-[24px]">1월 8일 할 일</h3>
                     <div className="flex flex-col gap-[4px]">
@@ -46,16 +51,16 @@ const Record = () => {
                                 title={task.title} 
                                 initialSeconds={task.time}
                                 isCompleted={false}
+                                autoStart={activeTaskId === task.id}
                                 onStatusChange={(time) => handleStatusChange(task.id, time, true)} 
                             />
                         ))}
                     </div>
                 </div>
 
-                {/* 완료된 섹션 */}
                 {completedTasks.length > 0 && (
                     <>
-                        <hr className="border-[#EEEEEE]" />
+                        <hr className="border-[#E5E5EC]" />
                         <div>
                             <h3 className="text-[20px] font-semibold text-[#111111] mb-[24px]">완료</h3>
                             <div className="flex flex-col gap-[4px]">
