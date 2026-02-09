@@ -1,5 +1,10 @@
-import type { FileUploadResponse } from "../types/task";
 import { api } from "./axios";
+import type { AddTaskRequest, AddTaskResponse, FileUploadResponse } from "../types/task";
+
+export async function addTask(payload: AddTaskRequest): Promise<AddTaskResponse> {
+    const res = await api.post<AddTaskResponse>("/tasks", payload);
+    return res.data;
+}
 
 export async function fileUpload(
   task_id: number,

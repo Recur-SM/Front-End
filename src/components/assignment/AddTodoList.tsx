@@ -3,9 +3,8 @@ import { ADDTODOTITLE, type TodoItem } from "../../types/list";
 import type { TabType } from "../../types/filter";
 import Arrow from "../../assets/arrow.svg";
 import Plus from "../../assets/plus.svg";
-import { addTask } from "../../api/add-task";
 import type { AddTaskRequest } from "../../types/task";
-import { fileUpload } from "../../api/file-upload";
+import { addTask, fileUpload } from "../../api/task";
 
 interface AddTodoListProps {
   selectedDate: string;
