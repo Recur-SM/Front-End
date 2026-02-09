@@ -9,14 +9,15 @@ import type { FeedbackItem, TodoItem } from "../types/list";
 import { getTasks } from "../api/task";
 import type { TabType } from "../types/filter";
 import { getFeedbackList } from "../api/feedback";
+import { useAuthStore } from "../stores/authStore";
 
 const MentorHome = () => {
   const [activeTab, setActiveTab] = useState("학습 관리");
   const { mentees, selectedMentee, setMentees, setSelectedMentee } =
     useMenteeStore();
-      const [tasks, setTasks] = useState<TodoItem[]>([]);
-      const [feebacks, setFeebacks] = useState<FeedbackItem[]>([]);
-
+  const { username } = useAuthStore();
+  const [tasks, setTasks] = useState<TodoItem[]>([]);
+  const [feebacks, setFeebacks] = useState<FeedbackItem[]>([]);
 
   useEffect(() => {
     const fetchMentorData = async () => {
@@ -43,7 +44,7 @@ const MentorHome = () => {
             date: t.taskDate,
             goal: t.taskGoal,
             file: t.pdfFileUrl,
-             category: t.subjectName as TabType,
+            category: t.subjectName as TabType,
             type: "할일",
             isFeedback: t.hasFeedback,
           }));
@@ -56,15 +57,16 @@ const MentorHome = () => {
     const fetchFeedbacks = async () => {
       try {
         const res = await getFeedbackList(selectedMentee.menteeId);
-        const fetchedFeedbacks: FeedbackItem[] =
-      res.result.feedbacks.map((t) => ({
-        id: t.feedbackId,  
-        title: t.taskName,
-        date: t.feedbackDate,
-        feedback: t.detailContent, 
-        type: "피드백", 
-        category: t.subjectName as TabType,
-      }));
+        const fetchedFeedbacks: FeedbackItem[] = res.result.feedbacks.map(
+          (t) => ({
+            id: t.feedbackId,
+            title: t.taskName,
+            date: t.feedbackDate,
+            feedback: t.detailContent,
+            type: "피드백",
+            category: t.subjectName as TabType,
+          }),
+        );
         setFeebacks(fetchedFeedbacks);
       } catch (e) {
         console.error(e);
@@ -79,7 +81,7 @@ const MentorHome = () => {
     <div className="flex">
       <Sidebar
         role="mentor"
-        userName="현지현"
+        userName={username!}
         students={mentees.map((m) => m.menteeName)}
         selectedStudent={selectedMentee?.menteeName ?? null}
         onStudentSelect={(name) => {
