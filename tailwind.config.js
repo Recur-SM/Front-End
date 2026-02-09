@@ -3,8 +3,14 @@ export default {
   content: [
     "./index.html", 
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./src-app/index.html",  
-    "./src-app/**/*.{js,ts,jsx,tsx}"],
-  theme: { extend: {} },
+    "./src-app/**/*.{js,ts,jsx,tsx}"
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Pretendard', '-apple-system', 'sans-serif'],
+      },
+    },
+  },
   plugins: [],
 }

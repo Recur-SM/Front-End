@@ -86,7 +86,7 @@ const AssignmentManagementPage = () => {
                         /* 사진 없을 때 */
                         <div className="w-full h-full flex flex-col items-center justify-center gap-[10px]">
                             <img src={Upload} alt="업로드" className="w-[39px] y-[39px]"></img>
-                            <div className="text-[14px] text-[#A1A1A1] font-medium text-center">
+                            <div className="text-[14px] text-[#767676] font-medium text-center">
                                 플래너 사진을<br />업로드 해주세요
                             </div>
                         </div>
