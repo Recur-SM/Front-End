@@ -100,3 +100,38 @@ export interface TaskResponse {
     tasks: Task[];
   };
 }
+
+export interface MonthlyTaskResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
+    year: number;
+    month: number;
+    dates: MonthlyTaskDate[];
+    summary: MonthlyTaskSummary;
+  };
+}
+
+export interface MonthlyTaskDate {
+  date: string;
+  day_of_week: string;
+  tasks: MonthlyTask[];
+  total_tasks: number;
+  completed_tasks: number;
+}
+
+export interface MonthlyTask {
+  task_id: number;
+  task_name: string;
+  subject_name: string;
+  is_completed: boolean;
+}
+
+export interface MonthlyTaskSummary {
+  total_days: number;
+  days_with_tasks: number;
+  total_tasks: number;
+  completed_tasks: number;
+  completion_rate: number;
+}
