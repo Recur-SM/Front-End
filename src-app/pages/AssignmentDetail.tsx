@@ -28,15 +28,15 @@ const AssignmentDetailPage = () => {
             <div className="w-[384px] min-h-[675px] p-[12px] rounded-[8px] flex flex-col itmes-center bg-white shadow-[0px_4px_6px_0px_rgba(0,0,0,0.03)]">
                 <div className="w-full text-[20px] font-semibold mt-[1px] mb-[25px] flex">수학 오답 노트</div>
 
-                <div className="w-full h-[102px] mb-[16px]">
-                    <div className="w-full h-[43px] flex flex-col justify-between">
+                <div className="w-full h-[102px] gap-[16px] mb-[16px]">
+                    <div className="w-full h-[43px] flex flex-col mb-[16px]">
                         <div className="text-[14px] font-medium text-[#111111]">학습지</div>
                         <div className="flex itmes-center gap-[2px]">
                             <div className="text-[14px] font-medium text-[#FF6738]">수학_오답노트_양식_설스터디.pdf</div>
                             <img src={Download} alt="다운로드" className="w-[22px] h-[22px]"></img>
                         </div>
                     </div>
-                    <div className="w-full h-[43px] flex flex-col justify-between">
+                    <div className="w-full h-[43px] flex flex-col">
                         <div className="text-[14px] font-medium text-[#111111]">목표</div>
                         <div className="text-[14px] font-medium text-[#767676]">양식 맞춰서 오답 풀이에 적용하기</div>
                     </div>
