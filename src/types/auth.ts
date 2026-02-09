@@ -18,3 +18,10 @@ export interface LoginResponse {
   message: string;
   result: LoginResult;
 }
+
+export interface LogoutResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: string;
+}
