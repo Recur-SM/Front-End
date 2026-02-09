@@ -5,15 +5,17 @@ import StudyManagement from "../components/learning/StudyManagement";
 import AssignmentManagement from "../components/assignment/AssignmentManagement";
 import { getMentees } from "../api/mentee";
 import { useMenteeStore } from "../stores/menteeStroe";
-import type { TodoItem } from "../types/list";
+import type { FeedbackItem, TodoItem } from "../types/list";
 import { getTasks } from "../api/task";
 import type { TabType } from "../types/filter";
+import { getFeedbackList } from "../api/feedback";
 
 const MentorHome = () => {
   const [activeTab, setActiveTab] = useState("학습 관리");
   const { mentees, selectedMentee, setMentees, setSelectedMentee } =
     useMenteeStore();
       const [tasks, setTasks] = useState<TodoItem[]>([]);
+      const [feebacks, setFeebacks] = useState<FeedbackItem[]>([]);
 
 
   useEffect(() => {
@@ -50,7 +52,27 @@ const MentorHome = () => {
         console.error(e);
       }
     };
+
+    const fetchFeedbacks = async () => {
+      try {
+        const res = await getFeedbackList(selectedMentee.menteeId);
+        const fetchedFeedbacks: FeedbackItem[] =
+      res.result.feedbacks.map((t) => ({
+        id: t.feedbackId,  
+        title: t.taskName,
+        date: t.feedbackDate,
+        feedback: t.detailContent, 
+        type: "피드백", 
+        category: t.subjectName as TabType,
+      }));
+        setFeebacks(fetchedFeedbacks);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
     fetchTasks();
+    fetchFeedbacks();
   }, [selectedMentee]);
 
   return (
@@ -79,7 +101,7 @@ const MentorHome = () => {
 
           <main className="p-4">
             {activeTab === "학습 관리" && (
-              <StudyManagement tasks={tasks} />
+              <StudyManagement tasks={tasks} feebacks={feebacks} />
             )}
             {activeTab === "과제 관리" && (
               <AssignmentManagement tasks={tasks} />
