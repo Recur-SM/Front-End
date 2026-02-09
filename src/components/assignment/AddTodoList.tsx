@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ADDTODOTITLE, type TodoItem } from "../../types/list";
+import { type TodoItem } from "../../types/list";
 import type { TabType } from "../../types/filter";
 import Arrow from "../../assets/arrow.svg";
 import Plus from "../../assets/plus.svg";
@@ -107,46 +107,7 @@ const AddTodoList: React.FC<AddTodoListProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-md px-8 py-5">
-      <span className="flex text-lg font-semibold pb-3">오늘 할 일</span>
-
-      <div className="grid grid-cols-7 gap-4 px-1 text-sm font-semibold text-gray-600">
-        {ADDTODOTITLE.map((title) => (
-          <div key={title}>{title}</div>
-        ))}
-      </div>
-
-      <div className="border-t my-4" />
-
-      {/* {todos.map((todo) => (
-        <div
-          key={todo.id}
-          className="grid grid-cols-7 gap-4 items-center py-1 pl-1 text-sm text-[#505050]"
-        >
-          <div>{todo.title}</div>
-          <div>{todo.date}</div>
-          <div>{todo.file ?? "-"}</div>
-          <div>{todo.goal ?? "-"}</div>
-          <div className="pl-6">
-            <input
-              type="checkbox"
-              className="w-4 h-4"
-              checked={todo.isFeedback}
-              disabled
-            />
-          </div>
-          <div className="flex">
-            <div
-              className={`px-3 py-2 rounded-full border border-[#FF6738]
-                text-xs text-[#FF6738]`}
-            >
-              {todo.category}
-            </div>
-            <div />
-          </div>
-        </div>
-      ))} */}
-
+    <div className="bg-white rounded-md px-8 py-3">
       {isAdding && (
         <div className="grid grid-cols-7 gap-4 items-center py-1 pl-1 text-sm">
           {/* 제목 */}
