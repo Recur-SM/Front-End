@@ -8,8 +8,6 @@ const StudyManagement = () => {
 
       <List title="어제자 피드백" type="피드백" />
 
-      <List title="주간 학습 리포트" type="주간" />
-
       <div className="flex-col px-3 py-3">
         <div className="flex font-semibold text-lg">월간 계획표</div>
         <div className="flex font-normal text-xs">
