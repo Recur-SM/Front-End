@@ -21,12 +21,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, userName }) => {
         onClick={onClose} 
       />
       
-      {/* 메뉴 바 */}
-      <div className="w-[159px] h-[932px] bg-white flex flex-col p-[24px_12px_24px_24px] sticky top-0 overflow-x-hidden z-100">
+      <div className="w-[159px] h-[932px] rounded-r-[8px] bg-white flex flex-col p-[24px_12px_24px_24px] sticky top-0 overflow-x-hidden z-100">
         {/* 상단 로고 & 프로필 영역 */}
         <div className="w-[111px] h-[104px] flex flex-col items-start border-b border-[#EFEFEF] mb-[24px]">
             <div className="text-[15px] text-[#FF6738] font-medium m-[4px] tracking-widest">
-            설 스터디
+              설 스터디
             </div>
 
             <div className="flex items-center gap-[8px] mx-[8px] mb-[2px]">
@@ -42,8 +41,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, userName }) => {
             </button>
         </div>
 
-        {/* 메뉴 영역 */}
-        <nav className="w-[135px] h-[239px] flex flex-col items-start">
+          {/* 메뉴 영역 */}
+          <nav className="w-[135px] h-[239px] flex flex-col items-start">
             <div className="text-[12px] text-[#111111] font-semibold m-[10px]">
                 메뉴
             </div>
@@ -55,15 +54,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, userName }) => {
               <li className="cursor-pointer mx-[10px] my-[8px]" onClick={onClose}>약점 맞춤 솔루션</li>
             </ul>
           </nav>
-        </div>
         
-         {/* 하단 로그아웃 */}
-        <button
-            className="flex items-center gap-[8px] text-[13px] text-[#505050]"
-            >
+        {/* 하단 로그아웃 */}
+        <div className="mt-auto">
+          <button className="flex items-center gap-[8px] text-[13px] text-[#505050]">
             <img src={LogoutIcon} alt="로그아웃" className="w-[20px] h-[20px] mx-[8px] my-[10px]" />
             <span>로그아웃</span>
-        </button>
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
