@@ -1,8 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
-import HomePage from '../../src-app/pages/HomePage';
-import AssignmentManagement from '../../src-app/pages/AssignmentManagement';
 import Header from "../../src-app/components/header";
 import Tabbar from "../../src-app/components/tabbar";
+import HomePage from '../../src-app/pages/HomePage';
+import AssignmentManagement from '../../src-app/pages/AssignmentManagement';
+import Record from '../../src-app/pages/Record';
 
 function MenteeHome() {
   return (
@@ -18,6 +19,7 @@ function MenteeHome() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/assignment-management" element={<AssignmentManagement />} />
+          <Route path="/record" element={<Record />} />
         </Routes>
       </main>
 

@@ -1,9 +1,11 @@
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import List from "../components/list";
 import Clock from "../assets/clock.svg";
 import Upload from "../assets/upload.svg";
-import { useState, useRef } from "react";
 
 const AssignmentManagementPage = () => {
+    const navigate = useNavigate();
     const [image, setImage] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     
@@ -27,8 +29,11 @@ const AssignmentManagementPage = () => {
 
     return (
         <div className="w-full min-h-auto overflow-x-hidden py-[32px] flex flex-col gap-[8px]">
-            {/* 공부 시간 기록하기 버튼 */}
-            <div className="w-[137px] h-[30px] rounded-[12px] flex justify-center items-center gap-[4px] ml-auto mr-[4px] border border-[#E5E5EC] text-[12px] text-[#767676] bg-white cursor-pointer active:bg-gray-50">
+            {/* 공부 시간 기록 버튼 */}
+            <div 
+                onClick={() => navigate("/mentee/record")} // 3. 클릭 시 이동 연결
+                className="w-[137px] h-[30px] rounded-[12px] flex justify-center items-center gap-[4px] ml-auto mr-[4px] border border-[#E5E5EC] text-[12px] text-[#767676] bg-white cursor-pointer active:bg-gray-50"
+            >
                 <img src={Clock} alt="시계" className="w-[20px] h-[20px]" />
                 <span>공부 시간 기록하기</span>
             </div>
