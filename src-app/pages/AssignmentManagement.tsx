@@ -9,7 +9,7 @@ const AssignmentManagementPage = () => {
     const [image, setImage] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     
-    const feedbackText = "저 영어 공부하는 날을 조금 더 늘리고 싶어요 일주일에 3, 4일 정도로요. → 기존 과제를 더 자주 하고 싶다는 말인 거죠?? 알겠습니다!  방학 시간표에 점점 적응이 되어서 그런가 분량이 조금씩 늘어나는 게 보이네요! 이렇게 알차게 시간을 보내고 나면 많이 성장한 자신을 만날 수 있을 거니 지금처럼만 해주면 좋을 것 같습니다.  항상 응원하고 있어용 😉";
+    const feedbackText = "분명하네요 ㅎㅎ 어제(1/5) 공부하면서 ’영어 과제’가 아침까진 있었는데, 갑자기 사라져서 당황하셨을 수도 있을 것 같습니다. 원래는 모든 ‘약점 맞춤 과제’가 3일 주기로 돌아가고 있었는데, 채영 학생이 일요일에 부담이 너무 많은 것 같아서 문법 강의는 월/목에, 문학 강의는 화/금에, 영어 과제는 수/토에 배분해뒀어요!! 이번주는 과제가 좀 복잡하게 배치되어있는데 잘 살펴서 해주시고, 다음주부터는 확실한 루틴 속에서 과제해주시면 됩니다!!";
 
     const handleUploadClick = () => {
         fileInputRef.current?.click();
@@ -23,7 +23,6 @@ const AssignmentManagementPage = () => {
                 setImage(reader.result as string);
             };
             reader.readAsDataURL(file);
-            // 이후 axios로 DB에 file 전송 로직 추가
         }
     };
 
@@ -31,7 +30,7 @@ const AssignmentManagementPage = () => {
         <div className="w-full min-h-auto overflow-x-hidden py-[32px] flex flex-col gap-[8px]">
             {/* 공부 시간 기록 버튼 */}
             <div 
-                onClick={() => navigate("/mentee/record")} // 3. 클릭 시 이동 연결
+                onClick={() => navigate("/mentee/record")}
                 className="w-[137px] h-[30px] rounded-[12px] flex justify-center items-center gap-[4px] ml-auto mr-[4px] border border-[#E5E5EC] text-[12px] text-[#767676] bg-white cursor-pointer active:bg-gray-50"
             >
                 <img src={Clock} alt="시계" className="w-[20px] h-[20px]" />
@@ -56,8 +55,18 @@ const AssignmentManagementPage = () => {
                 {/* 피드백 영역 */}
                 <div className="w-[198px] h-[291px] rounded-[8px] px-[12px] py-[13px] flex flex-col bg-white shadow-[0px_4px_6px_0px_rgba(0,0,0,0.03)]">
                     <div className="text-[20px] font-semibold mb-[16px]">피드백</div>
-                    <div className="flex-1 overflow-y-auto text-[12px] leading-[1.6] text-[#505050] scrollbar-hide">
-                        {feedbackText}
+                    <div className="flex-1 overflow-y-auto scrollbar-hide flex flex-col">
+                        {feedbackText ? (
+                            /* 피드백 내용이 있을 때 */
+                            <div className="text-[12px] leading-[1.6] text-[#505050]">
+                                {feedbackText}
+                            </div>
+                        ) : (
+                            /* 피드백 내용이 없을 때 */
+                            <div className="flex-1 flex items-center justify-center mb-[20px] text-[12px] text-[#767676]">
+                                내용이 없습니다
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -66,7 +75,6 @@ const AssignmentManagementPage = () => {
                     onClick={handleUploadClick}
                     className="w-[198px] h-[291px] rounded-[8px] flex flex-col bg-[#99999908] border border-[#767676] shadow-[0px_4px_6px_0px_rgba(0,0,0,0.03)] overflow-hidden cursor-pointer"
                 >
-                    {/* 숨겨진 파일 입력 필드 */}
                     <input 
                         type="file" 
                         ref={fileInputRef} 
@@ -76,16 +84,14 @@ const AssignmentManagementPage = () => {
                     />
 
                     {image ? (
-                        /* 사진 있을 때 */
                         <img 
                             src={image} 
                             alt="과제 인증샷" 
                             className="w-full h-full object-cover"
                         />
                     ) : (
-                        /* 사진 없을 때 */
                         <div className="w-full h-full flex flex-col items-center justify-center gap-[10px]">
-                            <img src={Upload} alt="업로드" className="w-[39px] y-[39px]"></img>
+                            <img src={Upload} alt="업로드" className="w-[39px] h-[39px]"></img>
                             <div className="text-[14px] text-[#767676] font-medium text-center">
                                 플래너 사진을<br />업로드 해주세요
                             </div>
