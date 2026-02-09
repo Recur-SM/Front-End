@@ -3,6 +3,9 @@ import { ADDTODOTITLE, type TodoItem } from "../../types/list";
 import type { TabType } from "../../types/filter";
 import Arrow from "../../assets/arrow.svg";
 import Plus from "../../assets/plus.svg";
+import { addTask } from "../../api/add-task";
+import type { AddTaskRequest } from "../../types/task";
+import { fileUpload } from "../../api/file-upload";
 
 interface AddTodoListProps {
   selectedDate: string;
@@ -19,6 +22,12 @@ const AddTodoList: React.FC<AddTodoListProps> = ({
     isFeedback: false,
   });
   const [fileName, setFileName] = useState<string | null>(null);
+
+  const subjectMap: Record<string, string> = {
+    국어: "KOR",
+    영어: "ENG",
+    수학: "MATH",
+  };
 
   const handleAddTodo = () => {
     setIsAdding(true);
@@ -45,24 +54,53 @@ const AddTodoList: React.FC<AddTodoListProps> = ({
     }));
   };
 
-  const handleSubmit = () => {
-    if (!newTodo.title || !newTodo.category) return;
+  const handleSubmit = async () => {
+    try {
+      if (!newTodo.title || !newTodo.category) return;
 
-    const todo: TodoItem = {
-      id: Date.now(), // 임시 id
-      title: newTodo.title,
-      date: selectedDate,
-      category: newTodo.category,
-      goal: newTodo.goal,
-      file: newTodo.file,
-      isFeedback: false,
-      type: "할일",
-    };
+      const taskCode = subjectMap[newTodo.category];
 
-    onAddTodo(todo);
-    setNewTodo({ type: "할일", isFeedback: false });
-    setFileName(null);
-    setIsAdding(false);
+      const todo: AddTaskRequest = {
+        menteeId: 0, // 임시
+        mentorId: 0,
+        subjectCode: taskCode,
+        taskName: newTodo.title,
+        taskDate: selectedDate,
+        taskGoal: newTodo.goal,
+        taskType: "ADDITIONAL",
+      };
+
+      const res = await addTask(todo);
+
+      const taskId = res.result.taskId;
+
+      // 파일이 있으면 업로드
+      if (fileName && newTodo.file) {
+        const fileInput = (
+          document.querySelector('input[type="file"]') as HTMLInputElement
+        )?.files?.[0];
+
+        if (fileInput) {
+          await fileUpload(taskId, fileInput);
+        }
+      }
+
+      const newTodoItem: TodoItem = {
+        id: res.result.taskId,
+        title: newTodo.title!,
+        date: selectedDate,
+        file: fileName ?? undefined,
+        type: "할일",
+        isFeedback: false,
+        category: newTodo.category!,
+      };
+      onAddTodo(newTodoItem);
+      setNewTodo({ type: "할일", isFeedback: false });
+      setFileName(null);
+      setIsAdding(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
