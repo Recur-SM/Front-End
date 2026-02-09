@@ -15,7 +15,7 @@ const Tabbar: React.FC = () => {
     const currentPath = location.pathname;
     
     if (tabPath === "/mentee/assignment-management") {
-      return currentPath === "/mentee/assignment-management" || currentPath === "/mentee/record";
+      return currentPath === "/mentee/assignment-management" || currentPath === "/mentee/record" || currentPath === "/mentee/assignment-detail";
     }
     
     return currentPath === tabPath;
