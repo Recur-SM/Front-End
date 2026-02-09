@@ -1,11 +1,11 @@
-// import { useState } from "react";
+import { useState } from "react";
 import MenuIcon from "../assets/menu.svg";
 import ProfileIcon from "../assets/profileIcon.svg";
 import Calendar from "../components/calendar";
-// import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar";
 
 const Header = () => {
-  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <>
@@ -17,7 +17,7 @@ const Header = () => {
               <img 
                   src={MenuIcon} 
                   alt="메뉴" 
-                  // onClick={() => setIsSidebarOpen(true)}
+                  onClick={() => setIsSidebarOpen(true)}
                   className="w-[20px] h-[20px] object-contain cursor-pointer" 
                 />
             </div>
@@ -43,8 +43,12 @@ const Header = () => {
         <Calendar type={1}/>
       </header>
 
-      {/* 사이드바 호출 */}
-      {/*<Sidebar /*isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} /> */}
+      {/* 사이드바 컴포넌트 */}
+      <Sidebar 
+        isOpen={isSidebarOpen} 
+        onClose={() => setIsSidebarOpen(false)} 
+        userName="김제현"
+      />
     </>
   );
 };
