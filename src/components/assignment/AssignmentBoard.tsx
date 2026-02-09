@@ -1,9 +1,9 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SubjectIdMap, type TodoItem } from "../../types/list";
 import type { AddFeedbackRequest } from "../../types/feedback";
 import { useMenteeStore } from "../../stores/menteeStroe";
 import { useAuthStore } from "../../stores/authStore";
-import { addFeedback } from "../../api/feedback";
+import { addFeedback, getFeedbackList } from "../../api/feedback";
 
 interface AssignmentBoardProps {
   todos: TodoItem[];
@@ -12,8 +12,66 @@ interface AssignmentBoardProps {
 const AssignmentBoard = ({ todos }: AssignmentBoardProps) => {
   const [values, setValues] = useState<Record<number, string>>({});
   const { selectedMentee } = useMenteeStore();
+  const [isLoading, setIsLoading] = useState(true);
+  const [feedbackIds, setFeedbackIds] = useState<Record<number, number>>({});
   const { id } = useAuthStore();
   const textareaRefs = useRef<Record<number, HTMLTextAreaElement | null>>({});
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadFeedbacks = async () => {
+      if (todos.length === 0 || !selectedMentee?.menteeId) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        // 멘티의 모든 피드백 목록 조회
+        const feedbackList = await getFeedbackList(selectedMentee.menteeId);
+        
+        const newValues: Record<number, string> = {};
+        const newFeedbackIds: Record<number, number> = {};
+
+        if (feedbackList?.result?.feedbacks) {
+          feedbackList.result.feedbacks.forEach((feedback) => {
+            const matchedTodo = todos.find(todo => todo.id === feedback.taskId);
+            
+            if (matchedTodo && feedback.detailContent) {
+              newValues[matchedTodo.id] = feedback.detailContent;
+              newFeedbackIds[matchedTodo.id] = feedback.feedbackId;
+            }
+          });
+        }
+
+        if (isMounted) {
+          setValues(newValues);
+          setFeedbackIds(newFeedbackIds);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error("피드백 조회 실패:", error);
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    loadFeedbacks();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [todos, selectedMentee]);
+  useEffect(() => {
+    Object.entries(values).forEach(([todoId, value]) => {
+      const el = textareaRefs.current[Number(todoId)];
+      if (el && value) {
+        el.style.height = "auto";
+        el.style.height = `${el.scrollHeight}px`;
+      }
+    });
+  }, [values]);
 
   const handleChange = (todoId: number, value: string) => {
     setValues((prev) => ({
@@ -23,7 +81,7 @@ const AssignmentBoard = ({ todos }: AssignmentBoardProps) => {
 
     const el = textareaRefs.current[todoId];
     if (el) {
-      el.style.height = "auto"; // 줄어드는 것도 가능하게
+      el.style.height = "auto";
       el.style.height = `${el.scrollHeight}px`;
     }
   };
@@ -43,15 +101,33 @@ const AssignmentBoard = ({ todos }: AssignmentBoardProps) => {
       detailContent: content,
     };
 
-    const res = await addFeedback(payload);
+    try {
+      const res = await addFeedback(payload);
+      console.log(res);
 
-    console.log(res)
+      if (res?.result.feedbackId) {
+        setFeedbackIds((prev) => ({
+          ...prev,
+          [todo.id]: res.result.feedbackId,
+        }));
+      }
+    } catch {
+      console.error("피드백 작성에 실패했습니다.");
+    }
   };
 
   if (todos.length === 0) {
     return (
       <div className="flex w-full justify-center items-center">
         <span className="text-[#767676]">내용이 없습니다</span>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex w-full justify-center items-center py-10">
+        <span className="text-[#767676]">로딩 중...</span>
       </div>
     );
   }
@@ -112,7 +188,7 @@ const AssignmentBoard = ({ todos }: AssignmentBoardProps) => {
                   "
                   onClick={() => handleSubmit(todo)}
                 >
-                  작성 완료
+                  {feedbackIds[todo.id] ? "수정 완료" : "작성 완료"}
                 </button>
               </div>
             </div>
