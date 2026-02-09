@@ -5,6 +5,8 @@ import Arrow from "../../assets/arrow.svg";
 import Plus from "../../assets/plus.svg";
 import type { AddTaskRequest } from "../../types/task";
 import { addTask, fileUpload } from "../../api/task";
+import { useMenteeStore } from "../../stores/menteeStroe";
+import { useAuthStore } from "../../stores/authStore";
 
 interface AddTodoListProps {
   selectedDate: string;
@@ -21,6 +23,8 @@ const AddTodoList: React.FC<AddTodoListProps> = ({
     isFeedback: false,
   });
   const [fileName, setFileName] = useState<string | null>(null);
+  const { selectedMentee } = useMenteeStore();
+  const { id } = useAuthStore();
 
   const subjectMap: Record<string, string> = {
     국어: "KOR",
@@ -60,8 +64,8 @@ const AddTodoList: React.FC<AddTodoListProps> = ({
       const taskCode = subjectMap[newTodo.category];
 
       const todo: AddTaskRequest = {
-        menteeId: 0, // 임시
-        mentorId: 0,
+        menteeId: selectedMentee!.menteeId,
+        mentorId: id!,
         subjectCode: taskCode,
         taskName: newTodo.title,
         taskDate: selectedDate,
