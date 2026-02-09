@@ -4,6 +4,7 @@ import Tabbar from "../../src-app/components/tabbar";
 import HomePage from '../../src-app/pages/HomePage';
 import AssignmentManagement from '../../src-app/pages/AssignmentManagement';
 import Record from '../../src-app/pages/Record';
+import AssignmentDetail from '../../src-app/pages/AssignmentDetail';
 
 function MenteeHome() {
   return (
@@ -20,6 +21,7 @@ function MenteeHome() {
           <Route path="/" element={<HomePage />} />
           <Route path="/assignment-management" element={<AssignmentManagement />} />
           <Route path="/record" element={<Record />} />
+          <Route path="/assignment-detail" element={<AssignmentDetail />} />
         </Routes>
       </main>
 
