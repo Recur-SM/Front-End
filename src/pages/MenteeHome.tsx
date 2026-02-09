@@ -14,7 +14,7 @@ function MenteeHome() {
       </div>
 
       {/* 메인 콘텐츠 */}
-      <main className="w-full max-w-[430px] pt-[172px] pb-[100px] px-5 flex-1 overflow-y-auto">
+      <main className="w-full max-w-[430px] pt-[172px] pb-[100px] px-[24px] flex-1 overflow-y-auto">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/assignment-management" element={<AssignmentManagement />} />
