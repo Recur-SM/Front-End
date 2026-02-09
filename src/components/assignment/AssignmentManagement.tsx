@@ -2,16 +2,20 @@ import { useState } from "react";
 import List from "../List";
 import WeekCalendar from "./WeekCalendar";
 import AddTodoList from "./AddTodoList";
-import { mockTodos } from "../../mocks/list.mock";
 import type { TodoItem } from "../../types/list";
 import PlannerBoard from "./PlannerBoard";
 import FeedbackBoard from "./FeedbackBoard";
 import AssignmentBoard from "./AssignmentBoard";
 
-const AssignmentManagement = () => {
-  const [selectedDay, setSelectedDay] = useState(new Date());
-  const [todos, setTodos] = useState<TodoItem[]>(mockTodos);
+interface AssignmentManagementProps {
+  tasks: TodoItem[];
+}
 
+const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
+  tasks,
+}) => {
+  const [selectedDay, setSelectedDay] = useState(new Date());
+  const [todos, setTodos] = useState<TodoItem[]>(tasks);
   const selectedDateStr = selectedDay.toISOString().split("T")[0];
   const todosForDay = todos.filter((t) => t.date === selectedDateStr);
 
@@ -30,14 +34,13 @@ const AssignmentManagement = () => {
       </div>
 
       <div className="py-1">
-        {todosForDay.length === 0 ? (
+        <List title="오늘 할 일" type="할일" tasks={todosForDay} />
+      
           <AddTodoList
             selectedDate={selectedDateStr}
             onAddTodo={handleAddTodo}
           />
-        ) : (
-          <List title="오늘 할 일" type="할일" selectedDate={selectedDateStr} />
-        )}
+       
       </div>
 
       <div className="flex flex-col py-2">

@@ -23,11 +23,11 @@ const AssignmentBoard = ({ todos }: AssignmentBoardProps) => {
           <span className="font-semibold text-lg">{todo.title}</span>
 
           <div className="flex w-full gap-1 py-2">
-            <div className="flex w-full justify-center items-center bg-[#99999933] h-[130px] rounded-lg border border-[#767676] text-sm">
+            <div className="flex w-1/3 justify-center items-center bg-[#99999933] h-[130px] rounded-lg border border-[#767676] text-sm">
               <span className="text-[#767676]">등록된 과제가 없습니다</span>
             </div>
 
-            <div className="relative flex flex-col w-full h-[130px] bg-white rounded-lg">
+            <div className="relative flex flex-col w-2/3 h-[130px] bg-white rounded-lgw-1/3">
               <span className="px-7 py-5 font-semibold text-lg">피드백</span>
 
               {!value && (

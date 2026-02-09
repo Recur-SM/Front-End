@@ -12,11 +12,9 @@ const FilteredRow = ({ item }: { item: FilterableItem }) => {
 
       <div>{item.date}</div>
 
-      <div className="flex gap-3 cursor-pointer">
-        <div>{item.file || "-"}</div>
-        {item.file && (
-          <img src={Download} alt="download" />
-        )}
+      <div className="flex gap-2 items-center">
+        <span className="truncate">{item.file || "-"}</span>
+        {item.file && <img src={Download} alt="download" className="w-4 h-4" />}
       </div>
 
       <div>{item.goal || "-"}</div>
