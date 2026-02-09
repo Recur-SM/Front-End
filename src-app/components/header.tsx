@@ -44,7 +44,7 @@ const Header = () => {
       </header>
 
       {/* 사이드바 호출 */}
-      <Sidebar /*isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)}*/ />
+      <Sidebar /*isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} *//>
     </>
   );
 };
