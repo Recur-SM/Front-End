@@ -17,7 +17,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, userName }) => {
     <div className="fixed inset-0 z-[100] flex">
       {/* 배경 어둡게 */}
       <div 
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm" 
+        className="fixed inset-0 bg-[#00000012]" 
         onClick={onClose} 
       />
       
