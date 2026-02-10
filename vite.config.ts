@@ -13,6 +13,7 @@ export default defineConfig({
     },
   },
   build: {
+    outDir: 'dist',
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
@@ -20,23 +21,14 @@ export default defineConfig({
       },
       output: {
         manualChunks: {
-          // 리액트 관련 라이브러리를 별도 청크로 분리
           "react-vendor": ["react", "react-dom", "react-router-dom"],
-
-          // FullCalendar 관련 라이브러리를 별도 청크로 분리
           calendar: [
             "@fullcalendar/react",
             "@fullcalendar/daygrid",
             "@fullcalendar/core",
           ],
-
-          // 상태 관리 라이브러리
           state: ["zustand"],
-
-          // UI 라이브러리
           ui: ["lucide-react"],
-
-          // 기타 큰 라이브러리들
           vendor: ["axios"],
         },
       },

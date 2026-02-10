@@ -54,7 +54,7 @@ const AppLayout = () => {
 
 function App() {
   return (
-    <BrowserRouter basename="/app.html">
+    <BrowserRouter basename="/app">
       <AppLayout />
     </BrowserRouter>
   );
