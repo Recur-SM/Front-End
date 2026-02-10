@@ -13,12 +13,14 @@ interface AssignmentManagementProps {
   tasks: TodoItem[];
   selectedDay?: Date;
   onSelectedDayChange?: (day: Date) => void;
+  onDownloadFile?: (taskId: number) => void | Promise<void>;
 }
 
 const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
   tasks,
   selectedDay: selectedDayProp,
   onSelectedDayChange,
+  onDownloadFile,
 }) => {
   const [internalDay, setInternalDay] = useState(new Date());
   const selectedDay = selectedDayProp ?? internalDay;
@@ -55,7 +57,12 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
       </div>
 
       <div className="py-1">
-        <List title={listTitle} type="할일" tasks={todosForDay} />
+        <List
+          title={listTitle}
+          type="할일"
+          tasks={todosForDay}
+          onDownloadFile={onDownloadFile}
+        />
 
         <AddTodoList selectedDate={selectedDateStr} onAddTodo={handleAddTodo} />
       </div>

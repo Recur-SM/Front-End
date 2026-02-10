@@ -7,12 +7,14 @@ interface StudyManagementProps {
   tasks: TodoItem[];
   feebacks: FeedbackItem[];
   onSwitchToAssignment?: () => void; // 탭 전환 콜백 추가
+  onDownloadFile?: (taskId: number) => void | Promise<void>;
 }
 
 const StudyManagement: React.FC<StudyManagementProps> = ({
   tasks,
   feebacks,
   onSwitchToAssignment,
+  onDownloadFile,
 }) => {
   const scrollToTask = useScrollStore((state) => state.scrollToTask);
   const todoTasks = tasks.filter((t) => t.type === "할일");
@@ -37,6 +39,7 @@ const StudyManagement: React.FC<StudyManagementProps> = ({
         type="할일"
         tasks={todoTasks}
         onTaskClick={handleTaskClick}
+        onDownloadFile={onDownloadFile}
       />
 
       <List

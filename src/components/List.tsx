@@ -9,9 +9,16 @@ interface ListProps {
   type: "할일" | "피드백";
   tasks: ListItem[];
   onTaskClick?: (taskId: number) => void;
+  onDownloadFile?: (taskId: number) => void | Promise<void>;
 }
 
-const List: React.FC<ListProps> = ({ title, type, tasks, onTaskClick }) => {
+const List: React.FC<ListProps> = ({
+  title,
+  type,
+  tasks,
+  onTaskClick,
+  onDownloadFile,
+}) => {
   const [selectedTab, setSelectedTab] = useState<TabType>("전체");
   const filteredTasks = tasks.filter((t) =>
     selectedTab === "전체" ? true : t.category === selectedTab,
@@ -49,6 +56,7 @@ const List: React.FC<ListProps> = ({ title, type, tasks, onTaskClick }) => {
             key={item.id}
             item={item}
             onClick={() => onTaskClick?.(item.id)}
+            onDownloadFile={onDownloadFile}
           />
         ))}
       </div>

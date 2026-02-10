@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { ListItem } from "../../types/list";
 import Arrow from "../../assets/arrow.svg";
 import Download from "../../assets/download.svg";
@@ -5,11 +6,28 @@ import Download from "../../assets/download.svg";
 interface FilteredRowProps {
   item: ListItem;
   onClick?: () => void;
+  onDownloadFile?: (taskId: number) => void | Promise<void>;
 }
 
-const FilteredRow = ({ item, onClick }: FilteredRowProps) => {
+const FilteredRow = ({ item, onClick, onDownloadFile }: FilteredRowProps) => {
+  const [downloading, setDownloading] = useState(false);
+
   const handleTaskClick = () => {
     onClick?.();
+  };
+
+  const isDownloadable = Boolean(item.file);
+
+  const handleFileDownload = async (e: React.MouseEvent) => {
+    if (!isDownloadable) return;
+    e.stopPropagation();
+    if (downloading) return;
+    setDownloading(true);
+    try {
+      await Promise.resolve(onDownloadFile?.(item.id));
+    } finally {
+      setDownloading(false);
+    }
   };
 
   return (
@@ -24,9 +42,26 @@ const FilteredRow = ({ item, onClick }: FilteredRowProps) => {
 
       <div>{item.date}</div>
 
-      <div className="flex gap-2 items-center">
+      <div
+        className={`flex gap-2 items-center min-w-0 ${
+          isDownloadable ? "cursor-pointer hover:opacity-80" : ""
+        }`}
+        onClick={handleFileDownload}
+        role={isDownloadable ? "button" : undefined}
+        aria-label={isDownloadable ? "파일 다운로드" : undefined}
+      >
         <span className="truncate">{item.file || "-"}</span>
-        {item.file && <img src={Download} alt="download" className="w-4 h-4" />}
+        {item.file && (
+          <img
+            src={Download}
+            alt="download"
+            className="w-4 h-4 flex-shrink-0"
+            aria-hidden
+          />
+        )}
+        {downloading && (
+          <span className="text-[#FF6738] text-[10px]">다운로드 중...</span>
+        )}
       </div>
 
       <div>{item.goal || "-"}</div>

@@ -7,10 +7,11 @@ import AssignmentManagement from "../components/assignment/AssignmentManagement"
 import { getMentees } from "../api/mentee";
 import { useMenteeStore } from "../stores/menteeStroe";
 import type { FeedbackItem, TodoItem } from "../types/list";
-import { getTasks } from "../api/task";
+import { getTaskDetail, getTasks } from "../api/task";
 import type { TabType } from "../types/filter";
 import { getFeedbackList } from "../api/feedback";
 import { useAuthStore } from "../stores/authStore";
+import { api } from "../api/axios";
 
 const MentorHome = () => {
   const [activeTab, setActiveTab] = useState<"학습 관리" | "과제 관리">(
@@ -90,6 +91,47 @@ const MentorHome = () => {
     setActiveTab("과제 관리");
   };
 
+  const downloadBlob = (blob: Blob, filename: string) => {
+    const objectUrl = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = objectUrl;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(objectUrl);
+  };
+
+  const getFileNameFromUrl = (url: string, fallback: string) => {
+    try {
+      const path = new URL(url, "http://dummy").pathname;
+      const segment = path.split("/").pop();
+      if (segment) return decodeURIComponent(segment);
+    } catch {
+      // ignore
+    }
+    return fallback;
+  };
+
+  const handleDownloadFile = async (taskId: number) => {
+    if (!selectedMentee) return;
+    try {
+      const detail = await getTaskDetail(taskId, selectedMentee.menteeId);
+      const fileUrlRaw = detail.result.pdf_file_url;
+      if (!fileUrlRaw) return;
+
+      // 상대 경로 형태면 /를 보정
+      const fileUrl =
+        fileUrlRaw.startsWith("http") || fileUrlRaw.startsWith("/")
+          ? fileUrlRaw
+          : `/${fileUrlRaw}`;
+
+      const res = await api.get(fileUrl, { responseType: "blob" });
+      const filename = getFileNameFromUrl(fileUrl, `task-${taskId}.pdf`);
+      downloadBlob(new Blob([res.data]), filename);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <div className="flex">
       <Sidebar
@@ -120,6 +162,7 @@ const MentorHome = () => {
                 tasks={tasks}
                 feebacks={feebacks}
                 onSwitchToAssignment={switchToAssignment}
+                onDownloadFile={handleDownloadFile}
               />
             )}
             {activeTab === "과제 관리" && (
@@ -127,6 +170,7 @@ const MentorHome = () => {
                 tasks={tasks}
                 selectedDay={selectedDay}
                 onSelectedDayChange={setSelectedDay}
+                onDownloadFile={handleDownloadFile}
               />
             )}
           </main>
