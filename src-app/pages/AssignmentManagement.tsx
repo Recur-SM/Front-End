@@ -3,26 +3,69 @@ import { useNavigate } from "react-router-dom";
 import List from "../components/list";
 import Clock from "../assets/clock.svg";
 import Upload from "../assets/upload.svg";
+import { uploadPlanner } from "../api/planner";
+import { useAuthStore } from "../stores/authStore";
 
 const AssignmentManagementPage = () => {
     const navigate = useNavigate();
+    const { id } = useAuthStore();
     const [image, setImage] = useState<string | null>(null);
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
     
     const feedbackText = "분명하네요 ㅎㅎ 어제(1/5) 공부하면서 ’영어 과제’가 아침까진 있었는데, 갑자기 사라져서 당황하셨을 수도 있을 것 같습니다. 원래는 모든 ‘약점 맞춤 과제’가 3일 주기로 돌아가고 있었는데, 채영 학생이 일요일에 부담이 너무 많은 것 같아서 문법 강의는 월/목에, 문학 강의는 화/금에, 영어 과제는 수/토에 배분해뒀어요!! 이번주는 과제가 좀 복잡하게 배치되어있는데 잘 살펴서 해주시고, 다음주부터는 확실한 루틴 속에서 과제해주시면 됩니다!!";
 
     const handleUploadClick = () => {
+        console.log("[planner] upload click", { hasImageFile: Boolean(imageFile), isSubmitting });
+        if (imageFile && !isSubmitting) {
+            handleSubmit();
+            return;
+        }
         fileInputRef.current?.click();
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            console.log("[planner] file selected", { name: file.name, size: file.size });
+            setImageFile(file);
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImage(reader.result as string);
             };
             reader.readAsDataURL(file);
+            if (!isSubmitting) {
+                handleSubmit(file);
+            }
+        }
+    };
+
+    const handleSubmit = async (fileOverride?: File) => {
+        const fileToUpload = fileOverride ?? imageFile;
+        console.log("[planner] submit check", { id, hasFile: Boolean(fileToUpload) });
+        if (!id) {
+            return;
+        }
+        if (!fileToUpload) {
+            return;
+        }
+        try {
+            setIsSubmitting(true);
+            console.log("[planner] submit start", { menteeId: id, hasFile: Boolean(fileToUpload) });
+
+            const plannerDate = new Date().toISOString().split("T")[0];
+            await uploadPlanner({
+                menteeId: id,
+                plannerDate,
+                content: "내용 없음",
+                image: fileToUpload,
+            });
+            console.log("[planner] submit success");
+        } catch (e) {
+            console.error("[planner] submit failed", e);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -99,6 +142,7 @@ const AssignmentManagementPage = () => {
                     )}
                 </div>
             </div>
+
         </div>
     );
 };
