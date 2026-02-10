@@ -107,7 +107,7 @@ const LoginPage = () => {
           </div>
         </div>
 
-        {/* 로그인 버튼: Yanus님 스타일 유지 + 로딩 상태 텍스트 적용 */}
+        {/* 로그인 버튼 */}
         <button 
           onClick={handleLogin}
           disabled={!isActive || isSubmitting}

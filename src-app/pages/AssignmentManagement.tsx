@@ -43,27 +43,34 @@ const AssignmentManagementPage = () => {
 
     const handleSubmit = async (fileOverride?: File) => {
         const fileToUpload = fileOverride ?? imageFile;
-        console.log("[planner] submit check", { id, hasFile: Boolean(fileToUpload) });
+        
+        // 현재 스토어에 저장된 id 값을 다시 확인
+        console.log("[planner] submit check", { currentId: id, hasFile: Boolean(fileToUpload) });
+
         if (!id) {
+            alert("로그인 정보가 없습니다. 다시 로그인 해주세요.");
             return;
         }
-        if (!fileToUpload) {
-            return;
-        }
+        if (!fileToUpload) return;
+
         try {
             setIsSubmitting(true);
-            console.log("[planner] submit start", { menteeId: id, hasFile: Boolean(fileToUpload) });
-
             const plannerDate = new Date().toISOString().split("T")[0];
-            await uploadPlanner({
+
+            // API 응답 결과를 변수에 담아 로그로 확인
+            const response = await uploadPlanner({
                 menteeId: id,
                 plannerDate,
                 content: "내용 없음",
                 image: fileToUpload,
             });
-            console.log("[planner] submit success");
+
+            console.log("[planner] submit success", response); 
+            alert("플래너가 성공적으로 업로드되었습니다!");
+            
         } catch (e) {
             console.error("[planner] submit failed", e);
+            alert("업로드 중 오류가 발생했습니다.");
         } finally {
             setIsSubmitting(false);
         }
