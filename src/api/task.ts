@@ -62,14 +62,13 @@ export async function getMonthlyTask(
 
 export async function submitTask(
   task_id: number,
-  completion_photo: string,
+  completion_photo: File,
 ): Promise<SubmitTaskResponse> {
   const formData = new FormData();
   formData.append("completion_photo", completion_photo);
 
   const res = await api.post(`/tasks/${task_id}/submit`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
-    params: { task_id: task_id },
   });
   return res.data;
 }
