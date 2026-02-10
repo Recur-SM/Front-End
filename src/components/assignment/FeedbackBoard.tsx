@@ -1,10 +1,17 @@
 import { useState } from "react";
 
-const FeedbackBoard = () => {
+interface FeedbackBoardProps {
+  height?: number;
+}
+
+const FeedbackBoard: React.FC<FeedbackBoardProps> = ({ height = 130 }) => {
   const [value, setValue] = useState("");
 
   return (
-    <div className="relative flex flex-col w-full h-[130px] bg-white rounded-lg">
+    <div
+      className="relative flex flex-col w-full h-[130px] bg-white rounded-lg"
+      style={{ height: `${height}px` }}
+    >
       <span className="px-7 py-5 font-semibold text-lg">피드백</span>
 
       {!value && (

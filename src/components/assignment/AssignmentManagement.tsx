@@ -8,12 +8,13 @@ import type { TodoItem } from "../../types/list";
 import PlannerBoard from "./PlannerBoard";
 import FeedbackBoard from "./FeedbackBoard";
 import AssignmentBoard from "./AssignmentBoard";
+import { useMenteeStore } from "../../stores/menteeStroe";
 
 interface AssignmentManagementProps {
   tasks: TodoItem[];
   selectedDay?: Date;
   onSelectedDayChange?: (day: Date) => void;
-onDownloadFile?: (fileUrl: string) => void | Promise<void>;
+  onDownloadFile?: (fileUrl: string) => void | Promise<void>;
 }
 
 const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
@@ -23,10 +24,18 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
   onDownloadFile,
 }) => {
   const [internalDay, setInternalDay] = useState(new Date());
+  const [localTodos, setLocalTodos] = useState<TodoItem[]>([]);
+  const [plannerHeight, setPlannerHeight] = useState(130);
   const selectedDay = selectedDayProp ?? internalDay;
   const setSelectedDay = onSelectedDayChange ?? setInternalDay;
+  const { selectedMentee } = useMenteeStore();
+  const menteeId = selectedMentee?.menteeId;
 
-  const [localTodos, setLocalTodos] = useState<TodoItem[]>([]);
+  if (!menteeId) {
+    console.warn("멘티 ID가 없습니다.");
+    return null;
+  }
+
   const selectedDateStr = format(selectedDay, "yyyy-MM-dd");
   const todosForDay = [
     ...tasks,
@@ -72,11 +81,15 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
 
         <div className="flex w-full gap-1 py-2">
           <div className="w-1/3">
-            <PlannerBoard />
+            <PlannerBoard
+              menteeId={selectedMentee!.menteeId}
+              date={selectedDateStr}
+              onHeightChange={setPlannerHeight}
+            />
           </div>
 
           <div className="w-2/3">
-            <FeedbackBoard />
+            <FeedbackBoard height={plannerHeight} />
           </div>
         </div>
 
