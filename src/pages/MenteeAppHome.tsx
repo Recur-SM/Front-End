@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet } from 'react-router-dom'; // Outlet 추가
+import { Routes, Route, Outlet } from 'react-router-dom';
 import { useState } from 'react';
 
 import Header from "../../src-app/components/header";
@@ -14,58 +14,65 @@ import AssignmentDetail from '../../src-app/pages/AssignmentDetail';
 function MenteeHome() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // 헤더 + 탭바 포함
+  // 헤더 + 탭바 포함 레이아웃
   const MainLayout = () => (
     <>
-      <div className="fixed top-0 z-50 w-full max-w-[430px]">
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[430px]">
         <Header onMenuClick={() => setIsSidebarOpen(true)} />
       </div>
-      <main className="w-full max-w-[430px] pt-[105px] pb-[100px] px-[24px] flex-1 overflow-y-auto">
+      
+      <main className="w-full pt-[105px] pb-[100px] px-[24px] flex-1 overflow-y-auto scrollbar-hide">
         <Outlet />
       </main>
-      <div className="fixed bottom-0 z-50 w-full max-w-[430px]">
+
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[430px]">
         <Tabbar />
       </div>
     </>
   );
 
-  // 상세 헤더만, 탭바 없음
+  // 상세 헤더 레이아웃
   const DetailLayout = () => (
     <>
-      <div className="fixed top-0 z-50 w-full max-w-[430px]">
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[430px]">
         <DetailHeader />
       </div>
-      <main className="w-full max-w-[430px] pt-[105px] pb-0 px-[24px] flex-1 overflow-y-auto">
+      
+      <main className="w-full pt-[105px] pb-0 px-[24px] flex-1 overflow-y-auto scrollbar-hide">
         <Outlet />
       </main>
     </>
   );
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col items-center">
-      <Routes>
-        {/* 헤더/탭바 제외 */}
-        <Route path="/login" element={<LoginPage />} />
+    /* 웹 배경색 설정 및 중앙 정렬 컨테이너 */
+    <div className="min-h-screen w-full bg-[#F7F7F7] flex justify-center overflow-x-hidden">
+      
+      {/* 실제 모바일 앱 규격 영역 */}
+      <div className="relative w-full max-w-[430px] min-h-screen">
+        
+        <Routes>
+          {/* 로그인 페이지 */}
+          <Route path="/login" element={<LoginPage />} />
 
-        {/* 헤더 + 탭바 있음 */}
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/assignment-management" element={<AssignmentManagement />} />
-          <Route path="/record" element={<Record />} />
-        </Route>
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/assignment-management" element={<AssignmentManagement />} />
+            <Route path="/record" element={<Record />} />
+          </Route>
 
-        {/* 상세 헤더만 있음 */}
-        <Route element={<DetailLayout />}>
-          <Route path="/assignment-detail" element={<AssignmentDetail />} />
-        </Route>
-      </Routes>
+          <Route element={<DetailLayout />}>
+            <Route path="/assignment-detail" element={<AssignmentDetail />} />
+          </Route>
+        </Routes>
 
-      {/* 사이드바 */}
-      <Sidebar 
-        isOpen={isSidebarOpen} 
-        onClose={() => setIsSidebarOpen(false)} 
-        userName="김제현"
-      />
+        {/* 사이드바 */}
+        <Sidebar 
+          isOpen={isSidebarOpen} 
+          onClose={() => setIsSidebarOpen(false)} 
+          userName="김제현"
+        />
+      </div>
     </div>
   );
 }

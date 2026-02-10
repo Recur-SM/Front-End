@@ -20,7 +20,7 @@ const AssignmentDetailPage = () => {
     };
 
     return (
-        <div className="w-full min-h-[600px] overflow-x-hidden mt-[32px] pb-[16px] flex flex-col gap-[8px]">
+        <div className="w-full min-h-auto overflow-x-hidden mt-[32px] pb-[16px] flex flex-col gap-[8px]">
             {/* 날짜 */}
             <div className="text-[20px] font-semibold">1월 8일</div>
             
