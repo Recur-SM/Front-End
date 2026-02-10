@@ -113,15 +113,10 @@ const List = ({ title, type, items = [], onAdd }: ListProps) => {
                 {/* 아이템 렌더링 */}
                 {filteredItems.map((item, idx) => (
                   <div key={idx} className="grid grid-cols-[1.5fr_0.8fr_2.2fr] items-center text-[14px] py-[1px]">
+                    
                     {/* 제목 영역 */}
                     <div 
-                      onClick={() => {
-                        if (item.file) {
-                          handleDownload(item.file);
-                        } else {
-                          handleTitleClick(item);
-                        }
-                      }}
+                      onClick={() => handleTitleClick(item)}
                       className="flex items-center text-[#111111] cursor-pointer hover:text-[#FF6738] transition-colors group"
                     >
                         <span className="group-hover:underline">{item.title}</span>
@@ -131,27 +126,27 @@ const List = ({ title, type, items = [], onAdd }: ListProps) => {
                     <span className="text-[#111111]">{item.date}</span>
                     
                     {/* 학습지 다운로드 영역 */}
-                    <div className="flex items-center justify-between gap-2">
-                      {/* 파일명 텍스트 클릭 시 다운로드 */}
-                      <span 
-                        onClick={() => item.file && handleDownload(item.file)}
-                        className={item.file ? "text-[#FF6738] underline cursor-pointer" : "text-[#999999]"}
-                      >
-                        {item.file ? truncateFileName(item.file) : "-"}
-                      </span>
+                    <div className="flex items-center">
+                      {item.file ? (
+                        <div 
+                          className="flex items-center gap-[2px] cursor-pointer group/down"
+                          onClick={() => handleDownload(item.file!)}
+                        >
+                          {/* 파일명 텍스트 */}
+                          <span className="text-[#FF6738] underline transition-colors group-hover/down:opacity-70">
+                            {truncateFileName(item.file)}
+                          </span>
 
-                      {/* 다운로드 아이콘 클릭 시 다운로드 */}
-                      {item.file && (
-                        <img 
-                          src={DownloadIcon} 
-                          className="w-[18px] h-[18px] cursor-pointer hover:opacity-70 transition-opacity" 
-                          alt="download"
-                          style={{ filter: "invert(54%) sepia(87%) saturate(2321%) hue-rotate(336deg) brightness(101%) contrast(101%)" }}
-                          onClick={(e) => {
-                            e.stopPropagation(); 
-                            handleDownload(item.file!);
-                          }}
-                        />
+                          {/* 다운로드 아이콘 */}
+                          <img 
+                            src={DownloadIcon} 
+                            className="w-[18px] h-[18px] transition-opacity group-hover/down:opacity-70" 
+                            alt="download"
+                            style={{ filter: "invert(54%) sepia(87%) saturate(2321%) hue-rotate(336deg) brightness(101%) contrast(101%)" }}
+                          />
+                        </div>
+                      ) : (
+                        <span className="text-[#999999]">-</span>
                       )}
                     </div>
                   </div>

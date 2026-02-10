@@ -20,12 +20,12 @@ const AssignmentDetailPage = () => {
     };
 
     return (
-        <div className="w-full min-h-auto overflow-x-hidden mt-[32px] pb-[16px] flex flex-col gap-[8px]">
+        <div className="w-full min-h-auto overflow-x-hidden mt-[32px] my-[110px] pb-[16px] flex flex-col gap-[8px]">
             {/* 날짜 */}
             <div className="text-[20px] font-semibold">1월 8일</div>
             
             {/* 하얀 컨테이너 */}
-            <div className="w-[384px] min-h-[675px] p-[12px] rounded-[8px] flex flex-col itmes-center bg-white shadow-[0px_4px_6px_0px_rgba(0,0,0,0.03)]">
+            <div className="w-full max-w-[384px] mx-auto p-[12px] rounded-[8px] flex flex-col itmes-center bg-white shadow-[0px_4px_6px_0px_rgba(0,0,0,0.03)]">
                 <div className="w-full text-[20px] font-semibold mt-[1px] mb-[25px] flex">수학 오답 노트</div>
 
                 <div className="w-full h-[102px] gap-[16px] mb-[16px]">
