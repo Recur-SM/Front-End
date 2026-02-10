@@ -6,14 +6,14 @@ const DetailHeader = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="fixed top-0 left-0 w-full h-[122px] pt-[54px] px-[24px] flex flex-col justify-center z-50">
+    <header className="fixed top-0 left-0 w-full h-[122px] pt-[54px] px-[24px] flex flex-col justify-center bg-[#F7F7F7] z-50">
       <div className="w-[382px] h-[56px] flex items-center justify-between mb-[12px]">
         <div className="flex-1 flex justify-start items-center">
           <div className="w-[40px] h-[40px] flex items-center justify-start">
             <img 
               src={BackArrow} 
               alt="돌아가기" 
-              onClick={() => navigate('/mentee/assignment-management')} 
+              onClick={() => navigate('/mentee-a/assignment-management')} 
               className="w-[40px] h-[40px] object-contain cursor-pointer" 
             />
           </div>
