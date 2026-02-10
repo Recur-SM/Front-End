@@ -9,7 +9,7 @@ interface ListProps {
   type: "할일" | "피드백";
   tasks: ListItem[];
   onTaskClick?: (taskId: number) => void;
-  onDownloadFile?: (taskId: number) => void | Promise<void>;
+onDownloadFile?: (fileUrl: string) => void | Promise<void>;
 }
 
 const List: React.FC<ListProps> = ({

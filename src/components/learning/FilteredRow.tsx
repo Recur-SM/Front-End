@@ -6,7 +6,7 @@ import Download from "../../assets/download.svg";
 interface FilteredRowProps {
   item: ListItem;
   onClick?: () => void;
-  onDownloadFile?: (taskId: number) => void | Promise<void>;
+onDownloadFile?: (fileUrl: string) => void | Promise<void>;
 }
 
 const FilteredRow = ({ item, onClick, onDownloadFile }: FilteredRowProps) => {
@@ -19,16 +19,17 @@ const FilteredRow = ({ item, onClick, onDownloadFile }: FilteredRowProps) => {
   const isDownloadable = Boolean(item.file);
 
   const handleFileDownload = async (e: React.MouseEvent) => {
-    if (!isDownloadable) return;
-    e.stopPropagation();
-    if (downloading) return;
-    setDownloading(true);
-    try {
-      await Promise.resolve(onDownloadFile?.(item.id));
-    } finally {
-      setDownloading(false);
-    }
-  };
+  if (!isDownloadable) return;
+  e.stopPropagation();
+  if (downloading) return;
+
+  setDownloading(true);
+  try {
+    await onDownloadFile?.(item.file!);
+  } finally {
+    setDownloading(false);
+  }
+};
 
   return (
     <div className="grid grid-cols-5 gap-4 items-center text-xs">
@@ -58,9 +59,6 @@ const FilteredRow = ({ item, onClick, onDownloadFile }: FilteredRowProps) => {
             className="w-4 h-4 flex-shrink-0"
             aria-hidden
           />
-        )}
-        {downloading && (
-          <span className="text-[#FF6738] text-[10px]">다운로드 중...</span>
         )}
       </div>
 

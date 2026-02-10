@@ -7,7 +7,7 @@ interface StudyManagementProps {
   tasks: TodoItem[];
   feebacks: FeedbackItem[];
   onSwitchToAssignment?: () => void; // 탭 전환 콜백 추가
-  onDownloadFile?: (taskId: number) => void | Promise<void>;
+onDownloadFile?: (fileUrl: string) => void | Promise<void>;
 }
 
 const StudyManagement: React.FC<StudyManagementProps> = ({

@@ -13,7 +13,7 @@ interface AssignmentManagementProps {
   tasks: TodoItem[];
   selectedDay?: Date;
   onSelectedDayChange?: (day: Date) => void;
-  onDownloadFile?: (taskId: number) => void | Promise<void>;
+onDownloadFile?: (fileUrl: string) => void | Promise<void>;
 }
 
 const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
