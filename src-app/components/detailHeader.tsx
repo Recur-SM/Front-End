@@ -13,7 +13,7 @@ const DetailHeader = () => {
             <img 
               src={BackArrow} 
               alt="돌아가기" 
-              onClick={() => navigate('/mentee-a/assignment-management')} 
+              onClick={() => navigate('/app/assignment-management')} 
               className="w-[40px] h-[40px] object-contain cursor-pointer" 
             />
           </div>

@@ -76,11 +76,28 @@ const AssignmentManagementPage = () => {
         }
     };
 
+    // 할 일 목록을 상태로 관리
+    const [todoItems, setTodoItems] = useState([
+        { title: "수학 오답 노트", date: "2월 8일", file: "수학_오답노트.pdf", subject: "수학" },
+        { title: "영단어 테스트", date: "2월 8일", subject: "영어" },
+    ]);
+
+    // 새로운 아이템을 추가하는 함수
+    const handleAddTodo = (newTodo: { title: string; subject: string }) => {
+        const today = new Date();
+        const formattedDate = `${today.getMonth() + 1}월 ${today.getDate()}일`;
+        
+        setTodoItems([
+            ...todoItems,
+            { ...newTodo, date: formattedDate }
+        ]);
+    };
+
     return (
         <div className="w-full min-h-auto overflow-x-hidden pt-[99px] pb-[32px] flex flex-col gap-[8px]">
             {/* 공부 시간 기록 버튼 */}
             <div 
-                onClick={() => navigate("/mentee-a/record")}
+                onClick={() => navigate("/app/record")}
                 className="w-[137px] h-[30px] rounded-[12px] flex justify-center items-center gap-[4px] ml-auto mr-[4px] border border-[#E5E5EC] text-[12px] text-[#767676] bg-white cursor-pointer active:bg-gray-50"
             >
                 <img src={Clock} alt="시계" className="w-[20px] h-[20px]" />
@@ -92,10 +109,8 @@ const AssignmentManagementPage = () => {
                 <List
                     title="오늘 할 일"
                     type={1}
-                    items={[
-                        { title: "수학 오답 노트", date: "2월 8일", file: "수학_오답노트_양식.pdf" },
-                        { title: "단어 암기", date: "2월 8일" }
-                    ]}
+                    items={todoItems}
+                    onAdd={handleAddTodo} 
                 />
             </div>
 

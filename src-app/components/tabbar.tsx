@@ -14,17 +14,25 @@ const Tabbar: React.FC = () => {
   const getActiveTab = (tabPath: string) => {
     const currentPath = location.pathname;
     
-    if (tabPath === "/mentee-a/assignment-management") {
-      return currentPath === "/mentee-a/assignment-management" || currentPath === "/mentee-a/record" || currentPath === "/mentee-a/assignment-detail";
+    if (tabPath === "/app/assignment-management") {
+      return (
+        currentPath === "/app/assignment-management" || 
+        currentPath === "/app/record" || 
+        currentPath === "/app/assignment-detail"
+      );
+    }
+    
+    if (tabPath === "/app") {
+      return currentPath === "/app" || currentPath === "/app/";
     }
     
     return currentPath === tabPath;
   };
 
   const tabs = [
-    { name: "학습 관리", icon: BookIcon, activeIcon: BookIconActive, path: "/mentee-a" },
-    { name: "과제 관리", icon: PencilIcon, activeIcon: PencilIconActive, path: "/mentee-a/assignment-management" },
-    { name: "마이페이지", icon: ProfileIcon, activeIcon: ProfileIconActive, path: "/mentee-a/my-page" },
+    { name: "학습 관리", icon: BookIcon, activeIcon: BookIconActive, path: "/app" },
+    { name: "과제 관리", icon: PencilIcon, activeIcon: PencilIconActive, path: "/app/assignment-management" },
+    { name: "마이페이지", icon: ProfileIcon, activeIcon: ProfileIconActive, path: "/app/my-page" },
   ];
 
   return (

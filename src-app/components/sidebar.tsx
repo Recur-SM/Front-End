@@ -34,7 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, userName }) => {
             </div>
           
             <button 
-                onClick={() => navigate('/mentee-a/assignment-my-page')}
+                onClick={() => navigate('/app/my-page')}
                 className="text-[12px] text-[#767676] mx-[8px] mb-[1.5px]"
                 >
                 마이페이지 &gt;
