@@ -9,7 +9,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 const AppLayout = () => {
   const location = useLocation();
-  const { accessToken } = useAuthStore();
   
   // 로그인 페이지 여부 체크 (basename인 /app 제외 후 비교)
   const isLoginPage = location.pathname === "/login";
