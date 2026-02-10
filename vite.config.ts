@@ -1,4 +1,5 @@
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite'
+import { resolve } from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,6 +14,10 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
+      input: {
+        main: resolve(__dirname, "index.html"),
+        app: resolve(__dirname, "app.html"),
+      },
       output: {
         manualChunks: {
           // 리액트 관련 라이브러리를 별도 청크로 분리
