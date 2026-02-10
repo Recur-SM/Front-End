@@ -4,6 +4,7 @@ import logoutIcon from "../../assets/logoutIcon.svg";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../stores/authStore";
 import { logout } from "../../api/auth";
+import Logo from "../../assets/seol-study-logo.svg";
 
 interface SidebarProps {
   role: "mentor" | "mentee";
@@ -41,14 +42,14 @@ const Sidebar: React.FC<SidebarProps> = ({
     <aside className="w-[11vw] h-screen bg-white border-r border-gray-200 flex flex-col p-[2.22vh_1.25vw] sticky top-0 shadow-sm overflow-x-hidden">
       {/* 상단 프로필 영역 */}
       <div className="mb-[3.7vh]">
-        <div className="text-xs text-[#FF6738] font-medium mb-[1.48vh]">
-          설 스터디
-        </div>
+         <img src={Logo} alt="logo" width={150} height={150} className="-ml-7 -mt-4" />
         <div className="flex items-center gap-[0.625vw] mb-[0.09vh]">
-          <div className="w-[1.45vw] h-[2.59vh] flex items-center justify-center overflow-hidden">
+          <div className="w-[1.45vw] flex items-center justify-center overflow-hidden">
             <img
               src={profileIcon}
               alt="프로필"
+              width={60}
+              height={60}
               className="w-full h-full object-contain"
             />
           </div>
