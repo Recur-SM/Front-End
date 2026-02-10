@@ -7,11 +7,10 @@ import AssignmentManagement from "../components/assignment/AssignmentManagement"
 import { getMentees } from "../api/mentee";
 import { useMenteeStore } from "../stores/menteeStroe";
 import type { FeedbackItem, TodoItem } from "../types/list";
-import { getTaskDetail, getTasks } from "../api/task";
+import { getTasks } from "../api/task";
 import type { TabType } from "../types/filter";
 import { getFeedbackList } from "../api/feedback";
 import { useAuthStore } from "../stores/authStore";
-import { api } from "../api/axios";
 
 const MentorHome = () => {
   const [activeTab, setActiveTab] = useState<"학습 관리" | "과제 관리">(
@@ -91,61 +90,28 @@ const MentorHome = () => {
     setActiveTab("과제 관리");
   };
 
-  const downloadBlob = (blob: Blob, filename: string) => {
+const handleDownloadFile = async (url: string) => {
+  try {
+    const res = await fetch(url); // presigned URL
+    if (!res.ok) throw new Error("Failed to fetch file");
+    const blob = await res.blob();
     const objectUrl = URL.createObjectURL(blob);
+
     const a = document.createElement("a");
     a.href = objectUrl;
+    // 원래 파일명 추출하거나 fallback 사용
+    const filename = url.split("/").pop()?.split("?")[0] ?? "file.png";
     a.download = filename;
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
+
     URL.revokeObjectURL(objectUrl);
-  };
-
-  const getFileNameFromUrl = (url: string, fallback: string) => {
-    try {
-      const path = new URL(url, "http://dummy").pathname;
-      const segment = path.split("/").pop();
-      if (segment) return decodeURIComponent(segment);
-    } catch {
-      // ignore
-    }
-    return fallback;
-  };
-
-  const handleDownloadFile = async (taskId: number) => {
-    if (!selectedMentee) return;
-    try {
-      const detail = await getTaskDetail(taskId, selectedMentee.menteeId);
-      const fileUrlRaw = detail.result.pdf_file_url;
-      if (!fileUrlRaw) return;
-
-      // 상대 경로 형태면 / 보정. 외부 presigned URL은 수정하면 서명(SignatureDoesNotMatch) 깨짐 → 그대로 사용
-      const fileUrl =
-        fileUrlRaw.startsWith("http") || fileUrlRaw.startsWith("/")
-          ? fileUrlRaw
-          : `/${fileUrlRaw}`;
-
-      const filename = getFileNameFromUrl(fileUrl, `task-${taskId}.pdf`);
-
-      // 외부 스토리지(presigned URL 등)는 withCredentials 요청 시 CORS로 막힐 수 있어
-      // credentials 없이(fetch) 내려받도록 분기
-      if (fileUrl.startsWith("http")) {
-        const res = await fetch(fileUrl, { credentials: "omit" });
-        if (!res.ok) {
-          window.open(fileUrl, "_blank");
-          return;
-        }
-        const blob = await res.blob();
-        downloadBlob(blob, filename);
-        return;
-      }
-
-      // 내부 API 경로는 인증 포함 axios로 blob 다운로드
-      const res = await api.get(fileUrl, { responseType: "blob" });
-      downloadBlob(new Blob([res.data]), filename);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  } catch (err) {
+    console.error(err);
+    alert("파일 다운로드에 실패했습니다.");
+  }
+};
 
   return (
     <div className="flex">
