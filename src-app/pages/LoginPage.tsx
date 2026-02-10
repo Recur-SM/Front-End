@@ -54,7 +54,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-auto mt-[172.5px] flex flex-col items-center">
+    <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-[382px] h-[588px] mt-[1px]">
         
         {/* 설 스터디 로고 */}
