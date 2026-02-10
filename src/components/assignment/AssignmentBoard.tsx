@@ -87,6 +87,10 @@ const AssignmentBoard = ({ todos, onUpdateTodo }: AssignmentBoardProps) => {
         return;
       }
 
+      setValues({});
+      setFeedbackIds({});
+      setIsLoading(true);
+
       try {
         // 멘티의 모든 피드백 목록 조회
         const feedbackList = await getFeedbackList(selectedMentee.menteeId);
