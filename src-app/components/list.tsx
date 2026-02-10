@@ -23,7 +23,7 @@ const List = ({ title, type, items = [] }: ListProps) => {
   const filters = ["전체", "국어", "영어", "수학"];
 
   const handleTitleClick = (item: ListItem) => {
-    navigate('/mentee-a/assignment-detail', { state: { assignment: item } });
+    navigate('/app/assignment-detail', { state: { assignment: item } });
   };
 
   const handleDownload = (fileName: string) => {

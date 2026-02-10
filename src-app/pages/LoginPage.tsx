@@ -40,7 +40,7 @@ const LoginPage = () => {
           useAuthStore.getState().setId(userId);
         }
         
-        navigate("/mentee-a/assignment-management", { replace: true });
+        navigate("/app/assignment-management", { replace: true });
       } else {
         setErrorId(true);
         setErrorPw(true);
@@ -54,7 +54,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="h-full mt-[172.5px] flex flex-col items-center">
+    <div className="min-h-auto mt-[172.5px] flex flex-col items-center">
       <div className="w-[382px] h-[588px] mt-[1px]">
         
         {/* 설 스터디 로고 */}

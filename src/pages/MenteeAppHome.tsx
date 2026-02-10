@@ -11,7 +11,7 @@ import AssignmentManagement from '../../src-app/pages/AssignmentManagement';
 import Record from '../../src-app/pages/Record';
 import AssignmentDetail from '../../src-app/pages/AssignmentDetail';
 
-function MenteeHome() {
+function MenteeAppHome() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // 헤더 + 탭바 포함 레이아웃
@@ -41,6 +41,10 @@ function MenteeHome() {
       <main className="w-full pt-[105px] pb-0 px-[24px] flex-1 overflow-y-auto scrollbar-hide">
         <Outlet />
       </main>
+
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[430px]">
+        <Tabbar />
+      </div>
     </>
   );
 
@@ -77,4 +81,4 @@ function MenteeHome() {
   );
 }
 
-export default MenteeHome;
+export default MenteeAppHome;
