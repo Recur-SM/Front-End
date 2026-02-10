@@ -93,7 +93,7 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
           </div>
 
           <div className="w-2/3">
-            <FeedbackBoard height={plannerHeight} plannerId={plannerId} menteeId={menteeId} mentorId={id!} />
+            <FeedbackBoard height={plannerHeight} plannerId={plannerId} menteeId={menteeId} mentorId={id!} plannerDate={selectedDateStr} />
           </div>
         </div>
 
