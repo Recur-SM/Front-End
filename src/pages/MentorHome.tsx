@@ -124,8 +124,23 @@ const MentorHome = () => {
           ? fileUrlRaw
           : `/${fileUrlRaw}`;
 
-      const res = await api.get(fileUrl, { responseType: "blob" });
       const filename = getFileNameFromUrl(fileUrl, `task-${taskId}.pdf`);
+
+      // 외부 스토리지(presigned URL 등)는 withCredentials 요청 시 CORS로 막힐 수 있어
+      // credentials 없이(fetch) 내려받도록 분기
+      if (fileUrl.startsWith("http")) {
+        const res = await fetch(fileUrl, { credentials: "omit" });
+        if (!res.ok) {
+          window.open(fileUrl, "_blank");
+          return;
+        }
+        const blob = await res.blob();
+        downloadBlob(blob, filename);
+        return;
+      }
+
+      // 내부 API 경로는 인증 포함 axios로 blob 다운로드
+      const res = await api.get(fileUrl, { responseType: "blob" });
       downloadBlob(new Blob([res.data]), filename);
     } catch (e) {
       console.error(e);
