@@ -24,7 +24,7 @@ function App() {
           ) : role === "MENTOR" ? (
             <MentorHome />
           ) : (
-            <MenteeHome />
+            <Navigate to="/login" replace />
           )
         }
       />
