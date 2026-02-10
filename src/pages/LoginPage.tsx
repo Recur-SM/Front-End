@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { login } from "../api/auth";
 import { useAuthStore } from "../stores/authStore";
+import Logo from "../assets/seol-study-logo.svg";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -29,9 +30,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen justify-center items-center gap-12">
-      <span className="text-2xl text-[#FF6738]">설 스터디</span>
-      <div className="flex">
+    <div className="flex flex-col h-screen justify-center items-center -mt-10">
+      <div className="flex flex-col items-center">
+        <img src={Logo} alt="logo" />
         <div className="flex flex-col gap-6 w-[360px]">
           <div className="flex flex-col gap-3">
             <span className="pl-1">사용자 아이디</span>
