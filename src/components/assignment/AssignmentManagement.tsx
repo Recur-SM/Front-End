@@ -9,6 +9,7 @@ import PlannerBoard from "./PlannerBoard";
 import FeedbackBoard from "./FeedbackBoard";
 import AssignmentBoard from "./AssignmentBoard";
 import { useMenteeStore } from "../../stores/menteeStroe";
+import { useAuthStore } from "../../stores/authStore";
 
 interface AssignmentManagementProps {
   tasks: TodoItem[];
@@ -26,9 +27,11 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
   const [internalDay, setInternalDay] = useState(new Date());
   const [localTodos, setLocalTodos] = useState<TodoItem[]>([]);
   const [plannerHeight, setPlannerHeight] = useState(130);
+  const [plannerId, setPlannerId] = useState(0);
   const selectedDay = selectedDayProp ?? internalDay;
   const setSelectedDay = onSelectedDayChange ?? setInternalDay;
   const { selectedMentee } = useMenteeStore();
+  const { id } = useAuthStore();
   const menteeId = selectedMentee?.menteeId;
 
   if (!menteeId) {
@@ -85,11 +88,12 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
               menteeId={selectedMentee!.menteeId}
               date={selectedDateStr}
               onHeightChange={setPlannerHeight}
+              setPlannerId = {setPlannerId}
             />
           </div>
 
           <div className="w-2/3">
-            <FeedbackBoard height={plannerHeight} />
+            <FeedbackBoard height={plannerHeight} plannerId={plannerId} menteeId={menteeId} mentorId={id!} plannerDate={selectedDateStr} />
           </div>
         </div>
 
