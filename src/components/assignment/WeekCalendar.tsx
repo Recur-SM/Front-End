@@ -72,7 +72,7 @@ const WeekCalendar: React.FC<WeekCalendarProps> = ({
                 {isSelected && !isToday && (
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[4.17vw] h-[6.17vw] border-2 border-[#FF6738] rounded-full" />
                 )}
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-3 items-center">
                   {/* 요일 */}
                   <span
                     className={`relative z-10 text-[0.83vw] font-medium ${
