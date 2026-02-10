@@ -21,7 +21,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, userName }) => {
         onClick={onClose} 
       />
       
-      <div className="w-[159px] h-[932px] rounded-r-[8px] bg-white flex flex-col p-[24px_12px_24px_24px] sticky top-0 overflow-x-hidden z-100">
+      <div className="w-[159px] min-h-auto rounded-r-[8px] bg-white flex flex-col p-[24px_12px_24px_24px] sticky top-0 overflow-x-hidden z-100">
         {/* 상단 로고 & 프로필 영역 */}
         <div className="w-[111px] h-[104px] flex flex-col items-start border-b border-[#EFEFEF] mb-[24px]">
             <div className="text-[15px] text-[#FF6738] font-medium m-[4px] tracking-widest">
