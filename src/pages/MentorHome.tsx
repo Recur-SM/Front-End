@@ -119,10 +119,13 @@ const MentorHome = () => {
       if (!fileUrlRaw) return;
 
       // 상대 경로 형태면 /를 보정
-      const fileUrl =
+      let fileUrl =
         fileUrlRaw.startsWith("http") || fileUrlRaw.startsWith("/")
           ? fileUrlRaw
           : `/${fileUrlRaw}`;
+
+      // 스토리지 URL 경로의 이중 슬래시(//) 제거 → NoSuchKey 방지 (프로토콜 :// 는 유지)
+      fileUrl = fileUrl.replace(/(?<=[^:])\/\/+/g, "/");
 
       const filename = getFileNameFromUrl(fileUrl, `task-${taskId}.pdf`);
 
