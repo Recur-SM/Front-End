@@ -22,6 +22,11 @@ const FeedbackBoard: React.FC<FeedbackBoardProps> = ({
   const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
+    setValue('');
+    setFetching(true);
+  }, [plannerDate, plannerId]);
+
+  useEffect(() => {
     const fetchComment = async () => {
       try {
         setFetching(true);
