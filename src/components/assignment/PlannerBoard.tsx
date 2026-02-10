@@ -6,12 +6,14 @@ interface PlannerProps {
   menteeId: number;
   date: string;
   onHeightChange?: (height: number) => void;
+  setPlannerId: (id: number) => void;
 }
 
 const PlannerBoard: React.FC<PlannerProps> = ({
   menteeId,
   date,
   onHeightChange,
+  setPlannerId
 }) => {
   const [plannerData, setPlannerData] = useState<PlannerResult | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +26,7 @@ const PlannerBoard: React.FC<PlannerProps> = ({
         setIsLoading(true);
         setError(false);
         const res: PlannerResponse = await getPlanner(menteeId, date);
+        setPlannerId(res.result.plannerId);
 
         if (res.isSuccess && res.result) {
           setPlannerData(res.result);
