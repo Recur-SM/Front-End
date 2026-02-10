@@ -118,14 +118,11 @@ const MentorHome = () => {
       const fileUrlRaw = detail.result.pdf_file_url;
       if (!fileUrlRaw) return;
 
-      // 상대 경로 형태면 /를 보정
-      let fileUrl =
+      // 상대 경로 형태면 / 보정. 외부 presigned URL은 수정하면 서명(SignatureDoesNotMatch) 깨짐 → 그대로 사용
+      const fileUrl =
         fileUrlRaw.startsWith("http") || fileUrlRaw.startsWith("/")
           ? fileUrlRaw
           : `/${fileUrlRaw}`;
-
-      // 스토리지 URL 경로의 이중 슬래시(//) 제거 → NoSuchKey 방지 (프로토콜 :// 는 유지)
-      fileUrl = fileUrl.replace(/(?<=[^:])\/\/+/g, "/");
 
       const filename = getFileNameFromUrl(fileUrl, `task-${taskId}.pdf`);
 
