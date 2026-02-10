@@ -135,3 +135,17 @@ export interface MonthlyTaskSummary {
   completed_tasks: number;
   completion_rate: number;
 }
+
+export interface SubmitTaskResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
+    completionId: number;
+    taskId: number;
+    completionPhotoUrl: string;
+    isCompleted: boolean;
+    completedAt: string;
+    createdAt: string;
+  };
+}
