@@ -8,9 +8,10 @@ import { useScrollStore } from "../../stores/scrollStore";
 
 interface AssignmentBoardProps {
   todos: TodoItem[];
+  onUpdateTodo?: (todoId: number, updates: Partial<TodoItem>) => void;
 }
 
-const AssignmentBoard = ({ todos }: AssignmentBoardProps) => {
+const AssignmentBoard = ({ todos, onUpdateTodo }: AssignmentBoardProps) => {
   const [values, setValues] = useState<Record<number, string>>({});
   const { selectedMentee } = useMenteeStore();
   const [isLoading, setIsLoading] = useState(true);
@@ -172,6 +173,8 @@ const AssignmentBoard = ({ todos }: AssignmentBoardProps) => {
           ...prev,
           [todo.id]: res.result.feedbackId,
         }));
+
+        onUpdateTodo?.(todo.id, { isFeedback: true });
       }
     } catch {
       console.error("피드백 작성에 실패했습니다.");

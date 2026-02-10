@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { format, isSameDay } from "date-fns";
 import { ko } from "date-fns/locale";
 import List from "../List";
@@ -26,6 +26,7 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
 }) => {
   const [internalDay, setInternalDay] = useState(new Date());
   const [localTodos, setLocalTodos] = useState<TodoItem[]>([]);
+  const [todos, setTodos] = useState<TodoItem[]>([]);
   const [plannerHeight, setPlannerHeight] = useState(130);
   const [plannerId, setPlannerId] = useState(0);
   const selectedDay = selectedDayProp ?? internalDay;
@@ -34,6 +35,10 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
   const { id } = useAuthStore();
   const menteeId = selectedMentee?.menteeId;
 
+  useEffect(() => {
+    setTodos(tasks);
+  }, [tasks]);
+
   if (!menteeId) {
     console.warn("멘티 ID가 없습니다.");
     return null;
@@ -41,7 +46,7 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
 
   const selectedDateStr = format(selectedDay, "yyyy-MM-dd");
   const todosForDay = [
-    ...tasks,
+    ...todos,
     ...localTodos.filter((t) => t.date === selectedDateStr),
   ];
 
@@ -51,6 +56,12 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
 
   const handleAddTodo = (todo: TodoItem) => {
     setLocalTodos((prev) => [...prev, todo]);
+  };
+
+  const handleUpdateTodo = (todoId: number, updates: Partial<TodoItem>) => {
+    setTodos((prev) =>
+      prev.map((todo) => (todo.id === todoId ? { ...todo, ...updates } : todo)),
+    );
   };
 
   const today = new Date();
@@ -88,12 +99,18 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
               menteeId={selectedMentee!.menteeId}
               date={selectedDateStr}
               onHeightChange={setPlannerHeight}
-              setPlannerId = {setPlannerId}
+              setPlannerId={setPlannerId}
             />
           </div>
 
           <div className="w-2/3">
-            <FeedbackBoard height={plannerHeight} plannerId={plannerId} menteeId={menteeId} mentorId={id!} plannerDate={selectedDateStr} />
+            <FeedbackBoard
+              height={plannerHeight}
+              plannerId={plannerId}
+              menteeId={menteeId}
+              mentorId={id!}
+              plannerDate={selectedDateStr}
+            />
           </div>
         </div>
 
@@ -101,7 +118,7 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
           {todosForDay.length === 0 && (
             <span className="font-semibold text-lg">과제</span>
           )}
-          <AssignmentBoard todos={todosForDay} />
+          <AssignmentBoard todos={todos} onUpdateTodo={handleUpdateTodo} />
         </div>
       </div>
     </div>
