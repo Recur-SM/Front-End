@@ -17,15 +17,18 @@ function MenteeAppHome() {
   // 헤더 + 탭바 포함 레이아웃
   const MainLayout = () => (
     <>
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[430px]">
+      {/* Header: z-index를 최상위급으로 높이고 bg-white 추가 */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 z-[100] w-full max-w-[430px] bg-white">
         <Header onMenuClick={() => setIsSidebarOpen(true)} />
       </div>
       
-      <main className="w-full pt-[105px] pb-[100px] px-[24px] flex-1 overflow-y-auto scrollbar-hide">
+      {/* main: relative z-10으로 설정하여 고정 요소들보다 아래에 위치하게 함 */}
+      <main className="relative z-10 w-full pt-[105px] pb-[100px] px-[24px] flex-1 overflow-y-auto scrollbar-hide">
         <Outlet />
       </main>
 
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[430px]">
+      {/* Tabbar: z-index를 높여 클릭 방해 차단 */}
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-[100] w-full max-w-[430px] bg-white">
         <Tabbar />
       </div>
     </>
@@ -34,43 +37,38 @@ function MenteeAppHome() {
   // 상세 헤더 레이아웃
   const DetailLayout = () => (
     <>
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[430px]">
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 z-[100] w-full max-w-[430px] bg-white">
         <DetailHeader />
       </div>
       
-      <main className="w-full pt-[105px] pb-0 px-[24px] flex-1 overflow-y-auto scrollbar-hide">
+      <main className="relative z-10 w-full pt-[105px] pb-0 px-[24px] flex-1 overflow-y-auto scrollbar-hide">
         <Outlet />
       </main>
 
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[430px]">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-[100] w-full max-w-[430px] bg-white">
         <Tabbar />
       </div>
     </>
   );
 
   return (
-    /* 웹 배경색 설정 및 중앙 정렬 컨테이너 */
     <div className="min-h-screen w-full bg-[#F7F7F7] flex justify-center overflow-x-hidden">
-      
-      {/* 실제 모바일 앱 규격 영역 */}
-      <div className="relative w-full max-w-[430px] min-h-screen">
-        
+      <div className="relative w-full max-w-[430px] min-h-screen bg-white"> {/* bg-white 추가로 가독성 확보 */}
         <Routes>
-          {/* 로그인 페이지 */}
-          <Route path="/login" element={<LoginPage />} />
+          {/* 하위 경로 매칭 시 / 제거 (상대 경로 적용) */}
+          <Route path="login" element={<LoginPage />} />
 
           <Route element={<MainLayout />}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/assignment-management" element={<AssignmentManagement />} />
-            <Route path="/record" element={<Record />} />
+            <Route index element={<HomePage />} />
+            <Route path="assignment-management" element={<AssignmentManagement />} />
+            <Route path="record" element={<Record />} />
           </Route>
 
           <Route element={<DetailLayout />}>
-            <Route path="/assignment-detail" element={<AssignmentDetail />} />
+            <Route path="assignment-detail" element={<AssignmentDetail />} />
           </Route>
         </Routes>
 
-        {/* 사이드바 */}
         <Sidebar 
           isOpen={isSidebarOpen} 
           onClose={() => setIsSidebarOpen(false)} 
