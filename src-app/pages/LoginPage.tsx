@@ -14,7 +14,6 @@ const LoginPage = () => {
     setErrorId(false);
     setErrorPw(false);
 
-    // 테스트용 로직 (실제 서버 연결 시 이 부분 수정)
     if (id !== "admin") {
       setErrorId(true);
       return;
@@ -23,22 +22,18 @@ const LoginPage = () => {
       setErrorPw(true);
       return;
     }
-
-    alert("로그인 성공!");
   };
 
   return (
     <div className="h-full mt-[172.5px] flex flex-col items-center">
       <div className="w-[382px] h-[588px] mt-[1px]">
         
-        {/* 설 스터디 로고 */}
         <img src={SeolStudy} alt="설 스터디 로고" className="w-[269px] h-[153px] mb-[32px] mx-auto" />
 
-        {/* 입력란 */}
-        <div className="w-[382px] flex flex-col gap-[20px]">
-          {/* 아이디 */}
-          <div>
-            <div className="text-[18px] text-[#111111] mx-[8px] my-[10px]">
+        <div className="w-[382px] flex flex-col">
+          {/* 아이디 영역 */}
+          <div className="flex flex-col">
+            <div className="text-[18px] text-[#111111] mx-[8px]">
               사용자 아이디
             </div>
             <input 
@@ -52,17 +47,15 @@ const LoginPage = () => {
                 errorId ? "border-[#FF3B30]" : "focus:border-[#FF6738]"
               }`}
             />
-            {/* 아이디 에러 메시지 */}
-            {errorId && (
-              <div className="text-[#FF3B30] text-[13px] mt-[8px] mx-[8px]">
-                존재하지 않는 계정입니다.
-              </div>
-            )}
+            {/* 에러 메시지 */}
+            <div className={`h-[34px] transition-opacity duration-200 ${errorId ? "opacity-100" : "opacity-0"}`}>
+              <span className="text-[#FF6738] text-[13px] mt-[8px] mx-[8px]">존재하지 않는 계정입니다.</span>
+            </div>
           </div>
 
-          {/* 비밀번호 */}
-          <div>
-            <div className="text-[18px] text-[#111111] mx-[8px] my-[10px]">
+          {/* 비밀번호 영역 */}
+          <div className="flex flex-col">
+            <div className="text-[18px] text-[#111111] mx-[8px]">
               비밀번호
             </div>
             <input 
@@ -77,20 +70,18 @@ const LoginPage = () => {
                 errorPw ? "border-[#FF3B30]" : "focus:border-[#FF6738]"
               }`}
             />
-            {/* 비밀번호 에러 메시지 */}
-            {errorPw && (
-              <div className="text-[#FF3B30] text-[13px] mt-[8px] mx-[8px]">
-                올바른 비밀번호를 입력해주세요.
-              </div>
-            )}
+            {/* 에러 메시지 */}
+            <div className={`h-[34px] transition-opacity duration-200 ${errorPw ? "opacity-100" : "opacity-0"}`}>
+              <span className="text-[#FF3B30] text-[13px] mt-[8px] mx-[8px]">올바른 비밀번호를 입력해주세요.</span>
+            </div>
           </div>
         </div>
 
-        {/* 로그인 버튼 */}
+        {/* 로그인 버튼*/}
         <button 
           onClick={handleLogin}
           disabled={!isActive}
-          className={`w-[382px] h-[57px] rounded-[12px] mt-[120px] flex justify-center items-center text-white text-[18px] transition-all duration-300
+          className={`w-[382px] h-[57px] rounded-[12px] mt-[86px] flex justify-center items-center text-white text-[18px] transition-all duration-300
             ${isActive ? "bg-[#FF6738] cursor-pointer" : "bg-[#999999] cursor-not-allowed"}
           `}
         >
