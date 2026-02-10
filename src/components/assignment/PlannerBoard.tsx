@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getPlanner } from "../../api/planner";
+import type { PlannerResponse, PlannerResult } from "../../types/planner";
 
 interface PlannerProps {
   menteeId: number;
@@ -7,23 +8,57 @@ interface PlannerProps {
 }
 
 const PlannerBoard: React.FC<PlannerProps> = ({ menteeId, date }) => {
-  
+  const [plannerData, setPlannerData] = useState<PlannerResult | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+
   useEffect(() => {
     const fetchPlanner = async () => {
       try {
-        const res = await getPlanner(menteeId, date);
-        console.log(res);
+        setIsLoading(true);
+        setError(false);
+        const res: PlannerResponse = await getPlanner(menteeId, date);
+
+        if (res.isSuccess && res.result) {
+          setPlannerData(res.result);
+        } else {
+          setPlannerData(null);
+        }
       } catch (error) {
-        console.error(error);
+        console.error("플래너 조회 실패:", error);
+        setError(true);
+        setPlannerData(null);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchPlanner();
   }, [menteeId, date]);
 
+  if (isLoading) {
+    return (
+      <div className="flex w-full justify-center items-center bg-[#99999933] h-[130px] rounded-lg border border-[#767676]">
+        <span className="text-[#767676] text-sm">로딩 중...</span>
+      </div>
+    );
+  }
+
+  if (error || !plannerData || !plannerData.imageUrl) {
+    return (
+      <div className="flex w-full justify-center items-center bg-[#99999933] h-[130px] rounded-lg border border-[#767676]">
+        <span className="text-[#767676] text-sm">등록된 플래너가 없습니다</span>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex w-full justify-center items-center bg-[#99999933] h-[130px] rounded-lg border border-[#767676] text-sm">
-      <span className="text-[#767676]">등록된 플래너가 없습니다</span>
+    <div className="relative w-full rounded-lg border border-[#767676] overflow-hidden">
+      <img
+        src={plannerData.imageUrl}
+        alt="플래너"
+        className="w-full h-auto"
+      />
     </div>
   );
 };
