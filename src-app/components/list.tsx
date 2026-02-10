@@ -14,19 +14,39 @@ interface ListProps {
   title: string;
   type: 1 | 2 | 3;
   items?: ListItem[];
+  onAdd?: (newTodo: { title: string; subject: string }) => void;
 }
 
-const List = ({ title, type, items = [] }: ListProps) => {
+const List = ({ title, type, items = [], onAdd }: ListProps) => {
   const [isAdding, setIsAdding] = useState(false);
   const [activeFilter, setActiveFilter] = useState("전체");
+  const [newTitle, setNewTitle] = useState("");
+  const [selectedSub, setSelectedSub] = useState("국");
+  
   const navigate = useNavigate();
-
   const filters = ["전체", "국어", "영어", "수학"];
 
+  const getTodayDate = () => {
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const date = today.getDate();
+    return `${month}월 ${date}일`;
+  };
+  
   const filteredItems = items.filter((item) => {
     if (activeFilter === "전체") return true;
     return item.subject === activeFilter;
   });
+
+  const handleConfirm = () => {
+    if (newTitle.trim() && onAdd) {
+      const subjectMap: { [key: string]: string } = { "국": "국어", "영": "영어", "수": "수학" };
+      onAdd({ title: newTitle, subject: subjectMap[selectedSub] });
+      
+      setNewTitle("");
+      setIsAdding(false);
+    }
+  };
 
   const handleTitleClick = (item: ListItem) => {
     navigate('/app/assignment-detail', { state: { assignment: item } });
@@ -46,7 +66,7 @@ const List = ({ title, type, items = [] }: ListProps) => {
       return name.substring(0, 12) + "...";
     }
     return name;
-  };   
+  };
 
   return (
     <div className="w-full max-w-[430px] rounded-[24px]">
@@ -120,14 +140,22 @@ const List = ({ title, type, items = [] }: ListProps) => {
               <div className="grid grid-cols-[1.5fr_0.8fr_2.2fr] items-center py-1">
                 <input 
                   autoFocus
-                  className="w-[66px] h-[28px] bg-transparent border border-transparent rounded-[4px] px-2 text-[14px] text-[#111111] outline-none transition-all placeholder:text-[#999999]" 
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                  className="w-[66px] h-[28px] bg-transparent border border-[#EEEEEE] rounded-[4px] px-2 text-[14px] text-[#111111] outline-none transition-all placeholder:text-[#999999] focus:border-[#FF6738]" 
                   placeholder="제목" 
                 />
-                <span className="text-[14px] text-[#999999]">1월 8일</span>
+                <span className="text-[14px] text-[#999999]">{getTodayDate()}</span>
                 <div className="flex justify-between items-center">
                   <div className="flex gap-1">
                     {["국", "영", "수"].map((sub) => (
-                      <button key={sub} className="w-[33px] h-[26px] rounded-full border border-[#999999] text-[12px] text-[#999999] flex items-center justify-center hover:border-[#FF6738] hover:text-[#FF6738]">
+                      <button 
+                        key={sub} 
+                        onClick={() => setSelectedSub(sub)}
+                        className={`w-[33px] h-[26px] rounded-full border text-[12px] flex items-center justify-center transition-all
+                          ${selectedSub === sub ? "border-[#FF6738] text-[#FF6738]" : "border-[#999999] text-[#999999]"}
+                        `}
+                      >
                         {sub}
                       </button>
                     ))}
@@ -135,7 +163,7 @@ const List = ({ title, type, items = [] }: ListProps) => {
                   <div className="flex items-center gap-2 font-light text-[18px] mr-1">
                     <span onClick={() => setIsAdding(false)} className="cursor-pointer transition-colors text-[#999999] hover:text-[#FF6738] text-[14px]">✕</span>
                     <span className="text-[#E5E5EC] text-[14px]">|</span>
-                    <span onClick={() => setIsAdding(false)} className="cursor-pointer transition-colors text-[#999999] hover:text-[#FF6738]">✓</span>
+                    <span onClick={handleConfirm} className="cursor-pointer transition-colors text-[#999999] hover:text-[#FF6738]">✓</span>
                   </div>
                 </div>
               </div>
@@ -153,50 +181,55 @@ const List = ({ title, type, items = [] }: ListProps) => {
         )}
 
         {/* 타입 2 */}
-        {type === 2 && (
-          <>
-            {filteredItems.length > 0 ? (
-              <>
-                <div className="grid grid-cols-[1.5fr_0.8fr_2.2fr] text-[14px] text-[#111111] font-semibold pb-[4px]">
-                  <span>제목</span><span>날짜</span><span>학습지</span>
-                </div>
-                {filteredItems.map((item, idx) => (
-                  <div key={idx} className="grid grid-cols-[1.5fr_0.8fr_2.2fr] items-center text-[14px] py-[1px]">
-                    <div 
-                      onClick={() => handleTitleClick(item)}
-                      className="flex items-center text-[#111111] cursor-pointer hover:text-[#FF6738] transition-colors group"
-                    >
+          {type === 2 && (
+            <>
+              {filteredItems.length > 0 ? (
+                <>
+                  <div className="grid grid-cols-[1.5fr_0.8fr_2.2fr] text-[14px] text-[#111111] font-semibold pb-[4px]">
+                    <span>제목</span>
+                    <span>날짜</span>
+                    <span>학습지</span>
+                  </div>
+
+                  {filteredItems.map((item, idx) => (
+                    <div key={idx} className="grid grid-cols-[1.5fr_0.8fr_2.2fr] items-center text-[14px] py-[1px]">
+                      <div 
+                        onClick={() => handleTitleClick(item)}
+                        className="flex items-center text-[#111111] cursor-pointer hover:text-[#FF6738] transition-colors group"
+                      >
                         <span className="group-hover:underline">{item.title}</span>
                         <img src={ArrowIcon} className="w-[17px] h-[17px] mt-[2px]" alt="arrow" />
+                      </div>
+
+                      <span className="text-[#111111]">{item.date}</span>
+
+                      <div className="flex items-center justify-between gap-2">
+                        <span className={item.file ? "text-[#FF6738] underline" : "text-[#999999]"}>
+                          {item.file ? truncateFileName(item.file) : "-"}
+                        </span>
+                        {item.file && (
+                          <img 
+                            src={DownloadIcon} 
+                            className="w-[18px] h-[18px] cursor-pointer hover:opacity-70 transition-opacity" 
+                            alt="download"
+                            style={{ filter: "invert(54%) sepia(87%) saturate(2321%) hue-rotate(336deg) brightness(101%) contrast(101%)" }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDownload(item.file!);
+                            }}
+                          />
+                        )}
+                      </div>
                     </div>
-                    <span className="text-[#111111]">{item.date}</span>
-                    <div className="flex items-center justify-between gap-2">
-                      <span className={item.file ? "text-[#FF6738] underline" : "text-[#999999]"}>
-                        {item.file ? truncateFileName(item.file) : "-"}
-                      </span>
-                      {item.file && (
-                        <img 
-                          src={DownloadIcon} 
-                          className="w-[18px] h-[18px] cursor-pointer hover:opacity-70 transition-opacity" 
-                          alt="download"
-                          style={{ filter: "invert(54%) sepia(87%) saturate(2321%) hue-rotate(336deg) brightness(101%) contrast(101%)" }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDownload(item.file!);
-                          }}
-                        />
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </>
-            ) : (
-              <div className="flex flex-col items-center justify-center py-10">
-                <span className="text-[#999999] text-[12px]">내용이 없습니다</span>
-              </div>
-            )}
-          </>
-        )}
+                  ))}
+                </>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-10">
+                  <span className="text-[#999999] text-[12px]">내용이 없습니다</span>
+                </div>
+              )}
+            </>
+          )}
       </div>
     </div>
   );
