@@ -93,8 +93,8 @@ const AssignmentManagementPage = () => {
                     title="오늘 할 일"
                     type={1}
                     items={[
-                        { title: "수학 오답 노트", date: "2월 8일", file: "수학_오답노트_양식.pdf" },
-                        { title: "단어 암기", date: "2월 8일" }
+                        { title: "수학 오답 노트", date: "2월 8일", file: "수학_오답노트.pdf", subject: "수학" },
+                        { title: "영단어 테스트", date: "2월 8일", subject: "영어" },
                     ]}
                 />
             </div>

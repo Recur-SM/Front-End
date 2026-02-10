@@ -7,6 +7,7 @@ interface ListItem {
   title: string;
   date: string;
   file?: string;
+  subject?: string;
 }
 
 interface ListProps {
@@ -21,6 +22,11 @@ const List = ({ title, type, items = [] }: ListProps) => {
   const navigate = useNavigate();
 
   const filters = ["전체", "국어", "영어", "수학"];
+
+  const filteredItems = items.filter((item) => {
+    if (activeFilter === "전체") return true;
+    return item.subject === activeFilter;
+  });
 
   const handleTitleClick = (item: ListItem) => {
     navigate('/app/assignment-detail', { state: { assignment: item } });
@@ -40,7 +46,7 @@ const List = ({ title, type, items = [] }: ListProps) => {
       return name.substring(0, 12) + "...";
     }
     return name;
-  };  
+  };   
 
   return (
     <div className="w-full max-w-[430px] rounded-[24px]">
@@ -48,7 +54,7 @@ const List = ({ title, type, items = [] }: ListProps) => {
       {/* 헤더 */}
       <div className="flex justify-between items-center mb-[20px]">
         <h3 className="text-[20px] font-semibold text-[#111111]">{title}</h3>
-        {items.length > 0 && (type === 1 || type === 2) && (
+        {(type === 1 || type === 2) && (
           <div className="flex gap-[4px]">
             {filters.map((f) => (
               <span 
@@ -70,16 +76,16 @@ const List = ({ title, type, items = [] }: ListProps) => {
       {/* 본문 영역 */}
       <div className="min-h-[100px] flex flex-col gap-1">
         
-        {/* 타입 1: 할 일 목록 */}
+        {/* 타입 1 */}
         {type === 1 && (
           <>
-            {items.length > 0 && (
+            {filteredItems.length > 0 && (
               <div className="grid grid-cols-[1.5fr_0.8fr_2.2fr] text-[14px] text-[#111111] font-semibold pb-[4px]">
                 <span>제목</span><span>날짜</span><span>학습지</span>
               </div>
             )}
 
-            {items.map((item, idx) => (
+            {filteredItems.map((item, idx) => (
               <div key={idx} className="grid grid-cols-[1.5fr_0.8fr_2.2fr] items-center text-[14px] py-[1px]">
                 <div 
                   onClick={() => handleTitleClick(item)}
@@ -90,7 +96,6 @@ const List = ({ title, type, items = [] }: ListProps) => {
                 </div>
                 <span className="text-[#111111]">{item.date}</span>
                 
-                {/* 학습지 영역 */}
                 <div className="flex items-center justify-between gap-2">
                   <span className={item.file ? "text-[#FF6738] underline" : "text-[#999999]"}>
                     {item.file ? truncateFileName(item.file) : "-"}
@@ -100,7 +105,7 @@ const List = ({ title, type, items = [] }: ListProps) => {
                       src={DownloadIcon} 
                       className="w-[18px] h-[18px] cursor-pointer hover:opacity-70 transition-opacity" 
                       alt="download"
-                      style={{ filter: "invert(54%) sepia(87%) saturate(2321%) hue-rotate(336deg) brightness(101%) contrast(101%)" }} // 주황색(#FF6738) 강제 적용
+                      style={{ filter: "invert(54%) sepia(87%) saturate(2321%) hue-rotate(336deg) brightness(101%) contrast(101%)" }}
                       onClick={(e) => {
                         e.stopPropagation(); 
                         handleDownload(item.file!);
@@ -147,15 +152,15 @@ const List = ({ title, type, items = [] }: ListProps) => {
           </>
         )}
 
-        {/* 타입 2: 데이터 없을 시 안내 */}
+        {/* 타입 2 */}
         {type === 2 && (
           <>
-            {items.length > 0 ? (
+            {filteredItems.length > 0 ? (
               <>
                 <div className="grid grid-cols-[1.5fr_0.8fr_2.2fr] text-[14px] text-[#111111] font-semibold pb-[4px]">
                   <span>제목</span><span>날짜</span><span>학습지</span>
                 </div>
-                {items.map((item, idx) => (
+                {filteredItems.map((item, idx) => (
                   <div key={idx} className="grid grid-cols-[1.5fr_0.8fr_2.2fr] items-center text-[14px] py-[1px]">
                     <div 
                       onClick={() => handleTitleClick(item)}
@@ -174,7 +179,7 @@ const List = ({ title, type, items = [] }: ListProps) => {
                           src={DownloadIcon} 
                           className="w-[18px] h-[18px] cursor-pointer hover:opacity-70 transition-opacity" 
                           alt="download"
-                          style={{ filter: "invert(54%) sepia(87%) saturate(2321%) hue-rotate(336deg) brightness(101%) contrast(101%)" }} // 주황색(#FF6738) 강제 적용
+                          style={{ filter: "invert(54%) sepia(87%) saturate(2321%) hue-rotate(336deg) brightness(101%) contrast(101%)" }}
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDownload(item.file!);
