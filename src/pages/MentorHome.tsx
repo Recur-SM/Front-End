@@ -1,5 +1,6 @@
 import Sidebar from "../components/menu/Sidebar";
 import { useEffect, useState } from "react";
+import { format } from "date-fns";
 import Topbar from "../components/menu/Topbar";
 import StudyManagement from "../components/learning/StudyManagement";
 import AssignmentManagement from "../components/assignment/AssignmentManagement";
@@ -20,6 +21,7 @@ const MentorHome = () => {
   const { username } = useAuthStore();
   const [tasks, setTasks] = useState<TodoItem[]>([]);
   const [feebacks, setFeebacks] = useState<FeedbackItem[]>([]);
+  const [selectedDay, setSelectedDay] = useState<Date>(() => new Date());
 
   useEffect(() => {
     const fetchMentorData = async () => {
@@ -32,12 +34,13 @@ const MentorHome = () => {
     fetchMentorData();
   }, []);
 
+  // 선택한 날짜 또는 멘티 변경 시 해당 날짜 할일 조회
   useEffect(() => {
     if (!selectedMentee) return;
+    const dateStr = format(selectedDay, "yyyy-MM-dd");
     const fetchTasks = async () => {
-      const today = new Date().toISOString().split("T")[0];
       try {
-        const res = await getTasks(selectedMentee.menteeId, today);
+        const res = await getTasks(selectedMentee.menteeId, dateStr);
         const fetchedTodos: TodoItem[] = res.result.tasks
           .filter((t) => t.taskType === "ADDITIONAL")
           .map((t) => ({
@@ -56,6 +59,11 @@ const MentorHome = () => {
       }
     };
 
+    fetchTasks();
+  }, [selectedMentee, selectedDay]);
+
+  useEffect(() => {
+    if (!selectedMentee) return;
     const fetchFeedbacks = async () => {
       try {
         const res = await getFeedbackList(selectedMentee.menteeId);
@@ -75,7 +83,6 @@ const MentorHome = () => {
       }
     };
 
-    fetchTasks();
     fetchFeedbacks();
   }, [selectedMentee]);
 
@@ -116,7 +123,11 @@ const MentorHome = () => {
               />
             )}
             {activeTab === "과제 관리" && (
-              <AssignmentManagement tasks={tasks} />
+              <AssignmentManagement
+                tasks={tasks}
+                selectedDay={selectedDay}
+                onSelectedDayChange={setSelectedDay}
+              />
             )}
           </main>
         </div>

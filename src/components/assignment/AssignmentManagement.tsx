@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { format, isSameDay } from "date-fns";
+import { ko } from "date-fns/locale";
 import List from "../List";
 import WeekCalendar from "./WeekCalendar";
 import AddTodoList from "./AddTodoList";
@@ -9,32 +11,51 @@ import AssignmentBoard from "./AssignmentBoard";
 
 interface AssignmentManagementProps {
   tasks: TodoItem[];
+  selectedDay?: Date;
+  onSelectedDayChange?: (day: Date) => void;
 }
 
 const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
   tasks,
+  selectedDay: selectedDayProp,
+  onSelectedDayChange,
 }) => {
-  const [selectedDay, setSelectedDay] = useState(new Date());
-  const [todos, setTodos] = useState<TodoItem[]>(tasks);
-  const selectedDateStr = selectedDay.toISOString().split("T")[0];
-  const todosForDay = todos.filter((t) => t.date === selectedDateStr);
+  const [internalDay, setInternalDay] = useState(new Date());
+  const selectedDay = selectedDayProp ?? internalDay;
+  const setSelectedDay = onSelectedDayChange ?? setInternalDay;
+
+  const [localTodos, setLocalTodos] = useState<TodoItem[]>([]);
+  const selectedDateStr = format(selectedDay, "yyyy-MM-dd");
+  const todosForDay = [
+    ...tasks,
+    ...localTodos.filter((t) => t.date === selectedDateStr),
+  ];
 
   const handleClickDay = (day: Date) => {
     setSelectedDay(day);
   };
 
   const handleAddTodo = (todo: TodoItem) => {
-    setTodos((prev) => [...prev, todo]);
+    setLocalTodos((prev) => [...prev, todo]);
   };
+
+  const today = new Date();
+  const listTitle = isSameDay(selectedDay, today)
+    ? "오늘 할 일"
+    : `${format(selectedDay, "M월 d일", { locale: ko })} 할 일`;
 
   return (
     <div className="flex flex-col">
       <div className="flex justify-center py-3">
-        <WeekCalendar today={selectedDay} onClickDay={handleClickDay} />
+        <WeekCalendar
+          today={today}
+          selectedDate={selectedDay}
+          onClickDay={handleClickDay}
+        />
       </div>
 
       <div className="py-1">
-        <List title="오늘 할 일" type="할일" tasks={todosForDay} />
+        <List title={listTitle} type="할일" tasks={todosForDay} />
 
         <AddTodoList selectedDate={selectedDateStr} onAddTodo={handleAddTodo} />
       </div>
