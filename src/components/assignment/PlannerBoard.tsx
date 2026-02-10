@@ -1,16 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getPlanner } from "../../api/planner";
 import type { PlannerResponse, PlannerResult } from "../../types/planner";
 
 interface PlannerProps {
   menteeId: number;
   date: string;
+  onHeightChange?: (height: number) => void;
 }
 
-const PlannerBoard: React.FC<PlannerProps> = ({ menteeId, date }) => {
+const PlannerBoard: React.FC<PlannerProps> = ({
+  menteeId,
+  date,
+  onHeightChange,
+}) => {
   const [plannerData, setPlannerData] = useState<PlannerResult | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const fetchPlanner = async () => {
@@ -36,6 +42,19 @@ const PlannerBoard: React.FC<PlannerProps> = ({ menteeId, date }) => {
     fetchPlanner();
   }, [menteeId, date]);
 
+  const handleImageLoad = () => {
+    if (imgRef.current && onHeightChange) {
+      onHeightChange(imgRef.current.offsetHeight);
+    }
+  };
+
+  useEffect(() => {
+    // 높이 초기화
+    if ((error || !plannerData || !plannerData.imageUrl) && onHeightChange) {
+      onHeightChange(130); // 기본 높이
+    }
+  }, [error, plannerData, onHeightChange]);
+
   if (isLoading) {
     return (
       <div className="flex w-full justify-center items-center bg-[#99999933] h-[130px] rounded-lg border border-[#767676]">
@@ -55,9 +74,11 @@ const PlannerBoard: React.FC<PlannerProps> = ({ menteeId, date }) => {
   return (
     <div className="relative w-full rounded-lg border border-[#767676] overflow-hidden">
       <img
+        ref={imgRef}
         src={plannerData.imageUrl}
         alt="플래너"
         className="w-full h-auto"
+        onLoad={handleImageLoad}
       />
     </div>
   );

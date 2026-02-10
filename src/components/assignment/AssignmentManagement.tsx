@@ -25,6 +25,7 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
 }) => {
   const [internalDay, setInternalDay] = useState(new Date());
   const [localTodos, setLocalTodos] = useState<TodoItem[]>([]);
+  const [plannerHeight, setPlannerHeight] = useState(130);
   const selectedDay = selectedDayProp ?? internalDay;
   const setSelectedDay = onSelectedDayChange ?? setInternalDay;
   const { selectedMentee } = useMenteeStore();
@@ -83,11 +84,12 @@ const AssignmentManagement: React.FC<AssignmentManagementProps> = ({
             <PlannerBoard
               menteeId={selectedMentee!.menteeId}
               date={selectedDateStr}
+              onHeightChange={setPlannerHeight}
             />
           </div>
 
           <div className="w-2/3">
-            <FeedbackBoard />
+            <FeedbackBoard height={plannerHeight} />
           </div>
         </div>
 
